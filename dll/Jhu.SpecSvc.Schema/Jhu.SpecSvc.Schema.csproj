@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4AFBD644-DD6E-4661-A488-A0975F4AC723}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jhu.SpecSvc.Schema</RootNamespace>
+    <AssemblyName>Jhu.SpecSvc.Schema</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\CharacterizationAttribute.cs" />
+    <Compile Include="Attributes\FieldAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schema\Axis.cs" />
+    <Compile Include="Schema\BoolParam.cs" />
+    <Compile Include="Schema\Characterization\ISamplingPrecisionRefVal.cs" />
+    <Compile Include="Schema\Characterization\IAccuracy.cs" />
+    <Compile Include="Schema\Characterization\IAxis.cs" />
+    <Compile Include="Schema\Characterization\IBounds.cs" />
+    <Compile Include="Schema\Characterization\ICharacterization.cs" />
+    <Compile Include="Schema\Characterization\ICoverage.cs" />
+    <Compile Include="Schema\Characterization\ICoverageLocation.cs" />
+    <Compile Include="Schema\Characterization\ICoverageSupport.cs" />
+    <Compile Include="Schema\Characterization\ICoverageBounds.cs" />
+    <Compile Include="Schema\Characterization\IDataCube.cs" />
+    <Compile Include="Schema\Characterization\ISamplingPrecision.cs" />
+    <Compile Include="Schema\Contact.cs" />
+    <Compile Include="Schema\IntArrayParam.cs" />
+    <Compile Include="Schema\Curation.cs" />
+    <Compile Include="Schema\DoubleArrayParam.cs" />
+    <Compile Include="Schema\DoubleInterval.cs" />
+    <Compile Include="Schema\DoubleParam.cs" />
+    <Compile Include="Schema\Group.cs" />
+    <Compile Include="Schema\IntParam.cs" />
+    <Compile Include="Schema\ParamBase.cs" />
+    <Compile Include="Schema\ParamCollection.cs" />
+    <Compile Include="Schema\Position.cs" />
+    <Compile Include="Schema\PositionParam.cs" />
+    <Compile Include="Schema\SpaceFrame.cs" />
+    <Compile Include="Schema\SpectrumExtensions\AgeAxis.cs" />
+    <Compile Include="Schema\SpectrumExtensions\GasMetAxis.cs" />
+    <Compile Include="Schema\SpectrumExtensions\StellarMetAxis.cs" />
+    <Compile Include="Schema\SpectrumExtensions\ModelParameters.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Schema\SpectrumExtensions\Spectrum.cs" />
+    <Compile Include="Schema\SpectrumExtensions\SfrAxis.cs" />
+    <Compile Include="Schema\SpectrumExtensions\Target.cs" />
+    <Compile Include="Schema\Spectrum\CoordSys.cs" />
+    <Compile Include="Schema\Spectrum\BackgroundModel.cs" />
+    <Compile Include="Schema\Spectrum\BackgroundModelAccuracy.cs" />
+    <Compile Include="Schema\Spectrum\VelocityDispersion.cs" />
+    <Compile Include="Schema\Spectrum\Environment.cs" />
+    <Compile Include="Schema\Spectrum\TimeSamplingPrecision.cs" />
+    <Compile Include="Schema\Spectrum\TimeSamplingPrecisionRefVal.cs" />
+    <Compile Include="Schema\Spectrum\SpectralSamplingPrecisionRefVal.cs" />
+    <Compile Include="Schema\Spectrum\SpatialSamplingPrecisionRefVal.cs" />
+    <Compile Include="Schema\Spectrum\SpatialSamplingPrecision.cs" />
+    <Compile Include="Schema\Spectrum\SpectralSamplingPrecision.cs" />
+    <Compile Include="Schema\Spectrum\TimeCoverageSupport.cs" />
+    <Compile Include="Schema\Spectrum\TimeCoverageBounds.cs" />
+    <Compile Include="Schema\Spectrum\TimeCoverage.cs" />
+    <Compile Include="Schema\Spectrum\TimeCoverageLocation.cs" />
+    <Compile Include="Schema\Spectrum\SpatialCoverageSupport.cs" />
+    <Compile Include="Schema\Spectrum\SpatialCoverageBounds.cs" />
+    <Compile Include="Schema\Spectrum\SpatialCoverageLocation.cs" />
+    <Compile Include="Schema\Spectrum\SpatialCoverage.cs" />
+    <Compile Include="Schema\Spectrum\Data.cs" />
+    <Compile Include="Schema\Spectrum\SpatialAccuracy.cs" />
+    <Compile Include="Schema\Spectrum\SpatialAxis.cs" />
+    <Compile Include="Schema\Spectrum\DataId.cs" />
+    <Compile Include="Schema\Spectrum\Derived.cs" />
+    <Compile Include="Schema\Spectrum\FluxAccuracy.cs" />
+    <Compile Include="Schema\Spectrum\FluxAxis.cs" />
+    <Compile Include="Schema\Spectrum\Redshift.cs" />
+    <Compile Include="Schema\Spectrum\RedshiftFrame.cs" />
+    <Compile Include="Schema\Spectrum\SpectralAccuracy.cs" />
+    <Compile Include="Schema\Spectrum\SpectralAxis.cs" />
+    <Compile Include="Schema\Spectrum\SpectralCoverageSupport.cs" />
+    <Compile Include="Schema\Spectrum\SpectralCoverage.cs" />
+    <Compile Include="Schema\Spectrum\SpectralCoverageBounds.cs" />
+    <Compile Include="Schema\Spectrum\SpectralCoverageLocation.cs" />
+    <Compile Include="Schema\Spectrum\Spectrum.cs" />
+    <Compile Include="Schema\Spectrum\SpectralFrame.cs" />
+    <Compile Include="Schema\Spectrum\Target.cs" />
+    <Compile Include="Schema\Spectrum\TimeAccuracy.cs" />
+    <Compile Include="Schema\Spectrum\TimeAxis.cs" />
+    <Compile Include="Schema\Spectrum\TimeFrame.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Schema\Ssa\Access.cs" />
+    <Compile Include="Schema\Ssa\Association.cs" />
+    <Compile Include="Schema\Ssa\Dataset.cs" />
+    <Compile Include="Schema\Ssa\Query.cs" />
+    <Compile Include="Schema\Ssa\Ssa.cs" />
+    <Compile Include="Schema\TextParam.cs" />
+    <Compile Include="Schema\TimeInterval.cs" />
+    <Compile Include="Schema\TimeParam.cs" />
+    <Compile Include="Schema\Units\Multiplier.cs" />
+    <Compile Include="Schema\Units\Unit.cs" />
+    <Compile Include="Schema\Units\UnitPart.cs" />
+    <Compile Include="Schema\SchemaUtil.cs" />
+    <Compile Include="VOTABLE\VOTABLE.cs">
+      <DependentUpon>VOTABLE.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VOTABLE\VOTABLE.xsd">
+      <SubType>
+      </SubType>
+      <CustomToolNamespace>VOTABLE</CustomToolNamespace>
+    </None>
+    <None Include="VOTABLE\VOTABLE.xsx">
+      <DependentUpon>VOTABLE.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

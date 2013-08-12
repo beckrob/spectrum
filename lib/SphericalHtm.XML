@@ -1,0 +1,1915 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SphericalHtm</name>
+    </assembly>
+    <members>
+        <member name="T:Spherical.Htm.SmartVertex">
+            <summary>
+            Smartvertex is aware of its context represented by a list of Wedge
+            objects derived from the arcs in the outline.
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.SmartVertex.up">
+            <summary>
+            "Northing" vector
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.SmartVertex.west">
+            <summary>
+            Westing vector
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.SmartVertex.v">
+            <summary>
+            Vector represented by this SmartVertex
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.SmartVertex.topo">
+            <summary>
+            Topo
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.SmartVertex.wedgelist">
+            <summary>
+            list of arcs in outline that contain the vertex.
+            Used in SetParentArcsAndTopo before wedge list is made. 
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.GetArcPosAngle(Spherical.Arc)">
+            <summary>
+            Get position angle of arc going through this vertex
+            </summary>
+            Angle is positive (right hand rule curled) from the "up" direction
+            <param name="a"></param>
+            <returns>Radians</returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.makeOneWedge(Spherical.Arc,Spherical.Arc)">
+            <summary>
+            Create a Wedge object for a pair of arcs coming in and out of this vertex
+            </summary>
+            called by SetLocalTopo in SmartTrixel
+            <param name="arcin"></param>
+            <param name="arcout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.GetParentAngles(System.Collections.Generic.List{Spherical.Arc})">
+            <summary>
+            Return sorted list  of angles of arcs in the tangent plane as measured from up (north)
+            in the positive direction in radians.
+            </summary>
+            <param name="parentArcs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.makeWedgeList(System.Collections.Generic.List{Spherical.Arc})">
+            <summary>
+            
+            </summary>
+            <param name="parentArcs"></param>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.#ctor(Spherical.Cartesian,System.Boolean)">
+            <summary>
+            Constructor may force the topo of smartvertex
+            </summary>
+            <param name="v"></param>
+            <param name="inside"></param>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.#ctor(Spherical.Cartesian)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.Equals(Spherical.Htm.SmartVertex)">
+            <summary>
+            Determines whether or not this Smartvertex is equivalent with the other
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.SmartVertex.AngleInRadian(Spherical.Htm.SmartVertex)">
+            <summary>
+            Arc separation between two vertices (on unit sphere)
+            </summary>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Spherical.Htm.SmartVertex.IsInside">
+            <summary>
+            Vertex is inside the region if it is either on the border or really inside
+            </summary>
+        </member>
+        <member name="P:Spherical.Htm.SmartVertex.Vertex">
+            <summary>
+            Property to expose the cartesian part of this smart vertex
+            </summary>
+        </member>
+        <member name="T:Spherical.Htm.SmartArc">
+            <summary>
+            Smart arcs encapsulate Arcs, and add HtmID tags
+            to their endpoints
+            
+            </summary>
+        </member>
+        <member name="T:Spherical.Htm.SortableRoot">
+            <summary>
+            Sortable roots are intesections of arcs with other arcs,
+            Usually a patch element and the edge of a trixel.
+            </summary>
+            Sortable roots are intervals, because aligned patch arcs and trixel edges
+            have not one or two , but an interval of common points. When the intersection is 
+            normal, then the Lower == Upper
+        </member>
+        <member name="F:Spherical.Htm.SortableRoot.ParentArc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.SortableRoot.#ctor(System.Double,System.Double,Spherical.Arc,Spherical.Topo)">
+            <summary>
+            Constructor 
+            </summary>
+            <param name="low"></param>
+            <param name="high"></param>
+            <param name="arc"></param>
+            <param name="top"></param>
+        </member>
+        <member name="M:Spherical.Htm.SortableRoot.#ctor(System.Double,Spherical.Arc)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="angle"></param>
+            <param name="arc"></param>
+        </member>
+        <member name="M:Spherical.Htm.SortableRoot.isZero">
+            <summary>
+            True if Sortable Root is or conatins 0
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SortableRoot.isOne">
+            <summary>
+            True if Sortable Root is or conatins 1
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SortableRoot.ToString">
+            <summary>
+            Display as text
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="T:Spherical.Htm.PositionAngle">
+            <summary>
+            An angle quantity augmented with state information
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.PositionAngle.#ctor(System.Double,Spherical.Htm.PositionAngle.Direction)">
+            <summary>
+            Constructor. Specifies both quantities
+            </summary>
+            <param name="angle">in radians</param>
+            <param name="state">Begin, End or Undefined</param>
+        </member>
+        <member name="M:Spherical.Htm.PositionAngle.CompareTo(Spherical.Htm.PositionAngle,Spherical.Htm.PositionAngle)">
+            <summary>
+            Comparator for sorting
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.Htm.HtmFace">
+            <summary>
+            This class maintains writeable global variables for otherwise static method
+            This is a sigleton object
+            </summary>
+            Things have been flagged MAKESTATE in other source files that are affeced
+        </member>
+        <member name="T:Spherical.Htm.HtmState">
+            <summary>
+            A singleton class housing many internal 'global' variables. Exposed only
+            for its getVersion method
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.HtmState._featuresizes">
+            <summary>
+            In radians
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.HtmState.faces">
+            <summary>
+            Singleton initializes all internal data structures:
+            faces, vertices and featuresizes 
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.HtmState.getVersion">
+            <summary>
+            Returns this library's Version string
+            </summary>
+            <returns>The version string</returns>
+        </member>
+        <member name="P:Spherical.Htm.HtmState.Instance">
+            <summary>
+            The only legal way to access this singleton
+            </summary>
+        </member>
+        <member name="P:Spherical.Htm.HtmState.newID">
+            <summary>
+            Produces a unique ID used throughout the internals.
+            It is exposed for the test harnesses and external verification
+            tools
+            </summary>
+        </member>
+        <member name="T:Spherical.Htm.Trixel">
+            <summary>
+            Trixel static methods operate on HtmID's mostly.
+            
+            operations needed to convert between location and HtmID
+            several representations of a HtmID, and locations expressed
+            in Cartesian, J2000 (ra/dec) geographic lat/lon space.
+            Since functions in the Spherical assembly convert 
+            to and from J2000 or geographic coordinates, only XYZ
+            is handled by this class
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Trixel.eHIDBits">
+            <summary>
+            Number of bits in an HID
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Trixel.TrixelNameLength">
+            <summary>
+            Maximum number of characters in text descriptions
+            Whenever character arrays are used to keep the text
+            description of a trixel, they must be exactly eMaxNameSize
+            characters long
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Trixel.Epsilon2">
+            <summary>
+            This tolerance is used for comparing angles
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Trixel.Epsilon">
+            <summary>
+            This tolerance is used for comparing fractional roots
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Trixel.DblTolerance">
+            <summary>
+            Twice the double precision tolerance
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.#ctor">
+            <summary>
+            Do not instantiate this class
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.CartesianToHid20(Spherical.Cartesian)">
+            <summary>
+            Convert a location as a normalized Cartesian to a level-20 HtmID.
+            if the paramater is a Cartesian.Nan then an invalid HtmID (0)
+            is returned (there are no integer NaNs).
+            </summary>
+            <param name="v">Cartesian location</param>
+            <returns>64 bit HtmID</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.CartesianToHid(System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Convert a Cartesian coordinate to a HID.
+            
+            Given a Cartesian coordinate
+            and a level number, it returns the 64 bit HID.
+            <b>WARNING!</b>
+            x, y, z are assumed to be normalized, so this function
+            doesn't waste time normalzing.
+            </summary>
+            <param name="x">X coordinate of location</param>
+            <param name="y">Y coordinate of location</param>
+            <param name="z">Z coordinate of location</param>
+            <param name="depth">The level of the HID</param>
+            <returns>64-bit HID</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.XyzToHidName(System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Find the string representation of the HtmID to a given level of a unit vector
+            
+            The vector <strong>must</strong> be normalized.
+            </summary>
+            <param name="x">double</param>
+            <param name="y">double</param>
+            <param name="z">double</param>
+            <param name="depth">int</param>
+            <returns>text representation of HtmID</returns>
+            
+        </member>
+        <member name="M:Spherical.Htm.Trixel.ToString(System.Int64)">
+            <summary>
+            Convert a HtmID to its textual representation
+            </summary>
+            <param name="hid">64-bit HtmID</param>
+            <returns>The textual representation</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.Parse(System.String)">
+            <summary>
+            Convert input string (numeric e.g. 969 or text e.g. N3021) to (long) HtmID. 
+            </summary>
+            <param name="in_string">input string</param> 
+            <returns>HtmID or 0 if input string does not parse into a valid HtmID</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.IsAncestor(System.Int64,System.Int64)">
+            <summary>
+            Decide whether or not a node in the tree of a given HtmID is an 
+            ancestor of another node
+            </summary>
+            <param name="grandpa">64-bit HtmID, candidate for ancestry</param>
+            <param name="hid">64-bit HtmID who is the potential descendant</param>
+            <returns>true if grandpa is an ancestor of hid</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.NameToTriangle(System.Char[],Spherical.Cartesian@,Spherical.Cartesian@,Spherical.Cartesian@)">
+            <summary>
+            Convert the named trixel to a triangle described
+            by three vertices.
+            The vertices are given by three arrays of three doubles.
+            The coordinates of the triangles are given in
+            the order (x, y, z) and so that the location
+            is on the surface of a unit sphere
+            </summary>
+            <param name="name">The text description of the trixel</param>
+            <param name="c0">The X coordinate</param>
+            <param name="c1">The Y coordinate</param>
+            <param name="c2">The Z coordinate</param>
+            <returns>true, if the conversion succeeded, false otherwise</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.startpane(Spherical.Cartesian@,Spherical.Cartesian@,Spherical.Cartesian@,System.Double,System.Double,System.Double,System.Char[])">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <param name="v3"></param>
+            <param name="xin"></param>
+            <param name="yin"></param>
+            <param name="zin"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.Contains(Spherical.Cartesian,Spherical.Cartesian,Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Test if p is inside triangle given by v1, v2, v3
+            </summary>
+            <param name="p">point to test</param>
+            <param name="v1">first vertex of triangle</param>
+            <param name="v2">second vertex of triangle</param>
+            <param name="v3">third vertex of triangle</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.ToTriangle(System.Int64,Spherical.Cartesian@,Spherical.Cartesian@,Spherical.Cartesian@)">
+            <summary>
+            Get the coordinates of the 3 corners of the trixel desscribed by the 
+            given HtmID. 
+            </summary>
+            <param name="hid">the specified HtmID</param>
+            <param name="a">output of first corner</param>
+            <param name="b">output of second corner</param>
+            <param name="c">output of third corner</param>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.IsValid(System.Int64)">
+            <summary>
+            Decide if the given 64-bit integer is a valid HtmID
+            </summary>
+            <param name="hid">64-bit input number</param>
+            <returns>true if given number is a valid HtmID, false otherwise</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.ToName(System.Char[],System.Int64)">
+            <summary>
+            Convert a 64-bit HID to a text desciption of the trixel.
+            </summary>
+            <param name="name">An array of HtmTrixel.eMaxNameSize (a const in this class)
+            character The array is null terminated.</param>
+            <param name="hid">The HID</param>
+            <returns>The number of significant characters in name[]</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.NameToHid(System.String)">
+            <summary>
+            Convert the trixel from text to 64 bit HID.
+            </summary>
+            <param name="sname">The string with the text representation of 
+            the trixel.</param>
+            <returns>The 64 bit HID</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.NameToHid(System.Char[],System.Int32)">
+            <summary>
+            Convert the trixel from text to 64 bit HID
+            The character array must be of size eMaxNameSize, and
+            it is not necessary to have null termination. The
+            number of siginificant characters in the trixel's name
+            is given as a parameter.
+            </summary>
+            <param name="name">The character array with the text 
+            representation of the trixel.</param>
+            <param name="effectivelength">The number of significant characters
+            in the array.</param>
+            <returns>The 64 bit HID</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.Truncate(System.Int64,System.Int32)">
+            <summary>
+            Truncate the HtmID to a lower level (hence fewer bits)
+            The HtmID of a trixel implicitly contains the level of the trixel.
+            When you need a lower level trixel that contains the trixel
+            of the given HtmID, this function gives it to you.
+            If the level of
+            the given HtmID is less than or equal to the desired level,
+            then there is no change.
+            </summary>
+            <param name="htmid">The given HtmID</param>
+            <param name="level">Desired level</param>
+            <returns>HtmID of lower level trixel</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.Extend(System.Int64,System.Int32)">
+            <summary>
+            Extend given HID to a desired level.
+            The opposite of truncate. However,
+            because there are many descendents, the result is a range of
+            consecutive HIDs. The low and hi values are returned in 
+            the out variables.
+            </summary>
+            <param name="htmid">HID to extend</param>
+            <param name="level">New level to which to extend</param>
+            <returns>A pair of 64-bit HtmIDs</returns>
+        </member>
+        <member name="M:Spherical.Htm.Trixel.LevelOfHid(System.Int64)">
+            <summary>
+            Returns the level number of an HtmID
+            </summary>
+            <param name="htmid">The HtmID</param>
+            <returns>The level number or -1</returns>
+        </member>
+        <member name="T:Spherical.Htm.SmartTrixel">
+            <summary>
+            Smart trixels evaluate their own relation to the region outline
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.rootCheck(Spherical.Htm.SortableRoot)">
+            <summary>
+            Ensure that the sortable root is well-formed, the lower and upper
+            parts are consistent and within Epsilon of  inside (0, 1) 
+            </summary>
+            <param name="root"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.initBCandPList">
+            <summary>
+            Compute bounding circle (BC) and patchlist filtered by the BC.
+            If parent trixel exists use its patch list if possible.
+            If parent doesn't exist, or has no patchlist, then use patches
+            from the Region.
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.#ctor(Spherical.Htm.Cover)">
+            <summary>
+            Virtual root of trixel tree, must have offsprings
+            </summary>
+            <param name="machine"></param>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.#ctor(Spherical.Htm.SmartTrixel,System.Int64,Spherical.Htm.SmartVertex,Spherical.Htm.SmartVertex,Spherical.Htm.SmartVertex)">
+            <summary>
+            Create a new SmartTrixel. The parent passes on the reference
+            to the machine, and tells this new trixel its "child number" (0-3)
+            
+            </summary>
+            <param name="parent">SmartTrixel responsible for this child</param>
+            <param name="hid">hid of this child</param>
+            <param name="iv0"></param>
+            <param name="iv1"></param>
+            <param name="iv2"></param>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.nrVerticesInner">
+            <summary>
+            Count the number of vertices inside region.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.splitFractionals(System.Int32,System.Boolean)">
+            <summary>
+            make a new fractional root list for the given edge and from the parent trixel's
+            list of fractional roots
+            </summary>
+            <param name="edgenr"></param>
+            <param name="bottom"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.intersectingFractionals">
+            <summary>
+            Does this trixel properly intersext the region outline?
+            </summary>
+            If the intersection grazes the edge, then it is not a proper intersection
+            <returns>true if yes</returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.updateFractionals">
+            <summary>
+            updates the three fractional lists, tries to inherit from parent whenever possible 
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.setLocalTopo(System.Int32)">
+            <summary>
+            Set the vertex topo information
+            </summary>
+            <param name="ix">index number of vertex</param>
+            <returns>Either Partial or Undefined</returns>
+            
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.GetMarkup">
+            <summary>
+            Assigns markup value to this Trixel
+            </summary>
+            <returns>Partial, Inner, Reject or Undefined</returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.FilterByBC(System.Collections.Generic.IEnumerable{Spherical.IPatch})">
+            <summary>
+            Create list of patches from a region
+            whose bounding circle (BC) intersects with the trixel's BC
+            </summary>
+            <param name="patches">Region's patchlist</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.simplifySortableRoots(System.Collections.Generic.List{Spherical.Htm.SortableRoot})">
+            <summary>
+            Eliminate redundant roots
+            </summary>
+            <param name="sortableRoots"></param>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.IsArcInTrixel(Spherical.Htm.SmartArc,System.Boolean)">
+            <summary>
+            Decide whether or not any endpoint of arc is inside the trixel
+            </summary>
+            <param name="sa"></param>
+            <param name="both"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.haveCommonInterval(Spherical.Arc,Spherical.Arc,System.Double@,System.Double@)">
+            <summary>
+            
+            </summary>
+            <param name="edge"></param>
+            <param name="a"></param>
+            <param name="arclo"></param>
+            <param name="archi"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.haveIntersect(Spherical.Arc,Spherical.Arc,Spherical.Cartesian,System.Double@)">
+            <summary>
+            
+            </summary>
+            <param name="edge"></param>
+            <param name="a"></param>
+            <param name="root"></param>
+            <param name="arcint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.GetFractionalRoots(Spherical.Arc,System.Collections.Generic.IList{Spherical.IPatch},System.Boolean)">
+            <summary>
+            Get a sorted list of distances of intersections (roots) from the given edge's first point
+            </summary>
+            <remarks>
+            An edge of a trixel is intersected with each arc in each patch of the patchlist.
+            The roots that are on both the edge and the arc are put
+            on a list in the form of angular distance from the edge's Point1.
+            </remarks>
+            <param name="edge">An arc representing the edge (of the trixel)</param>
+            <param name="in_plist">Patch list</param>
+            <param name="simplify">if true, root list simplification will occur</param>
+            <returns>list of roots tagged with fractional angles tagged with  in radians</returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.CompareTo(Spherical.Htm.SortableRoot,Spherical.Htm.SortableRoot)">
+            <summary>
+            Comparator for sorting
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.SmartTrixel.ToString">
+            <summary>
+            Standard ToString override
+            </summary>
+            
+            <returns>Hid formatted as [NS]{[0-3]}+</returns>
+        </member>
+        <member name="P:Spherical.Htm.SmartTrixel.Hid">
+            <summary>
+            The HtmID of this trixel
+            </summary>
+        </member>
+        <member name="T:Spherical.Shape.Parser">
+            <summary>
+            With the rules of the <a href="../../HtmPrimer/regiongrammar.html">Shape Grammar</a>,
+            turn the given specification into a Region object with its only public method.
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.Parser.errmsg(Spherical.Shape.Parser.Error)">
+            <summary>
+            Turns a Parser.Error argument into a textual description.
+            </summary>
+            <param name="errno">The Error object</param>
+            <returns>string containing text of description</returns>
+        </member>
+        <member name="M:Spherical.Shape.Parser.#ctor(System.String)">
+            <summary>
+            Create an instance of a shape parser with a specification
+            
+            Parsing occurs when parse() is invoked.
+            </summary>
+            <param name="in_spec">a valid shape specification</param>
+        </member>
+        <member name="M:Spherical.Shape.Parser.match_current(System.String,System.Boolean)">
+            <summary>
+            Is the current token same as pattern?
+            </summary>
+            <param name="pattern"></param>
+            <param name="casesensitive"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Shape.Parser.isprefix(System.String)">
+            <summary>
+            Does the current token have the given prefix?
+            </summary>
+            <param name="prefix"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Shape.Parser.extract(System.String)">
+            <summary>
+            Extracts all the points from a convex hull specification
+            </summary>
+            <param name="textSpec">string containing the 'CHULL ' spec</param>
+            <returns>a linear array of x, y, z values</returns>
+        </member>
+        <member name="M:Spherical.Shape.Parser.compile(System.String)">
+            <summary>
+            Compile a text description of a region into a new Region object.
+            
+            If there is an error in the specification, compile will
+            throw a ParserException with an appropriate text message, and and internal
+            Parser.Error variable.
+            </summary>
+            <param name="textSpec">textual representation of desired region</param>
+            <returns>a new Spherical.Region object</returns>
+        </member>
+        <member name="P:Spherical.Shape.Parser.ismore">
+            <summary>
+            True, if there are any tokens left to parse. ismore() skips over white spaces
+            </summary>
+        </member>
+        <member name="P:Spherical.Shape.Parser.input">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Spherical.Shape.Parser.Error">
+            <summary>
+            Descibes the Spherical Shape Parser error
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.Ok">
+            <summary>
+            All is well, no error
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errIllegalNumber">
+            <summary>
+            The parsed token was not a number.
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errEol">
+            <summary>
+            Premature end of line was reached
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errNot2forRect">
+            <summary>
+            There were other than 2 points specified for a RECT command.
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errNotenough4Poly">
+            <summary>
+            There weren't at least 3 points for specifying a polygon or convex hull.
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errPolyBowtie">
+            <summary>
+            The given polygon is either concave, or has self-intersecting edges
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errPolyZeroLength">
+            <summary>
+            The polygon specified contains edges of zero length (eg, from consecutive 
+            identical points).
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errChullTooBig">
+            <summary>
+            The list of points for convex hull generation span a space larger than a hemisphere.
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errChullCoplanar">
+            <summary>
+            The list of points for convex hull generation are all on the same great circle.
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errNullSpecification">
+            <summary>
+            An empty string was given as a specification.
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Parser.Error.errUnknown">
+            <summary>
+            Some other error occured. Please call someone if this happens
+            </summary>
+        </member>
+        <member name="T:Spherical.Shape.Chull">
+            <summary>
+            
+            Computes the convex hull of a collection of points
+            on the surface of the sphere. Uses QuickHull3D 
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.Chull.Make(System.Collections.Generic.List{Spherical.Cartesian},Spherical.Shape.Chull.Cherror@)">
+            <summary>
+            Create a Spherical.Convex object from the convex hull of the shape made up
+            of the list of Cartesian points. 
+            </summary>
+            <param name="points">list of cartesians</param>
+            <param name="cherr">error code</param>
+            <returns>Spherical.Convex object</returns>
+        </member>
+        <member name="M:Spherical.Shape.Chull.Make(System.Collections.Generic.List{System.Double},System.Collections.Generic.List{System.Double},System.Collections.Generic.List{System.Double},Spherical.Shape.Chull.Cherror@)">
+            <summary>
+            Create a convex spherical polygon from the spherical convex hull of the given points 
+            </summary>
+            <param name="xs">list of x coords</param>
+            <param name="ys">list of y coords</param>
+            <param name="zs">list of z coords</param>
+            <param name="err">error code</param>
+            <returns>a new Spherical.Convex object</returns>
+        </member>
+        <member name="M:Spherical.Shape.Chull.#ctor">
+            <summary>
+            Do not allow default constructor
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.Chull.PointsToConvex(System.Collections.Generic.List{System.Double},System.Collections.Generic.List{System.Double},System.Collections.Generic.List{System.Double},Spherical.Shape.Chull.Cherror@)">
+            <summary>
+            Internal function for which Make(...) serves as a public wrapper
+            </summary>
+            <param name="xs">list of x coorsd</param>
+            <param name="ys">list of y coords</param>
+            <param name="zs">list of z coords</param>
+            <param name="err">error code</param>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.Shape.Chull.Cherror">
+            <summary>
+            Various error conditions for unsuccesful convex hull creation
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Chull.Cherror.Ok">
+            <summary>
+            operation was succesful
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Chull.Cherror.Coplanar">
+            <summary>
+            points were coplanar, convex hull undefined
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Chull.Cherror.BiggerThanHemisphere">
+            <summary>
+            points can not be confined to any hemisphere, convex hull undefined
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Chull.Cherror.NotEnoughPoints">
+            <summary>
+            The required number of points were not present
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Chull.Cherror.Unkown">
+            <summary>
+            Other error, not defined
+            </summary>
+        </member>
+        <member name="T:Spherical.Shape.Rectangle">
+            <summary>
+            Implements a simple region consisting of a single convex
+            obtained by limiting the RA and DEC values. 
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.Rectangle.Make(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Create a new Convex object to make a rectangle with the ra/dec limits given
+            </summary>
+            <param name="ra1">The low RA value</param>
+            <param name="dec1">The low DEC Value</param>
+            <param name="ra2">The high RA value</param>
+            <param name="dec2">The high DEC value</param>
+            <returns>A new Convex object</returns>
+        </member>
+        <member name="F:Spherical.Shape.ParserException.errno">
+            <summary>
+            The error number encoding the type of exception.
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.ParserException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="si"></param>
+            <param name="sc"></param>
+        </member>
+        <member name="M:Spherical.Shape.ParserException.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.ParserException.#ctor(System.String)">
+            <summary>
+            Constructor with a message string
+            </summary>
+            <param name="s">The message</param>
+        </member>
+        <member name="M:Spherical.Shape.ParserException.#ctor(System.String,System.Exception)">
+            <summary>
+            Contrsuctor with a message and a presumably caught excpetion
+            </summary>
+            <param name="s">the message</param>
+            <param name="e">the exception</param>
+        </member>
+        <member name="M:Spherical.Shape.ParserException.#ctor(Spherical.Shape.Parser.Error)">
+            <summary>
+            Contructor using the error number 
+            </summary>
+            <param name="errno"></param>
+        </member>
+        <member name="T:Spherical.Htm.Wedge">
+            <summary>
+            A wedge is an open area defined by a point and and incoming and outgoing
+            semiline
+            
+            It is always used in a relative context, so only the angle from a "northing" direction
+            in the positive sense is stored for the two semilines.
+            
+            Wedges are used for capturing the topological relationships between arcs that
+            contain a vertex of a trixel, and the neighborhood of the trixel's vertex.
+            
+            Used only by SmartTrixel and SmartVertex
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Wedge.incoming">
+            <summary>
+            Low angle (incoming semiline)
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Wedge.outgoing">
+            <summary>
+            High angle (outgoing semiline)
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Wedge.#ctor">
+            <summary>
+            Universal wedge, whole circle 0-360
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Wedge.#ctor(System.Double,System.Double)">
+            <summary>
+            outgoing arc (low) and incoming arc (high)
+            </summary>
+            <param name="inangle">incoming (low) angle</param>
+            <param name="outangle">outgoing (high) angle</param>
+        </member>
+        <member name="M:Spherical.Htm.Wedge.Compare(Spherical.Htm.Wedge)">
+            <summary>
+            This wedge can either completely or partially overlap the other wedge, or 
+            it's relationship is undefined
+            
+            </summary>
+            <param name="other">other widget to test</param>
+            <returns>One of Partial, Inner or Undefined</returns>
+        </member>
+        <member name="T:Spherical.Shape.Polygon">
+            <summary>
+            Implements a simple region consisting of a single convex
+            that models the convex polygon whose vertices are given as lists of x,y,z values
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.Polygon.Make(System.Collections.Generic.List{System.Double},System.Collections.Generic.List{System.Double},System.Collections.Generic.List{System.Double},System.Int32,Spherical.Shape.Polygon.Error@)">
+            <summary>
+            Create the polygon as a Spherical.Convex object.
+            </summary>
+            <param name="x">list of x coordinates</param>
+            <param name="y">list of y coordinates</param>
+            <param name="z">list of z coordinates</param>
+            <param name="len">the number of x,y,z numbers given</param>
+            <param name="error">an error code</param>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.Shape.Polygon.Error">
+            <summary>
+            An error condition when attempting to make a polygon from points
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Polygon.Error.Ok">
+            <summary>
+            Polygon is good
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Polygon.Error.errZeroLength">
+            <summary>
+            Polygon has no valid points
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Polygon.Error.errBowtieOrConcave">
+            <summary>
+            Specifications yield a self-crossing polygon, or polygon
+            is not convex
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Polygon.Error.errToomanyPoints">
+            <summary>
+            There are too many points in the polygon (never happens, deprecate)
+            </summary>
+        </member>
+        <member name="F:Spherical.Shape.Polygon.Error.errUnkown">
+            <summary>
+            Some unknown error occured (contact developers)
+            </summary>
+        </member>
+        <member name="T:Spherical.Htm.InternalErrorException">
+            <summary>
+            Exceptions specific to Spherical.HTM
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.InternalErrorException.#ctor(System.String)">
+            <summary>
+            Specifics of message describe the error
+            </summary>
+            <param name="message"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Spherical.Htm.Sql" -->
+        <member name="F:Spherical.Htm.Sql.level">
+            <summary>
+            Global constants:  all HTMs for SQL are done with 20-deep HTMs
+            if a cartesian vector length is less than 1e-9 set it to 1,0,0
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmVersion">
+            <summary>
+            fHtmVersion() returns the version number of this htm library as a string
+            </summary>
+            <returns> sqlString: Somthing like this <br />
+            Typically: "Spherical.HTM 3.1.0 (Release - Build 1)"
+            </returns>
+            <example><code>
+                    create function fHtmVersion() returns nvarchar(max)
+                            as external name HTM.Sql.fHtmVersion
+                    declare @version nvarchar(max)
+            		select @version = dbo.fHtmVersion()
+             </code></example>  
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmXyz(System.Double,System.Double,System.Double)">
+            <summary>
+            fHtmXyz(x,y,z) returns the 20-deep HtmID of the given cartesian point.
+            There are no error cases. All vectors are nomalized and 0,0,0 maps to 1,0,0
+            </summary>
+            <param name="x"> double, x Cartesian coordinate</param>
+            <param name="y"> double, y Cartesian coordinate</param>
+            <param name="z"> double, z Cartesian coordinate</param>
+            <returns> HtmID: Int64 20-deep HTM id of the point  </returns>
+            <example><code>
+                    create function fHtmXyz(@x float, @y float, @z float) 
+            				returns bigint 
+                            as external name HTM.Sql.fHtmXyz
+                    declare @HtmID bigint
+            		select @HtmID = dbo.fHtmXyz(1,0,0)
+             </code></example> 
+            <seealso cref="!:fHtmEq()">  uses eqatorial. </seealso>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmEq(System.Double,System.Double)">
+            <summary>
+            fHtmEq(ra,dec) returns the 20-deep HtmID of the given equatorial point.
+            <br/> There are no error cases. all RA, folded to [0..360] and dec to [-90...90]
+            </summary>	
+            <param name="ra"> double, right ascencion coordinate (degrees)</param>
+            <param name="dec"> double, declination coordinate (degrees)</param>
+            <returns> HtmID: Int64 20-deep HTM id of the point  </returns> 
+            <example><code>
+                    create function fHtmEq(@ra float, @dec float ) 
+            				returns bigint 
+                            as external name HTM.Sql.fHtmEq
+                    declare @HtmID bigint
+            		select @HtmID = dbo.fHtmEq(195,5) -- 
+             </code></example>  
+            <seealso cref="!:fHtmXyz()">  uses cartesian. </seealso>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmLatLon(System.Double,System.Double)">
+            <summary>
+            fHtm(lat,lon) returns the 20-deep HtmID of the given location.
+            There are no error cases. all RA, folded to [0..360] and dec to [0...90]
+            </summary>	
+            <param name="lat"> double, latitude coordinate (degrees)</param>
+            <param name="lon"> double, longitude coordinate (degrees)</param>
+            <returns> HtmID: Int64 20-deep HTM id of the point  </returns> 
+            <example><code>
+                    create function fHtmLatLon(@lat float, @lon float ) 
+            				returns bigint 
+                            as external name HTM.Sql.fHtmLatLon
+                    declare @HtmID bigint
+            		select @HtmID = dbo.fHtmLatLon(5, 195) -- output defaults to ''
+             </code></example>  
+            <seealso cref="!:fHtmXyz()">  uses cartesian. </seealso>
+            <seealso cref="!:fHtmEq()">  uses J2000 (ra/dec). </seealso>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fDistanceEq(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            double fDistanceEq(ra1,dec1,ra2,dec2) 
+             returns distance in ArcMinutes between two points. 
+            </summary>	
+            <param name="ra1">  double, right ascencion coordinate (degrees)</param>
+            <param name="dec1"> double, declination coordinate (degrees)</param>
+            <param name="ra2">  double, right ascencion coordinate (degrees)</param>
+            <param name="dec2"> double, declination coordinate (degrees)</param>
+            <returns>double distance in arc minutes. </returns>
+            <example><code>
+                    create function fDistanceEq(@ra1 float, @dec1 float, @ra2 float, @dec2 float) 
+            				returns float
+            					 as external name HTM.Sql.fDistanceEq
+            		select dbo.fDistanceEq(0,0,30,30)
+             </code></example>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fDistanceLatLon(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            double fDistanceLatLon(lat1,lon1,lat2,lon2) 
+             returns distance in ArcMinutes between two points. 
+            </summary>	
+            <param name="lat1"> double, latitude coordinate (degrees)</param>
+            <param name="lon1"> double, longitude coordinate (degrees)</param>
+            <param name="lat2"> double, latitude coordinate (degrees)</param>
+            <param name="lon2"> double, longitude coordinate (degrees)</param>
+            <returns> double distance in arc minutes.</returns> 
+            <example><code>
+                    create function fDistanceLatLon(@lat1 float, @lon1 float, @lat2 float, @lon2 float) 
+            				returns float
+            					 as external name HTM.Sql.fDistanceLatLon
+            		select dbo.fDistanceLatLon(0,0,30,30)
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fDistanceXyz(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            double fDistanceXyz(x1,y1,z1,x2,y2,z2) 
+             returns distance in ArcMinutes between two points. 
+            </summary>	
+            <param name="x1"> double, first x Cartesian coordinate</param>
+            <param name="y1"> double, first y Cartesian coordinate</param>
+            <param name="z1"> double, first z Cartesian coordinate</param>
+            <param name="x2"> double, second x Cartesian coordinate</param>
+            <param name="y2"> double, second y Cartesian coordinate</param>
+            <param name="z2"> double, second z Cartesian coordinate</param>
+            <returns> double distance in arc minutes. </returns>
+            <example><code>
+                    create function fDistanceXyz(@x1 float, @y1 float, @z1 float, 
+                                                 @x2 float, @y2 float, @z2 float) 
+            				returns float
+            					 as external name HTM.Sql.fDistanceXyz
+            		select dbo.fDistanceXyz(0,0,0,0,0,1)
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmGetString(System.Data.SqlTypes.SqlInt64)">
+            <summary>
+            fHtmGetString(HtmID) returns varchar(max)a string describing the HtmID
+            </summary>
+            <param name="HtmID"> the ID to be translated</param>
+            <returns> varchar(max)   </returns>
+            <example><code>
+                    create function fHtmGetString(HtmID) 
+            				returns varchar(max) 
+                            as external name HTM.Sql.fHtmGetString
+                    
+            		print dbo.fHtmGetString(dbo.fHtmXyz(1,0,0))
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmLatLonToXyz(System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble)">
+            <summary>
+            XyzTable(x,y,z) fHtmLatLonToXyz(lat, lon) converts an lat,lon point
+            to a table with one row containing the cartesian point (x,y,z)  
+            </summary>	
+            <param name="lat"> double, latitude coordinate (degrees)</param>
+            <param name="lon"> double, longitude coordinate (degrees)</param>
+            <returns> IEnummerable VertexTable(x float, y float, z float) 
+            with a row contining the (x,y,z) of a lat,lon point.</returns>
+            <example><code>
+                    create function fHtmLatLonToXyz(lat float, lon float) 
+            				returns VertexTable(x float, y float, z float) 
+            					 as external name HTM.Sql.fHtmLatLonToXyz
+            		select * from  fHtmLatLonToXyz(115, 38)
+             </code></example> 
+            <seealso cref="!:fHtmXyzToLatLon()"> converts xyz to lat,lon. </seealso>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmEqToXyz(System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble)">
+            <summary>
+            XyzTable(x,y,z) fHtmEqToXyz(ra, dec) converts an equitorial point
+            to a table with one row containing the cartesian point (x,y,z)  
+            </summary>	
+            <param name="ra"> double, right ascencion coordinate (degrees)</param>
+            <param name="dec"> double, declination coordinate (degrees)</param>
+            <returns> IEnummerable VertexTable(x float, y float, z float) 
+            <br /> with a row contining the (x,y,z) of a ra,dec point.
+            </returns>
+            <example><code>
+                    create function fHtmEqXyz(lat float, lon float) 
+            				returns VertexTable(x float, y float, z float) 
+            					 as external name HTM.Sql.fHtmEqToXyz
+            		select * from  fHtmEqToXyz(115, 38)
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmXyzToLatLon(System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble)">
+             <summary>
+             LatLonTable(lat,lon) fHtmXyzToLatLon(x,y,z) converts the cartesian point (x,y,z)  
+             to a table with one row containing the equivalent lat,lon point  
+             </summary>	
+             <param name="x"> double, unit vector cartesian "x" </param>
+             <param name="y"> double, unit vector cartesian "x" </param>
+             <param name="z"> double, unit vector cartesian "x" </param>
+             <returns> IEnummerable LatLonTable(lat float, lon float) 
+             <br/> with a row contining the (lat, lon) of the cartesian xyz point.</returns>
+             <example><code>
+                     create function fHtmXyzToEq(x float, y float, z float) 
+            					returns LatLonTable(lat float, lon float) 
+            						 as external name HTM.Sql.fHtmXyzToLatLon
+            			select * from fHtmXyzToLatLon(1,0,0)
+              </code></example> 
+             <seealso cref="!:fHtmLatLonToXyz()"> converts lat, lon to xyz.  </seealso>
+            --------------------------------------------------------------
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmXyzToEq(System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble)">
+             <summary>
+             EqTable(ra, dec) fHtmXyzToEq(x,y,z) converts the cartesian point (x,y,z)  
+             to a table with one row containing the equivalent equitorial (ra,dec) point  
+             </summary>	
+             <param name="x"> double, unit vector cartesian "x" </param>
+             <param name="y"> double, unit vector cartesian "x" </param>
+             <param name="z"> double, unit vector cartesian "x" </param>
+             <returns> IEnummerable EqTable(ra float, dec float) 
+             <br/> with a row contining the (ra, dec) of the cartesian xyz point.</returns>
+             <example><code>
+                     create function fHtmXyzToEq(x float, y float, z float) 
+            					returns EqTable(ra float, dec float) 
+            						 as external name HTM.Sql.fHtmXyzToEq
+            			select * from  fHtmXyzToEq(1,0,0)
+              </code></example> 
+             <seealso cref="!:fHtmEqToXyz()"> converts ra, dec to xyz.  </seealso>
+            --------------------------------------------------------------
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmGetCenterPoint(System.Data.SqlTypes.SqlInt64)">
+            <summary>
+            fHtmGetCenterPoint(HtmID) converts an HTM triangle ID to an (x,y,z) vector of the HTM triangle centerpoint.
+            and returns that vector as the only row of a table.  
+            </summary>	
+            <param name="HtmID">  long: the htm ID of the triangle. an unsigned bigint.   </param>
+            <returns> IEnummerable VertexTable(x float, y float, z float) 
+            with one row contining the HTM triangle centerpoint.</returns>
+            <example><code>
+                    create function fHtmGetCenterPoint(@htmID bigint.) 
+            				returns VertexTable(x float, y float, z float) 
+            					 as external name HTM.Sql.fHtmGetCenterPoint
+            		select * from  fHtmGetCenterPoint(dbo.fHtmXyz(.57735,.57735,.57735))
+            <br/> gives: 0.577350269189626, 0.577350269189626, 0.577350269189626 
+             </code></example> 
+            <seealso cref="!:fHtmGetCornerPoints()"> gives triangle corner points. </seealso>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmGetCornerPoints(System.Data.SqlTypes.SqlInt64)">
+            <summary>
+            fHtmGetCornerPoints(HtmID) converts an HTM triangle ID to an table of three 
+            (x,y,z) vectors of the HTM triangle corners. 
+            </summary>	
+            <param name="HtmID"> long: the htm ID of the triangle. an unsigned bigint. </param>  
+            <returns> IEnummerable VertexTable(x float, y float, z float) 
+            with each row contining the (x,y,z)  of a triangle corner point.</returns>
+            <example><code>
+                    create function fHtmTovertices(@htmID bigint.) 
+            				returns VertexTable(x float, y float, z float) 
+            					 as external name HTM.Sql.fHtmTovertices
+            		select * from  fHtmGetCornerPoints(8)
+            		gives: x y z
+            		       1 0 0
+            		       0 0 -1
+            		       0 1 0
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverCircleLatLon(System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble)">
+            <summary>
+            fHtmCoverCircleLatLon(ra,dec,radiusArcMin) returns a trixel table (a list) covering 
+            <br /> the circle centered at that lat,lon, within that arc-minute radius. 
+            <br /> A trixel table is a list of HtmIDStart,HtmIDEnd pairs that describe 
+            <br /> the HTM triangles (all points of a triangle are between its HtmIDStart and HtmIDEnd.
+            </summary>	
+            <param name="lat"> double, latitude of centerpoint (degrees)</param>
+            <param name="lon"> double, longitude of centerpoint (degrees)</param>
+            <param name="radiusArcMin"> double, radius in arcminutes</param>
+            <returns> IEnummerable(HtmIDStart bigint, HtmIDend bigint)</returns>
+            <example><code>
+                    create function fHtmCoverCircleLatLon(@lat float, @lon float, @radiusArcMin float) 
+            				returns bigint 
+                            as external name HTM.Sql.fHtmCoverCircleLatLon
+            		select * from fHtmCoverCircLatLon(5,195,1) 
+             </code></example>  
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverCircleEq(System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble)">
+            <summary>
+            fHtmCoverCircleEq(ra,dec,radiusArcMin) returns a trixel table (a list) covering 
+            <br /> the circle centered at that J2000 ra,dec, within that arc-minute radius. 
+            <br /> A trixel table is a list of HtmStart,HtmStop pairs that describe 
+            <br /> the HTM triangles (all points of a triangle are between its HtmStart and HtmStop.
+            </summary>	
+            <param name="ra"> double, right ascencion of centerpoint (degrees)</param>
+            <param name="dec"> double, declination of centerpoint (degrees)</param>
+            <param name="radiusArcMin"> double, radius in arcminutes</param>
+            <returns> IEnummerable(HtmIDStart bigint, HtmIDStop bigint)</returns>
+            <example><code>
+                    create function fHtmCoverCircleEq(@ra float, @dec float, @radiusArcMin float) 
+            				returns bigint 
+                            as external name HTM.Sql.fHtmCoverCircleEq
+             </code></example>  
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverCircleXyz(System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble,System.Data.SqlTypes.SqlDouble)">
+            <summary>
+            fHtmCoverCircleXyz(x,y,z,radiusArcMin) returns a trixel table (a list) covering 
+            <br /> the circle centered at that x,y,z, within that arc-minute radius. 
+            <br /> A trixel table is a list of HtmIDStart,HtmIDEnd pairs that describe 
+            <br /> the HTM triangles (all points of a triangle are between its HtmIDStart and HtmIDEnd. 
+            </summary>	
+            <param name="x"> double, x Cartesian coordinate of centerpoint</param>
+            <param name="y"> double, y Cartesian coordinate of centerpoint</param>
+            <param name="z"> double, z Cartesian coordinate of centerpoint</param>
+            <param name="radiusArcMin"> double, radius in arcminutes</param>
+            <returns>IEnummerable TrixelTable(HtmIDStart bigint, HtmIDend bigint) </returns>
+            <example><code>
+                    create function fHtmCoverCircleXyz(@x float, @y float, @z float, @radiusArcMin float) 
+            				returns bigint 
+                            as external name HTM.Sql.fHtmCoverCircleXyz
+                    declare @HtmID bigint
+            		select * from fHtmCoverCircleXyz(1,0,0,1) 
+             </code></example>  
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverList(System.Data.SqlTypes.SqlString)">
+            <summary>
+            fHtmCoverList(regionspec) returns a list of HtmID's 
+            that describe the HTM triangles covering the region. 
+            </summary>	
+            <param name="coverspec"> a string satisfying the region syntax</param>
+            <returns> IEnummerable(HtmID bigint)</returns>
+            <example><code>
+            create function fHtmCoverList(@region nvarchar(max)) 
+              returns table  (HtmID bigint)
+              as external name HTM.Sql.fHtmCoverList
+            select * from fHtmCoverList('CIRCLE J2000 195 0 1')
+            </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverRegionSelect(System.Data.SqlTypes.SqlString,System.Data.SqlTypes.SqlString)">
+            <summary>
+            fHtmCoverRegionSelect(regionspec) returns a the qualified list of HtmIDStart,HtmIDEnd pairs 
+            <br />that describe the level 20 trixels covering the region.
+            </summary>
+            <param name="coverspec"> a string satisfying the region syntax</param>
+            <param name="kind"> "Partial", "Full" or "Both" </param>
+            <returns> IEnummerable(HtmIDStart bigint, HtmIDend bigint)</returns>
+            <example><code>
+                    create function fHtmCoverRegionSelect(@region nvarchar(max), @kind nvarchar(max))
+            				returns table  (HtmIDstart bigint, HtmIDend bigint)
+            					 as external name HTM.Sql.fHtmCoverRegionSelect
+            	select * from fHtmCoverRegionSelect('CIRCLE J2000 195 0 1', 'full')
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverRegion(System.Data.SqlTypes.SqlString)">
+            <summary>
+            fHtmCoverRegion(region) returns a list of HtmStart,HtmStop pairs 
+            <br />that describe the HTM triangles covering the region. 
+            </summary>	
+            <param name="coverspec"> a string satisfying the region syntax</param>
+            <returns> IEnummerable(HtmIDStart bigint, HtmIDend bigint)</returns>
+            <example><code>
+                    create function fHtmCoverRegion(@region nvarchar(max)) 
+            				returns table  (HtmIDstart bigint, HtmIDend bigint)
+            					 as external name HTM.Sql.fHtmCover
+            	select * from fHtmCoverRegion('CIRCLE J2000 195 0 1')
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverRegionAdvanced(System.Data.SqlTypes.SqlString)">
+            <summary>
+            fHtmCoverRegionAdvanced(region) returns a list of HtmStart,HtmStop pairs 
+            <br />that describe the HTM triangles covering the region. Inner and Outer triangles.
+            are treated separately.
+            </summary>	
+            <param name="coverspec"> a string satisfying the region syntax</param>
+            <returns> IEnummerable(HtmIDStart bigint, HtmIDend bigint, flag smallint)</returns>
+            <example><code>
+                    create function fHtmCoverRegionAdvanced(@region nvarchar(max)) 
+            				returns table  (HtmIDstart bigint, HtmIDend bigint, flag smallint)
+            					 as external name HTM.Sql.fHtmCoverRegionAdvanced
+            	select * from fHtmCoverRegionAdvancedn('CIRCLE J2000 195 0 1')
+             </code></example> 
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmCoverBinaryAdvanced(System.Data.SqlTypes.SqlBytes)">
+            <summary>
+            
+            </summary>
+            <param name="rbytes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Sql.fHtmRegionToTable(System.Data.SqlTypes.SqlString)">
+            <summary>
+            fHtmRegionToTable(region) converts a region definiton a table of halfspaces
+            </summary>	
+            <param name="coverspec"> a string satisfying the region syntax</param>
+            <returns> Table of Halfspaces,
+            something like <br />REGION CONVEX 1 0 0 0 0 1 0 0 CONVEX 0 0 1 0 </returns>
+            <example><code>
+                    create function fHtmRegionToTable(@region nvarchar(max)) 
+            				returns table  (convexid int, halfspaceid int, x double, y double, z double, D double)
+            					 as external name HTM.Sql.fHtmRegionToTable
+            		select * from dbo.fHtmRegionToTable('CIRCLE J2000 195 0 1')
+             </code></example> 
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Spherical.Htm.Sql.fHtmRegionToNormalFormString(System.Data.SqlTypes.SqlString)" -->
+        <member name="M:Spherical.Htm.Sql.fHtmCoverRegionError(System.Data.SqlTypes.SqlString)">
+            <summary>
+            fHtmCoverRegionError(coverspec) returns diagnostic message appropriate for a bad region string 
+            or "OK" if there are no errors
+            </summary>
+            <param name="coverspec"> a string satisfying the region syntax</param>
+            <returns> diagnostic message: varchar(max) 
+            <br />    OK if ok
+            <br />	else message and a syntax string. 
+            </returns>
+            <example><code>
+                    create function fHtmCoverRegionError(@region nvarchar(max)) 
+            				returns varchar(max)
+            					 as external name HTM.Sql.fHtmCoverRegionError
+            		print dbo.fHtmCoverRegionError('CIRCLE LATLON 195 ')
+            </code></example> 
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Spherical.Htm.Sql.FillSingle(System.Object,System.Data.SqlTypes.SqlInt64@)" -->
+        <!-- Badly formed XML comment ignored for member "M:Spherical.Htm.Sql.FillPair(System.Object,System.Data.SqlTypes.SqlInt64@,System.Data.SqlTypes.SqlInt64@)" -->
+        <!-- Badly formed XML comment ignored for member "M:Spherical.Htm.Sql.FillAugPair(System.Object,System.Data.SqlTypes.SqlInt64@,System.Data.SqlTypes.SqlInt64@,System.Data.SqlTypes.SqlBoolean@)" -->
+        <!-- Badly formed XML comment ignored for member "M:Spherical.Htm.Sql.FillDPair(System.Object,System.Data.SqlTypes.SqlDouble@,System.Data.SqlTypes.SqlDouble@)" -->
+        <!-- Badly formed XML comment ignored for member "M:Spherical.Htm.Sql.FillTriple(System.Object,System.Data.SqlTypes.SqlDouble@,System.Data.SqlTypes.SqlDouble@,System.Data.SqlTypes.SqlDouble@)" -->
+        <!-- Badly formed XML comment ignored for member "M:Spherical.Htm.Sql.FillHalfspace(System.Object,System.Data.SqlTypes.SqlInt64@,System.Data.SqlTypes.SqlInt64@,System.Data.SqlTypes.SqlDouble@,System.Data.SqlTypes.SqlDouble@,System.Data.SqlTypes.SqlDouble@,System.Data.SqlTypes.SqlDouble@)" -->
+        <member name="T:Spherical.Htm.Sql.Scalar">
+            <summary>
+            Scalar is a 1-tuple of HtmID.  
+            <br />It defines the format of IEnumerable list elements returned by the htm cover list function. 
+            <br />These lists are recast as tables of the form T(HTM_id bigint)
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Spherical.Htm.Sql.Pair" -->
+        <!-- Badly formed XML comment ignored for member "T:Spherical.Htm.Sql.AugPair" -->
+        <!-- Badly formed XML comment ignored for member "T:Spherical.Htm.Sql.DPair" -->
+        <!-- Badly formed XML comment ignored for member "T:Spherical.Htm.Sql.Triple" -->
+        <member name="T:Spherical.Htm.Sql.HSEntry">
+            <summary>
+            HSentry is a halfspace entry in a row: convexID halfspaceID x y z D 
+            </summary>
+        </member>
+        <member name="T:Spherical.Htm.Int64AugPair">
+            <summary>
+            An augmented pair of HtmId values. Besides the low-high pair, it also 
+            includes a flag that indicates whether or not the trixels represented by the
+            range are inner trixels.
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Int64AugPair.full">
+            <summary>
+            Flag is true if and only if the trixels represented by this range are
+            inner trixels
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Int64AugPair.lo">
+            <summary>
+            the low HtmID for this range
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Int64AugPair.hi">
+            <summary>
+            The high HtmID for this range
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Int64AugPair.#ctor(Spherical.Htm.Int64Pair,System.Boolean)">
+            <summary>
+            Create an instance of this struct with the supplied property
+            </summary>
+            <param name="lohi">the pair containing the low-high HtmID values</param>
+            <param name="full">the flag to indicate whether or not the trixels are inner</param>
+        </member>
+        <member name="M:Spherical.Htm.Int64AugPair.#ctor(System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Create an instance of this struct with the supplied property
+            </summary>
+            <param name="lo">the low HtmID value</param>
+            <param name="hi">the high HtmID value</param>
+            <param name="full">the flag to indeicate whether or not the trixels are inner</param>
+        </member>
+        <member name="T:Spherical.Htm.Int64Pair">
+            <summary>
+            A pair of low-high HtmId values
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Int64Pair.lo">
+            <summary>
+            the low HtmID for this range
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Int64Pair.hi">
+            <summary>
+            The high HtmID for this range
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Int64Pair.#ctor(System.Int64,System.Int64)">
+            <summary>
+            Create an instance of this struct with the supplied property
+            </summary>
+            <param name="lo">the low HtmID value</param>
+            <param name="hi">the high HtmID value</param>
+        </member>
+        <member name="T:Spherical.Htm.Hidranges">
+            <summary>
+            Hidranges manages lists of HtmID pairs. It is used mostly
+            internally by the Cover class. It has public exposure, because
+            the external test harness not in this namespace uses this class
+            for verifying the internal workings of the HTM library
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Hidranges.pairList">
+            <summary>
+            list of pairs managed by this class
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.Combine(System.Collections.Generic.List{Spherical.Htm.Int64Pair},System.Collections.Generic.List{Spherical.Htm.Int64Pair})">
+            <summary>
+            Returns a new list of pairs that comes as a result of combining two other
+            lists. Performs mergers but does not coalesce two adjacent regions into one.
+            Use Compact() for that.
+            NOTE! The two ranges must be in the right (sorted) order. 
+            </summary>
+            <param name="ranges">First list of pairs</param>
+            <param name="newranges">Second list of pairs</param>
+            <returns>Combined list of pairs</returns>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.Merge(System.Collections.Generic.List{Spherical.Htm.Int64Pair})">
+            <summary>
+            merge a given list into the current list of pairs
+            </summary>
+            <param name="newranges"></param>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.AddRange(Spherical.Htm.Int64Pair)">
+            <summary>
+            Add pair of hids to internal list of pairs. Does not do checking
+            </summary>
+            <param name="pair">The low-high pair to be added</param>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.AddRange(System.Int64,System.Int64)">
+            <summary>
+            Add pair of HtmIDs to internal list of pairs. No checking is performed
+            </summary>
+            <param name="lo">low value</param>
+            <param name="hi">high value</param>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.Clear">
+            <summary>
+            Clears this list
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.CompareTo(Spherical.Htm.Int64Pair,Spherical.Htm.Int64Pair)">
+            <summary>
+            Comparator for sorting ranges
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.Check">
+            <summary>
+            Ensure that ranges are disjoint.
+            </summary>
+            <throws>InternalErrorException if there is a problem</throws>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.Sort">
+            <summary>
+            Sort Interval by lows
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.IsWellFormed(System.Collections.Generic.List{Spherical.Htm.Int64Pair})">
+            <summary>
+            perform sanity check for the health of sorted pairs
+            throws an exception if check fails, else returns quietly
+            </summary>
+            <param name="sortedpairs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.Compact">
+            <summary>
+            Merge adjacent intervals, i.e., eliminate zero gaps
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.Compact(System.Collections.Generic.List{Spherical.Htm.Int64Pair})">
+            <summary>
+            Merge adjacent intervals
+            </summary>
+            <param name="sortedPairs"></param>
+        </member>
+        <member name="M:Spherical.Htm.Hidranges.ToString">
+            <summary>
+            Returns the string representation of Hidranges.
+            </summary>
+            <returns>formatted string object</returns>
+        </member>
+        <member name="T:Spherical.Htm.Cover">
+            <summary>
+            Cover provides static (a) methods to generate trixel covermaps of regions
+            
+            A covermap can be extracted as a list of trixels, or lists of HtmID 
+            (start, end) pairs.
+            In the latter case, the HtmIDs are always for level 20 trixels. 
+            The trixels in the covermaps are either "inner" or "partial".
+            Inner trixels are completely contained
+            in the region. Partial trixels intersect the boundary of the
+            region. Partial trixels follow the outline(s) of the region.
+            The "outer" covermap is the union of
+            "inner" and "partial" covermaps.
+            Each covermap has an associated "cost," which is currently the number of
+            (start, end) HtmID range pairs in the outer covermap.
+            The cost is used in deciding when
+            to terminate the generation of the covermap
+            
+            The Cover object uses an internal "machine" that 
+            does all the computing. The machine runs in stages, each successive step
+            generates a finer
+            resolution covermap and therefore increases the depth of the partial 
+            trixels in the covermap.
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.DefaultMinRanges">
+            <summary>
+            Try to return at least this many ranges, default value
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.DefaultMaxRanges">
+            <summary>
+            Try to return at most this many ranges, default value
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.reg">
+            <summary>
+            stores the Region object
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.outline">
+            <summary>
+            The list of patches making up the outline of the region.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Spherical.Htm.Cover.smartArcTable" -->
+        <member name="F:Spherical.Htm.Cover.stackOfPartialLists">
+            <summary>
+            Keep track of all partial trixels for each level
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.listOfInners">
+            <summary>
+            List of inner trixels
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.savedListOfPartials">
+            <summary>
+            Current list of partials. Always selected from the stack of partials
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.smartQue">
+            <summary>
+            The queue for storing node in breadth-first search
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.maxRanges">
+            <summary>
+            Used for evaluating halt condition. Prevents going too far
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.minRanges">
+            <summary>
+            used for evaluating halt condition. Prevents stopping too early
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.minLevel">
+            <summary>
+            used for evaluating halt condition. Prevents stopping too early
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Cover.maxLevel">
+            <summary>
+            Used for evaluating halt condition. Prevents going too far
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Cover.Visit(Spherical.Htm.ISmartTrixel)">
+            <summary>
+            Process current smart trixel. called from machine's Step() function
+            </summary>
+            <param name="sq"></param>
+        </member>
+        <member name="M:Spherical.Htm.Cover.Cost(Spherical.Htm.Markup)">
+            <summary>
+            Evaluate current cost in terms of number of 
+            </summary>
+            <param name="kind"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.RowCost(System.Collections.Generic.List{Spherical.Htm.ISmartTrixel},System.Collections.Generic.List{Spherical.Htm.ISmartTrixel})">
+            <summary>
+            Compute the number of rows that would be returned
+            </summary>
+            <param name="partials">list of partial trixels</param>
+            <param name="inners">list of inner trixels</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.estimateMinMaxLevels">
+            <summary>
+            Given some idea about the size of features in a region,
+            this allows limiting the levels to which search for cover proceeds
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Cover.buildArcTable(Spherical.Outline)">
+            <summary>
+            Relate an Arc to a SmartArc
+            </summary>
+            <param name="ol"></param>
+        </member>
+        <member name="M:Spherical.Htm.Cover.Init(Spherical.Region,System.Boolean)">
+            <summary>
+            Initialize internals
+            </summary>
+            <param name="r"></param>
+        </member>
+        <member name="M:Spherical.Htm.Cover.#ctor(Spherical.Region)">
+            <summary>
+            Create a Cover object with the given Region, and initialize the 
+            internal cover machine.
+            
+            </summary>
+            <param name="reg">Region object to be covered with trixels </param>
+        </member>
+        <member name="M:Spherical.Htm.Cover.#ctor(Spherical.Region,System.Boolean)">
+            <summary>
+            Create a Cover object with the given Region, and initialize the 
+            internal cover machine.
+            </summary>
+            <param name="reg">Region object to be covered with trixels</param>
+            <param name="haspatches">true if region was simplifed, and therefore has patches and outlines</param>
+        </member>
+        <member name="M:Spherical.Htm.Cover.GetSmartArc(Spherical.Arc)">
+            <summary>
+            Get the SmartArc related to the given Arc
+            </summary>
+            <param name="arc"></param>
+            <returns>The SmartArc, or null</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.GetPseudoArea(Spherical.Htm.Markup)">
+            <summary>
+            Compute the pseudoarea of selected part of the covermap
+            
+            </summary>
+            <param name="kind">One of {Inner, Outer, Partial}</param>
+            <returns>64 bit integer</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.Cost">
+            <summary>
+            Compute the cost in resources in the current state of the Cover object.
+            </summary>
+            <returns>the cost</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.SetTunables(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Change the tunable parameters for the generation of the covermap
+            </summary>
+            <param name="minr">Minimum number of ranges</param>
+            <param name="maxr">Maximum number of ranges</param>
+            <param name="maxl">Maximum level number (to stop runaway searches)</param>
+        </member>
+        <member name="M:Spherical.Htm.Cover.evaluateCurrentLevel">
+            <summary>
+            compute RunStatus for this cover generation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.Run">
+            <summary>
+            Run this cover machine until completion.
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Cover.Step">
+            <summary>
+            Step this machine to the next level.
+            </summary>
+        </member>
+        <member name="M:Spherical.Htm.Cover.HidList(Spherical.Region)">
+            <summary>
+            Convenience wrapper for a one step cover generation.
+            </summary>
+            <param name="reg">Region to be cevered</param>
+            <returns>list of (start, end) HtmID pairs of Outer trixels</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.HidAugRange(Spherical.Region)">
+            <summary>
+            Create augmented range list (3rd column flags partial or inner)
+            </summary>
+            <param name="reg"></param>
+            <returns>list of triples</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.HidRange(Spherical.Region)">
+            <summary>
+            Static helper function does one-step cover initialization 
+            and returns HtmID pairs. Implicitly creates an instance
+            of Cover but discards it at the end, only the list of pairs
+            is returned to the caller.
+            </summary>
+            <param name="reg">list of HtmID start-end values</param>
+            <returns>list of pairs</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.PseudoArea(System.Int64)">
+            <summary>
+            Compute the PseudoArea (number of level-20 trixels) of the given trixel.
+            </summary>
+            <param name="hid">the trixel's HtmID</param>
+            <returns>64-bit pseudoarea</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.PseudoArea(Spherical.Htm.Hidranges)">
+            <summary>
+            Compute the PseudoArea (number of level 20 trixels) of the given region.
+            </summary>
+            <param name="it">Range containing HtmID (start,end) pairs</param>
+            <returns>64-bit pseudoarea</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.GetTrixels(Spherical.Htm.Markup)">
+            <summary>
+            Get the covermap as list of trixels the machine in the current state.
+            </summary>
+            <param name="kind">Inner, Outer or Partial</param>
+            <returns>The list of HIDs</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.GetPairs(Spherical.Htm.Markup)">
+            <summary>
+            Get the covermap as a list of level 20 HtmID
+            (start, end) pairs from the machine in the current state
+            </summary>
+            <param name="kind">Inner, Outer or Partial</param>
+            <returns>list of Int64Pair objects</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.GetTriples(Spherical.Htm.Markup)">
+            <summary>
+            Get the covermap as a list of level 20 HtmID
+            (start, end, flag) triples from the current state of the machine
+            
+            The partial and inner trixels are treated separately
+            The flag indicates
+            whether the (start, end) portion of the triple is from partial 
+            or inner trixels.
+            </summary>
+            <param name="kind">Inner, Outer or Partial</param>
+            <returns>list of triples</returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.NodesToTriples(System.Collections.Generic.List{Spherical.Htm.ISmartTrixel},System.Collections.Generic.List{Spherical.Htm.ISmartTrixel})">
+            <summary>
+            Make a list of augmented pairs from the given partial and inner trixels
+            </summary>
+            <param name="partialNodes"></param>
+            <param name="innerNodes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.NodesToPairs(System.Collections.Generic.List{Spherical.Htm.ISmartTrixel},System.Collections.Generic.List{Spherical.Htm.ISmartTrixel})">
+            <summary>
+            
+            </summary>
+            <param name="partialNodes"></param>
+            <param name="innerNodes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Htm.Cover.NodesToTrixels(System.Collections.Generic.List{Spherical.Htm.ISmartTrixel},System.Collections.Generic.List{Spherical.Htm.ISmartTrixel})">
+            <summary>
+            Make a list of HtmIDs from the given partial and inner nodes
+            </summary>
+            <param name="partialNodes"></param>
+            <param name="innerNodes"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Spherical.Htm.Cover.GetRegion">
+            <summary>
+            Get the Region object associated with this Cover.
+            </summary>
+            <returns>the Region object</returns>
+        </member>
+        <member name="P:Spherical.Htm.Cover.GetLevel">
+            <summary>
+            Return the current level of trixels in the current state of the covermap.
+            Levels run from 0 to 24.
+            </summary>
+            <returns>level number</returns>
+        </member>
+        <member name="P:Spherical.Htm.Cover.GetMaxLevel">
+            <summary>
+            Get the current maximum level in effect
+            </summary>
+            <returns>integer between 0 and 20, inclusive</returns>
+        </member>
+        <member name="T:Spherical.Shape.Circle">
+            <summary>
+            Compute a Convex consisting of a single Halfspace based on 
+            the parameters of the given circle
+            </summary>
+        </member>
+        <member name="M:Spherical.Shape.Circle.Make(System.Double,System.Double,System.Double)">
+            <summary>
+            Make a Convex from the parameters of the given circle
+            </summary>
+            <param name="ra">Right Ascensionof center</param>
+            <param name="dec">Declinationof center</param>
+            <param name="radius">radius in minutes of arc</param>
+            <returns>a new Convex object</returns>
+        </member>
+        <member name="M:Spherical.Shape.Circle.Make(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Make a Convex from the parameters of the given circle 
+            </summary>
+            <param name="x">X coord of center on unit sphere</param>
+            <param name="y">Y coord of center on unit sphere</param>
+            <param name="z">Z coord of center on unit sphere</param>
+            <param name="radius">radius in arc minutes</param>
+            <returns>a new Convex object</returns>
+        </member>
+        <member name="M:Spherical.Shape.Circle.pUpdate(Spherical.Halfspace,Spherical.Cartesian,Spherical.Topo,System.Collections.Generic.List{Spherical.Cartesian})">
+            <summary>
+            Add new point to the Support List, and remove all that
+            no longer qualify for being in the support list.
+            </summary>
+            <param name="C"></param>
+            <param name="Point"></param>
+            <param name="topo"></param>
+            <param name="Support"></param>
+            <returns>a new potential MEC</returns>
+        </member>
+        <member name="M:Spherical.Shape.Circle.IsPlausible(Spherical.Halfspace,System.Collections.Generic.List{Spherical.Cartesian})">
+            <summary>
+            True, if given halfspace contains all the points in the Support list
+            </summary>
+            <param name="workC"></param>
+            <param name="Support"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Shape.Circle.pElementOf(Spherical.Cartesian,System.Collections.Generic.List{Spherical.Cartesian})">
+            <summary>
+            True, if Point is listed in Support list, otherwise false
+            </summary>
+            <param name="Point"></param>
+            <param name="Support"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.Htm.Markup">
+            <summary>
+            Markup is a classification of a trixel with respect to the way it intersects a 
+            region. 
+            </summary>
+        </member>
+        <member name="F:Spherical.Htm.Markup.Inner">
+            <summary>trixel is completely inside</summary>
+        </member>
+        <member name="F:Spherical.Htm.Markup.Partial">
+            <summary>trixel non-trivially intersects</summary>
+        </member>
+        <member name="F:Spherical.Htm.Markup.Reject">
+            <summary>trixel is completely outside</summary>
+        </member>
+        <member name="F:Spherical.Htm.Markup.Undefined">
+            <summary>trixel's status is not known</summary>
+        </member>
+        <member name="F:Spherical.Htm.Markup.Outer">
+            <summary>
+            used for requesting trixels that are either Inner or Partial
+            </summary>
+        </member>
+        <member name="T:Spherical.Htm.RunStatus">
+            <summary>
+            RunStatus tells the Cover generating engine
+            whether it should stop running, went too far or 
+            continue running.
+            </summary>
+        </member>
+    </members>
+</doc>

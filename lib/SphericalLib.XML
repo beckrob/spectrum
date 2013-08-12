@@ -1,0 +1,2890 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SphericalLib</name>
+    </assembly>
+    <members>
+        <member name="T:Spherical.IO.IRegionReader">
+            <summary>
+            Defines interface for reading a region
+            </summary>
+        </member>
+        <member name="M:Spherical.IO.IRegionReader.ReadRegion(Spherical.Region)">
+            <summary>
+            Reads description into the specified region.
+            </summary>
+            <param name="r"></param>
+        </member>
+        <member name="M:Spherical.IO.RegionReaderVersion1.#ctor(System.IO.Stream)">
+            <summary>
+            Creates the region reader with a specified stream
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:Spherical.IO.RegionReaderVersion1.Spherical#IO#IRegionReader#ReadRegion(Spherical.Region)">
+            <summary>
+            Reads a region into the specified reference.
+            </summary>
+            <param name="region">The region.</param>
+        </member>
+        <member name="F:Spherical.IO.RegionReaderVersion1.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="T:Spherical.Root">
+            <summary>
+            Represents the intersection of two circles in a convex.
+            </summary>
+        </member>
+        <member name="M:Spherical.Root.#ctor(Spherical.Cartesian,Spherical.Convex,System.Int32,System.Int32)">
+            <summary>
+            Create a root from the point, its parents and use the given convex 
+            to set the status and store which convex covers and masks it.
+            </summary>
+        </member>
+        <member name="M:Spherical.Root.MaskedByExists(System.Predicate{System.Int32})">
+            <summary>
+            Determines whether there exist a halfspace that masks the root and matches the predicate.
+            </summary>
+            <param name="match"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Root.ToString">
+            <summary>
+            String representation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Spherical.Root.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="T:Spherical.Arc">
+            <summary>
+            Represents a segment of a circle on the unit sphere.
+            </summary>
+        </member>
+        <member name="M:Spherical.Arc.#ctor">
+            <summary>
+            Creates an empty arc. 
+            </summary>
+            <remarks>Implemented for serializers.</remarks>
+        </member>
+        <member name="M:Spherical.Arc.#ctor(Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Creates a great circle arc.
+            </summary>
+            <param name="p1">The start point.</param>
+            <param name="p2">The end point.</param>
+        </member>
+        <member name="M:Spherical.Arc.#ctor(Spherical.Halfspace,Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Creates an arc.
+            </summary>
+            <param name="circle">The circle of the arc.</param>
+            <param name="p1">The start point on the circle.</param>
+            <param name="p2">The end point on the circle.</param>
+            <remarks>The points are assumed to be on the circle, no checks performed.</remarks>
+        </member>
+        <member name="M:Spherical.Arc.#ctor(Spherical.Cartesian,Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Creates an arc.
+            </summary>
+            <param name="p1">The start point of the arc.</param>
+            <param name="p2">The end point of the arc.</param>
+            <param name="middle">The middle point of the arc.</param>
+        </member>
+        <member name="M:Spherical.Arc.#ctor(Spherical.Halfspace,Spherical.Cartesian)">
+            <summary>
+            Creates a full circle arc.
+            </summary>
+            <param name="circle">The circle of the arc.</param>
+            <param name="p">The start/end point on the circle.</param>
+        </member>
+        <member name="M:Spherical.Arc.#ctor(Spherical.Arc)">
+            <summary>
+            Creates an arc from another one.
+            </summary>
+            <param name="a">The input arc.</param>
+        </member>
+        <member name="M:Spherical.Arc.ContainsOnEdge(Spherical.Cartesian)">
+            <summary>
+            Calls...
+            </summary>
+            <param name="p">The point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Arc.CalcTriangleArea(Spherical.Cartesian)">
+            <summary>
+            Computes the area of the triangle defined by the arc and a given 
+            point, which is connected to the endpoints with great circles.
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Arc.GetAngle(Spherical.Cartesian)">
+            <summary>
+            Returns the angle on the circle to specified point from the start point.
+            </summary>
+            <param name="x">The point on the circle.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Arc.GetPoint(System.Double)">
+            <summary>
+            Returns a point on the circle at the specified angle.
+            </summary>
+            <param name="phi">The angle in radians.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Arc.GetWideConvex(System.Double)">
+            <summary>
+            Gets a convex of specified width that contains the arc.
+            </summary>
+            <param name="arcmin">The width of the convex along the arc in arcminutes.</param>
+        </member>
+        <member name="M:Spherical.Arc.Equals(System.Object)">
+            <summary>
+            Implements the equality check.
+            </summary>
+            <param name="right">The right-side.</param>
+        </member>
+        <member name="M:Spherical.Arc.Equals(Spherical.Arc)">
+            <summary>
+            Implements the equality check.
+            </summary>
+            <param name="right">The right-side Arc.</param>
+        </member>
+        <member name="M:Spherical.Arc.GetHashCode">
+            <summary>
+            Serves as a hash function
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Arc.ToString">
+            <summary>
+            Returns the string representation of the arc.
+            </summary>
+        </member>
+        <member name="F:Spherical.Arc.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.Circle">
+            <summary>
+            Gets the circle of the arc.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.PointU">
+            <summary>
+            Used by XML serializer.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.PointW">
+            <summary>
+            Used by XML serializer.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.Point1">
+            <summary>
+            Gets the starting point of the arc.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.Point2">
+            <summary>
+            Gets the end point of the arc.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.Middle">
+            <summary>
+            Gets the middle point of the arc.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.Area">
+            <summary>
+            Gets the semi-lune area of the arc.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.IsFull">
+            <summary>
+            Determines whether the arc is a full circle.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.Angle">
+            <summary>
+            Gets the angle between the end points.
+            </summary>
+        </member>
+        <member name="P:Spherical.Arc.Length">
+            <summary>
+            Gets the length of the arc.
+            </summary>
+        </member>
+        <member name="M:Spherical.IO.RegionReaderVersion0.#ctor(System.IO.Stream)">
+            <summary>
+            Creates the region reader with a specified stream
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:Spherical.IO.RegionReaderVersion0.Spherical#IO#IRegionReader#ReadRegion(Spherical.Region)">
+            <summary>
+            Reads a region into the specified reference.
+            </summary>
+            <param name="region">The region.</param>
+        </member>
+        <member name="F:Spherical.IO.RegionReaderVersion0.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="T:Spherical.Igloo.Cell">
+            <summary>
+            Represents an Igloo cell.
+            </summary>
+        </member>
+        <member name="T:Spherical.Patch">
+            <summary>
+            Represents the arcs in a patch of a convex.
+            </summary>
+        </member>
+        <member name="T:Spherical.IPatch">
+            <summary>
+            Defines interface for a collection of arc lists.
+            </summary>
+        </member>
+        <member name="M:Spherical.IPatch.ContainsOnEdge(Spherical.Cartesian)">
+            <summary>
+            Determines whether specified point is on the edge.
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Spherical.IPatch.ArcList">
+            <summary>
+            Gets the list of arcs.
+            </summary>
+        </member>
+        <member name="P:Spherical.IPatch.Mec">
+            <summary>
+            Gets the minimal enclosing circle of the arcs.
+            </summary>
+        </member>
+        <member name="M:Spherical.Patch.#ctor">
+            <summary>
+            Creates an empty patch.
+            </summary>
+            <remarks>Implemented for serializers.</remarks>
+        </member>
+        <member name="M:Spherical.Patch.#ctor(Spherical.Arc[])">
+            <summary>
+            Creates a patch from a list of arcs.
+            </summary>
+            <remarks><para>Derives area and bounding circle.</para>
+            <para>Copies arc list by reference.</para></remarks>
+            <param name="list">The arcs of the patch.</param>
+        </member>
+        <member name="M:Spherical.Patch.#ctor(Spherical.Patch)">
+            <summary>
+            Creates a patch from another one.
+            </summary>
+            <param name="p">The patch to copy.</param>
+        </member>
+        <member name="M:Spherical.Patch.CalcAreaLength(Spherical.Cartesian,System.Double@,System.Double@)">
+            <summary>
+            Measures the area of the patch using the specified pivot point and adds up lengths.
+            </summary>
+            <param name="c">The pivot point</param>
+            <param name="area">The output area of patch</param>
+            <param name="length">The output length of patch</param>
+        </member>
+        <member name="M:Spherical.Patch.GetMinimalEnclosingCircle(System.Double)">
+            <summary>
+            Derives the minimal enclosing circle.
+            </summary>
+        </member>
+        <member name="M:Spherical.Patch.TestArea(Spherical.Cartesian)">
+            <summary>
+            Calculates the area of patch using the specified pivot point.
+            </summary>
+            <param name="c">The pivot point.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Patch.ToString">
+            <summary>
+            Returns the string representation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Spherical.Patch.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="M:Spherical.Patch.ContainsOnEdge(Spherical.Cartesian)">
+            <summary>
+            Determines whether specified point is on the edge.
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Spherical.Patch.ArcList">
+            <summary>
+            Gets the list of arcs in the patch.
+            </summary>
+        </member>
+        <member name="P:Spherical.Patch.Mec">
+            <summary>
+            Gets the minimcal enclosing circle of the patch.
+            </summary>
+        </member>
+        <member name="P:Spherical.Patch.Area">
+            <summary>
+            Gets the area of the patch in square degrees.
+            </summary>
+        </member>
+        <member name="P:Spherical.Patch.Length">
+            <summary>
+            Gets the circumference of patch in radians.
+            </summary>
+        </member>
+        <member name="T:Spherical.Nodes.Graph`1">
+            <summary>
+            Represents a graph. 
+            </summary>
+            <typeparam name="T">The type of node data.</typeparam>
+            <remarks>This graph should have only undirected edges (bidirectional links),
+            see also the method RemoveNode().</remarks>
+        </member>
+        <member name="T:Spherical.Nodes.NodeList`1">
+            <summary>
+            Represents a collection of nodes.
+            </summary>
+            <typeparam name="T">The type of node data.</typeparam>
+        </member>
+        <member name="M:Spherical.Nodes.NodeList`1.#ctor">
+            <summary>
+            Creates a list of nodes.
+            </summary>
+        </member>
+        <member name="M:Spherical.Nodes.NodeList`1.#ctor(System.Int32)">
+            <summary>
+            Creates a list of nodes.
+            </summary>
+            <param name="capacity">The initial capacity.</param>
+        </member>
+        <member name="M:Spherical.Nodes.NodeList`1.#ctor(System.Collections.Generic.IEnumerable{Spherical.Nodes.Node{`0}})">
+            <summary>
+            Creates a list nodes.
+            </summary>
+            <param name="nodes">The collection of nodes to copy.</param>
+        </member>
+        <member name="M:Spherical.Nodes.NodeList`1.Find(`0)">
+            <summary>
+            Searches for a node.
+            </summary>
+            <param name="value">The value to search for.</param>
+            <returns>The first node with specified value, if exists; null otherwise.</returns>
+        </member>
+        <member name="P:Spherical.Nodes.NodeList`1.Data">
+            <summary>
+            Enumerates the data in all nodes.
+            </summary>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.#ctor">
+            <summary>
+            Creates a graph.
+            </summary>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.#ctor(System.Int32)">
+            <summary>
+            Creates a graph.
+            </summary>
+            <param name="capacity">The initial capacity for nodes.</param>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.#ctor(System.Collections.Generic.IEnumerable{Spherical.Nodes.Node{`0}})">
+            <summary>
+            Creates a graph.
+            </summary>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.#ctor(System.Collections.Generic.IList{Spherical.Nodes.Node{`0}})">
+            <summary>
+            Creates a graph.
+            </summary>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.AddEdge(Spherical.Nodes.Node{`0},Spherical.Nodes.Node{`0})">
+            <summary>
+            Adds an undirected edge from one node to another.
+            </summary>
+            <param name="n1">One of the nodes that is joined by the edge.</param>
+            <param name="n2">One of the nodes that is joined by the edge.</param>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.RemoveEdge(Spherical.Nodes.Node{`0},Spherical.Nodes.Node{`0})">
+            <summary>
+            Removes the links between one node and another.
+            </summary>
+            <param name="n1">One of the nodes.</param>
+            <param name="n2">One of the nodes.</param>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.RemoveNode(Spherical.Nodes.Node{`0})">
+            <summary>
+            Removes a node and the edges.
+            </summary>
+            <remarks>Assumes that all links are bidirectional and only looks at the neighbors.</remarks>
+        </member>
+        <member name="M:Spherical.Nodes.Graph`1.NumberOfEdges">
+            <summary>
+            Returns the number of edges.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.Halfspace">
+            <summary>
+            Represents a halfspace in 3D.
+            </summary>
+            <remarks>
+            <para>
+            The intersection of a halfspace with the unit sphere is a cap or circle on the surface of the sphere. 
+            These concepts are used interchangeably throughout this project.
+            </para>
+            <para>
+            Halfspace is a mutable value type.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Spherical.Halfspace.#ctor(Spherical.Cartesian,System.Double,System.Double)">
+            <summary>
+            Creates a halfspace from the center point and the cosine and sine of the angle.
+            </summary>
+            <param name="center"></param>
+            <param name="cos0"></param>
+            <param name="sin0"></param>
+        </member>
+        <member name="M:Spherical.Halfspace.#ctor(System.Double,System.Double,System.Double,System.Boolean,System.Double,System.Double)">
+            <summary>
+            Creates a halfspace from the center point (x,y,z) and the cosine and sine of the angle.
+            </summary>
+            <param name="x">The X coordinate.</param>
+            <param name="y">The Y coordinate.</param>
+            <param name="z">The Z coordinate.</param>
+            <param name="normalize">The flag that determines whether the vector is normalized.</param>
+            <param name="cos0">The cosine of the radius.</param>
+            <param name="sin0">The sine of the radius.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.#ctor(System.Double,System.Double,System.Double,System.Boolean,System.Double)">
+            <summary>
+            Creates a halfspace from the center point and the cosine of the angle.
+            </summary>
+            <param name="x">The X coordinate.</param>
+            <param name="y">The Y coordinate.</param>
+            <param name="z">The Z coordinate.</param>
+            <param name="normalize">The flag that determines whether the vector is normalized.</param>
+            <param name="cos0">The cosine of the radius.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.#ctor(Spherical.Cartesian,System.Double)">
+            <summary>
+            Creates a halfspace from the center point and the cosine of the angle.
+            </summary>
+            <param name="center">The center vector.</param>
+            <param name="cos0">The cosine of radius.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Creates a halfspace from center coordinates (RA,Dec) and radius.
+            </summary>
+            <param name="ra">The Right Ascension of the center.</param>
+            <param name="dec">The Declination of the center.</param>
+            <param name="arcmin">The radius in arcminutes.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.#ctor(Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Creates Halfspace from circle defined by two
+            diametrically opposite points. If the two points are 
+            relative poles, then the whole sphere is returned.
+            </summary>
+            <param name="p0"></param>
+            <param name="p1"></param>
+        </member>
+        <member name="M:Spherical.Halfspace.#ctor(Spherical.Cartesian,Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Creates a halfspace whose edge goes through three specified points.
+            </summary>
+            <param name="p0"></param>
+            <param name="p1"></param>
+            <param name="p2"></param>
+        </member>
+        <member name="M:Spherical.Halfspace.Invert">
+            <summary>
+            Inverts halfspace: derives the complementer on the sphere
+            </summary>
+            <remarks>Mirrors center and cos0 = -1 * cos0</remarks>
+        </member>
+        <member name="M:Spherical.Halfspace.Invert(Spherical.Halfspace)">
+            <summary>
+            Inverts halfspace: derives the complementer on the sphere
+            </summary>
+            <remarks>Mirrors center and cos0 = -1 * cos0</remarks>
+            <param name="h">Halfspace to be inverted</param>
+            <returns>Inverse of given halfspace</returns>
+            <remarks>Used for mapping collections</remarks>
+        </member>
+        <member name="M:Spherical.Halfspace.Inverse">
+            <summary>
+            Inverts halfspace: derives the complementer on the sphere
+            </summary>
+            <remarks>Mirrors center and cos0 = -1 * cos0</remarks>
+            <returns>Inverse of this halfspace</returns>
+        </member>
+        <member name="M:Spherical.Halfspace.Grow(System.Double)">
+            <summary>
+            Increases the radius by the given angle.
+            </summary>
+            <param name="arcmin">The angle in arcminutes.</param>
+            <returns>The reference of this halfspace.</returns>
+        </member>
+        <member name="M:Spherical.Halfspace.GetTopo(Spherical.Halfspace)">
+            <summary>
+            Determines the topological relation of the halfspace to another.
+            </summary>
+            <param name="h">The halfspace to test.</param>
+            <returns>The topological relation.</returns>
+        </member>
+        <member name="M:Spherical.Halfspace.GetTopo(Spherical.Halfspace,Spherical.Cartesian@,Spherical.Cartesian@)">
+            <summary>
+            Determines the topological relation of the halfspace to another.
+            </summary>
+            <param name="h">The halfspace to test.</param>
+            <param name="pos">The positive root if the two intersect. (Output)</param>
+            <param name="neg">The negative root if the two intersect. (Output)</param>
+            <returns>The topological relation.</returns>
+        </member>
+        <member name="M:Spherical.Halfspace.GetTopo(Spherical.Halfspace,Spherical.Cartesian@,Spherical.Cartesian@,System.Int32@)">
+            <summary>
+            Determines the topological relation of the halfspace to another.
+            </summary>
+            <param name="h">The halfspace to test.</param>
+            <param name="pos">The positive root if the two intersect. (Output)</param>
+            <param name="neg">The negative root if the two intersect. (Output)</param>
+            <param name="flag">The flag as returned from Halfspace.Roots() if called, -99 otherwise. (Output)</param>
+            <returns>The topological relation.</returns>
+        </member>
+        <member name="M:Spherical.Halfspace.GetTopo(Spherical.Cartesian)">
+            <summary>
+            Determines the topological relation of the halfspace and the specified point.
+            </summary>
+            <param name="p">The unit vector.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Halfspace.GetTopo(Spherical.Cartesian,System.Double)">
+            <summary>
+            Determines the topological relation of the halfspace and the specified point.
+            </summary>
+            <param name="p">The unit vector.</param>
+            <param name="sintol">The sine of the tolerance limit.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Halfspace.IsEmpty(System.Double)">
+            <summary>
+            Determines whether the halfspace is empty.
+            </summary>
+        </member>
+        <member name="M:Spherical.Halfspace.IsEmpty">
+            <summary>
+            Determines whether the halfspace is empty.
+            </summary>
+        </member>
+        <member name="M:Spherical.Halfspace.IsAll(System.Double)">
+            <summary>
+            Determines whether the halfspace contains the whole unit sphere.
+            </summary>
+        </member>
+        <member name="M:Spherical.Halfspace.IsAll">
+            <summary>
+            Determines whether the halfspace contains the whole unit sphere.
+            </summary>
+        </member>
+        <member name="M:Spherical.Halfspace.Contains(Spherical.Cartesian,System.Double,System.Double)">
+            <summary>
+            Determines whether the halfspace contains the specified vector.
+            </summary>
+        </member>
+        <member name="M:Spherical.Halfspace.Contains(System.Collections.Generic.IEnumerable{Spherical.Cartesian},System.Double,System.Double)">
+            <summary>
+            Determines whether the halfspace contains a collection of points.
+            </summary>
+            <param name="list">The list of points.</param>
+            <param name="costol">The cosine of the tolerance.</param>
+            <param name="sintol">The sine of the tolerance.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.GetPointWest">
+            <summary>
+            Computes point on circle to the west from the center.
+            </summary>
+        </member>
+        <member name="M:Spherical.Halfspace.Roots(Spherical.Halfspace,Spherical.Cartesian@,Spherical.Cartesian@)">
+            <summary>
+            Finds the roots of two halfspaces.
+            </summary>
+            <param name="that">The halfspace to intersect.</param>
+            <param name="pos">The 'positive' root. (Output)</param>
+            <param name="neg">The 'negative' root. (Output)</param>
+            <returns>
+            <para>The return value is 2 if found both roots.</para>
+            <para>The return value is 0 if vectors are co-linear.</para>
+            <para>The return value is -1 if vectors are not co-linear but no roots.</para>
+            <para>The return value is -3 if circles are barely touching, so no roots.</para>
+            </returns>
+            <remarks>
+            The root finder will only return roots if there are two. 
+            Touching circles are not considered intersecting because of numerical precision.
+            </remarks>
+        </member>
+        <member name="M:Spherical.Halfspace.GetXLine(Spherical.Halfspace,Spherical.Cartesian@,Spherical.Cartesian@)">
+            <summary>
+            Finds the intersection of two planes.
+            </summary>
+            <param name="that">The halfspace of the other plane.</param>
+            <param name="xdir">The unit vector in the line. (Output)</param>
+            <param name="xpt">An arbitrary point on the line. (Out)</param>
+            <returns>The return value is 'false' if planes are parallel, 'true' otherwise.</returns>
+            <remarks>Based on Graphics Gems III's GetXLine() in pl2plane.c at
+            <![CDATA[http://www.acm.org/pubs/tog/GraphicsGems/gemsiii/pl2plane.c]]>
+            </remarks>
+        </member>
+        <member name="M:Spherical.Halfspace.op_Equality(Spherical.Halfspace,Spherical.Halfspace)">
+            <summary>
+            Determines whether two halfspaces are equal.
+            </summary>
+            <param name="left">Left side halfspace</param>
+            <param name="right">Right side halfspace</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Spherical.Halfspace.op_Inequality(Spherical.Halfspace,Spherical.Halfspace)">
+            <summary>
+            Determines whether two halfspaces differ.
+            </summary>
+            <param name="left">Left side halfspace</param>
+            <param name="right">Right side halfspace</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Spherical.Halfspace.Equals(System.Object)">
+            <summary>
+            Implements the equality check.
+            </summary>
+            <param name="right">The right-side.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.Equals(Spherical.Halfspace)">
+            <summary>
+            Implements the equality check.
+            </summary>
+            <param name="right">The right-side halfspace.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.GetHashCode">
+            <summary>
+            Implements a faster hashcode.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Spherical.Halfspace.UnitSphere">
+            <summary>
+            Represents a halfspace that contains the entire sphere.
+            </summary>
+            <remarks>It is the same as <c>new Halfspace(0,0,1,false,-1)</c>.</remarks>
+        </member>
+        <member name="M:Spherical.Halfspace.ToString">
+            <summary>
+            Returns the string representation of the halfspace.
+            </summary>
+        </member>
+        <member name="M:Spherical.Halfspace.ToString(System.Boolean)">
+            <summary>
+            Returns the string representation of the halfspace.
+            </summary>
+            <param name="outsin">The flag determines whether the sine is also included.</param>
+        </member>
+        <member name="M:Spherical.Halfspace.Parse(System.String,System.Boolean)">
+            <summary>
+            Parses a string of "x y z d" into a halfspace.
+            </summary>
+            <param name="repr">The string representation.</param>
+            <param name="normalize">The flag determines whether the vectors are normalized.</param>
+            <returns>The halfspace derived from the string.</returns>
+        </member>
+        <member name="F:Spherical.Halfspace.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.Vector">
+            <summary>
+            Gets or sets the vector of the halfspace.
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.Cos0">
+            <summary>
+            Gets the cosine of the radius.
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.Sin0">
+            <summary>
+            Gets the sine of the radius.
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.ESign">
+            <summary>
+            Gets the extended sign of the halfspace.
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.RadiusInRadian">
+            <summary>
+            Gets the radius of circle in radians.
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.RadiusInDegree">
+            <summary>
+            Gets the radius of circle in degrees.
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.RadiusInArcmin">
+            <summary>
+            Gets the radius of circle in arc minutes.
+            </summary>
+        </member>
+        <member name="P:Spherical.Halfspace.Area">
+            <summary>
+            Gets the surface area of the halfspace.
+            </summary>
+        </member>
+        <member name="T:Spherical.Igloo.Builder">
+            <summary>
+            Builds an Igloo (3:0:3) pixelization.
+            </summary>
+        </member>
+        <member name="M:Spherical.Igloo.Builder.#ctor(Spherical.Region)">
+            <summary>
+            Creates an Igloo builder.
+            </summary>
+            <param name="region"></param>
+        </member>
+        <member name="M:Spherical.Igloo.Builder.Simplify(Spherical.Region)">
+            <summary>
+            Returns a simplified version of the specified region.
+            </summary>
+            <param name="r">The region</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Igloo.Builder.Simplify(Spherical.Region,System.Int32,System.Int32)">
+            <summary>
+            Returns a simplified version of the specified region.
+            </summary>
+            <param name="r">The region</param>
+            <param name="maxlevel">The maximum depth of the tree</param>
+            <param name="maxleaves">The maximum number of leaves</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Igloo.Builder.Simplify(Spherical.Region,System.Int32,System.Int32,System.Double,Spherical.Region@)">
+            <summary>
+            Returns a simplified version of the specified region.
+            </summary>
+            <param name="r">The region</param>
+            <param name="maxlevel">The maximum depth of the tree</param>
+            <param name="maxleaves">The maximum number of leaves</param>
+            <param name="maskfrac">The maxiumum fractional area of a cell allowed for masks</param>
+            <param name="mask">The output mask</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Igloo.Builder.Divide(System.Int32,System.Int32)">
+            <summary>
+            Builds covering tree for the region determining the masks for each cells.
+            </summary>
+            <param name="maxlevel">The maximum depth.</param>
+            <param name="maxleaves">The maximum number of leaves.</param>
+        </member>
+        <member name="M:Spherical.Igloo.Builder.Conquer(System.Double,Spherical.Region,Spherical.Region)">
+            <summary>
+            Collects full nodes, derives mask and edges convexes.
+            </summary>
+            <param name="masklimit">The fractional area acceptable for masks.</param>
+            <param name="edge">The empty region where the edge convexes are saved unless null is passed.</param>
+            <param name="mask">The empty region where the mask convexes are saved.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Igloo.Builder.Merge(System.Collections.Generic.List{Spherical.Nodes.TreeNode{Spherical.Igloo.Cell}})">
+            <summary>
+            Merges cells into parents.
+            </summary>
+            <param name="inside">The list of full nodes.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.Nodes.TreeNodeList`1">
+            <summary>
+            Represents a collection of nodes.
+            </summary>
+            <typeparam name="T">The data type of nodes.</typeparam>
+        </member>
+        <member name="M:Spherical.Nodes.TreeNodeList`1.#ctor(Spherical.Nodes.TreeNode{`0},System.Int32)">
+            <summary>
+            Creates the collection
+            </summary>
+            <param name="owner">The owner.</param>
+            <param name="capacity">The initial capacity of the collection.</param>
+        </member>
+        <member name="M:Spherical.Nodes.TreeNodeList`1.Add(Spherical.Nodes.TreeNode{`0})">
+            <summary>
+            Adds a node to the collection.
+            </summary>
+            <param name="node">The node.</param>
+        </member>
+        <member name="M:Spherical.Nodes.TreeNodeList`1.Remove(Spherical.Nodes.TreeNode{`0})">
+            <summary>
+            Removes the specified node.
+            </summary>
+            <param name="node">The node.</param>
+        </member>
+        <member name="M:Spherical.Nodes.TreeNodeList`1.Clear">
+            <summary>
+            Removes all nodes.
+            </summary>
+        </member>
+        <member name="T:Spherical.Nodes.GraphWalker`1">
+            <summary>
+            Represents the crawler that walks a graph.
+            </summary>
+            <typeparam name="T">The type of the data in the graph.</typeparam>
+        </member>
+        <member name="M:Spherical.Nodes.GraphWalker`1.#ctor(Spherical.Nodes.Graph{`0})">
+            <summary>
+            Creates an instance.
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Spherical.Nodes.GraphWalker`1.GetClusters">
+            <summary>
+            Enumerates the unconnected clusters.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Nodes.GraphWalker`1.GetConnected(Spherical.Nodes.Node{`0})">
+            <summary>
+            Enumerates the connected nodes.
+            </summary>
+            <param name="node">The node where to start from.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.PatchFactory">
+            <summary>
+            PatchFactory has a set of roots and arclets plus related info
+            </summary>
+        </member>
+        <member name="F:Spherical.PatchFactory.hasDegeneracy">
+            <summary>
+            Determines whether there are degenerate roots.
+            </summary>
+        </member>
+        <member name="M:Spherical.PatchFactory.#ctor(Spherical.Convex)">
+            <summary>
+            Derive roots of convex, save 'west point' of halfspaces, 
+            merge roots and set their (alter)ego
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.PatchFactory.SelectRootsOnCircle(System.Int32)">
+            <summary>
+            Return indices of roots on a circle specified by halfspace index.
+            The list is sorted such that the roots have counterclockwise ordering.
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.PatchFactory.BuildArclets">
+            <summary>
+            Return all arclets of all circles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.PatchFactory.SelectArcletsVisible(Spherical.RootStatus)">
+            <summary>
+            Return indices of visible arclets on given circles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.PatchFactory.MakeArc(Spherical.PatchFactory.Arclet)">
+            <summary>
+            Materializes an arc from an arclet
+            </summary>
+            <param name="arclet">arclet</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.PatchFactory.InitRootGoodness(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Initializes the 'good' flag of roots.
+            </summary>
+            <remarks>The meaning of it all:
+            <code>
+            	good =  1 : root is inside convex
+            	good =  0 : root's parents are 'goodcircles' (in S) but masked out by other 'goodcircles'
+            	good = -1 : root's parents are NOT both 'goodcircles'
+            	good = -2 : root's parents ARE 'goodcircles' (in S) but masked by at least one 'not goodcircle'
+            </code>
+            </remarks>
+        </member>
+        <member name="M:Spherical.PatchFactory.SelectCompleteCircles(System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Int32}@)">
+            <summary>
+            Return indices of halfspaces that are needed to represent the convex (still not minimal)
+            and which one is visible.
+            </summary>
+        </member>
+        <member name="M:Spherical.PatchFactory.PruneGoodArclets(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Removes arclets from list that have the same endpoints.
+            </summary>
+            <remarks>It aims to remove the arcs with the less constraining halfspace.</remarks>
+            <param name="iArclet"></param>
+        </member>
+        <member name="M:Spherical.PatchFactory.ConnectArclets(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Connects arclets into patches.
+            </summary>
+            <remarks>
+            Picks the first arclet index from the
+            given list of arclets and return the indices of that make a patch.
+            Also removes the used indices from the passed list of arclets.
+            </remarks>
+        </member>
+        <member name="M:Spherical.PatchFactory.DerivePatches(System.Boolean)">
+            <summary>
+            Derives all patches of convex and simplifies it if requested.
+            </summary>
+            <param name="simplify_convex">Determines whether to simplify convex</param>
+            <returns>list of patches</returns>
+        </member>
+        <member name="M:Spherical.PatchFactory.ToString">
+            <summary>
+            Returns the string representation.
+            </summary>
+            <returns></returns> 
+        </member>
+        <member name="M:Spherical.PatchFactory.ToString(Spherical.RootStatus)">
+            <summary>
+            Returns the string reprensentation.
+            </summary>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Spherical.PatchFactory.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="T:Spherical.PatchFactory.Arclet">
+            <summary>
+            Internally point to roots and halfspaces that make up an arc
+            </summary>
+        </member>
+        <member name="T:Spherical.Topo">
+            <summary>
+            Enumeration of possible spatial relations of two geometrical shapes on the sphere.
+            </summary>
+        </member>
+        <member name="F:Spherical.Topo.Same">
+            <summary>
+            The shapes are identical.
+            </summary>
+        </member>
+        <member name="F:Spherical.Topo.Inverse">
+            <summary>
+            The shape is identical to the other's inverse.
+            </summary>
+        </member>
+        <member name="F:Spherical.Topo.Overlap">
+            <summary>
+            The shapes do not intersect but overlap, e.g. two holes.
+            </summary>
+        </member>
+        <member name="F:Spherical.Topo.Intersect">
+            <summary>
+            The shapes intersect and have roots.
+            </summary>
+        </member>
+        <member name="F:Spherical.Topo.Inner">
+            <summary>
+            The shape is contained in the other one.
+            </summary>
+        </member>
+        <member name="F:Spherical.Topo.Outer">
+            <summary>
+            The shape contains the other one.
+            </summary>
+        </member>
+        <member name="F:Spherical.Topo.Disjoint">
+            <summary>
+            The two shapes are spatially disjoint.
+            </summary>
+        </member>
+        <member name="T:Spherical.ESign">
+            <summary>
+            Enumeration of extended sign of convexes, as well as halfspaces.
+            </summary>
+        </member>
+        <member name="F:Spherical.ESign.Unknown">
+            <summary>
+            Extended sign not known
+            </summary>
+        </member>
+        <member name="F:Spherical.ESign.Zero">
+            <summary>
+            Extended sign is zero, meaning great circle
+            </summary>
+        </member>
+        <member name="F:Spherical.ESign.Positive">
+            <summary>
+            Extended sign is positve, when radius is less than Pi
+            </summary>
+        </member>
+        <member name="F:Spherical.ESign.Negative">
+            <summary>
+            Extended sign is negative, when radius is more than Pi; it's a hole
+            </summary>
+        </member>
+        <member name="F:Spherical.ESign.Mixed">
+            <summary>
+            Extended sign is mixed when convex has both positive and negative
+            </summary>
+        </member>
+        <member name="T:Spherical.PointOrder">
+            <summary>
+            Enumeration of possible point orderings in a list.
+            </summary>
+        </member>
+        <member name="F:Spherical.PointOrder.CCW">
+            <summary>
+            Counter-clockwise
+            </summary>
+        </member>
+        <member name="F:Spherical.PointOrder.CW">
+            <summary>
+            Clockwise
+            </summary>
+        </member>
+        <member name="F:Spherical.PointOrder.Safe">
+            <summary>
+            Clockwise or counter-clockwise
+            </summary>
+        </member>
+        <member name="F:Spherical.PointOrder.Random">
+            <summary>
+            Random order
+            </summary>
+        </member>
+        <member name="T:Spherical.RootStatus">
+            <summary>
+            Enumeration of possible status flags or roots.
+            </summary>
+        </member>
+        <member name="F:Spherical.RootStatus.Any">
+            <summary>
+            Any
+            </summary>
+        </member>
+        <member name="F:Spherical.RootStatus.Unknown">
+            <summary>
+            Unknown
+            </summary>
+        </member>
+        <member name="F:Spherical.RootStatus.Inside">
+            <summary>
+            Inside
+            </summary>
+        </member>
+        <member name="F:Spherical.RootStatus.Outside">
+            <summary>
+            Outside
+            </summary>
+        </member>
+        <member name="F:Spherical.RootStatus.Edge">
+            <summary>
+            Edge
+            </summary>
+        </member>
+        <member name="M:Spherical.MEC.pUpdate(Spherical.Halfspace,Spherical.Cartesian,Spherical.Topo,System.Collections.Generic.List{Spherical.Cartesian})">
+            <summary>
+            Add new point to the Support List, and remove all that
+            no longer qualify for being in the support list.
+            </summary>
+            <param name="C"></param>
+            <param name="Point"></param>
+            <param name="topo"></param>
+            <param name="Support"></param>
+            <returns>a new potential MEC</returns>
+        </member>
+        <member name="M:Spherical.MEC.pUpdateCircle(Spherical.Halfspace@,Spherical.Halfspace,System.Collections.Generic.List{Spherical.Cartesian})">
+            <summary>
+            
+            </summary>
+            <param name="workC"></param>
+            <param name="testC"></param>
+            <param name="Support"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.MEC.IsPlausible(Spherical.Halfspace,System.Collections.Generic.List{Spherical.Cartesian})">
+            <summary>
+            True, if given halfspace contains all the points in the Support list
+            </summary>
+            <param name="workC"></param>
+            <param name="Support"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.MEC.pElementOf(Spherical.Cartesian,System.Collections.Generic.List{Spherical.Cartesian})">
+            <summary>
+            True, if Point is listed in Support list, otherwise false
+            </summary>
+            <param name="Point"></param>
+            <param name="Support"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Spherical.IO.SqlIO">
+            <summary>
+            Implements routines for reading regions from SQL database.
+            </summary>
+        </member>
+        <member name="M:Spherical.IO.SqlIO.ReadRegion(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.String)">
+            <summary>
+            Reads halfspaces from the database into a region by running the specified SQL query.
+            </summary>
+            <param name="conn">The SQL connection to read the region from.</param>
+            <param name="tran">The SQL transaction.</param>
+            <param name="query">The SQL select convexid, x, y, z, c statement for the region.</param>
+            <remarks>The types of the columns are Int32 for the ID and double for the rest.</remarks>
+            <example>
+            To select region #1 from the halfspace table:
+            <code>
+            Region r = SqlIO.ReadRegion(cn,tn,"SELECT ConvexID,X,Y,Z,C FROM RegionHalfspace WHERE RegionID=1");
+            </code>
+            </example>
+            <returns>The region is not simplified.</returns>
+        </member>
+        <member name="M:Spherical.IO.SqlIO.ReadRegionWithSine(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.String)">
+            <summary>
+            Reads halfspaces from the database into a region by running the specified SQL query.
+            </summary>
+            <param name="conn">The SQL connection to read the region from.</param>
+            <param name="tran">The SQL transaction.</param>
+            <param name="query">The SQL select convexid, x, y, z, c, s statement for the region.</param>
+            <remarks>The types of the columns are Int32 for the ID and double for the rest.</remarks>
+            <example>
+            To select region #1 from the halfspace table:
+            <code>
+            Region r = SqlIO.ReadRegion(cn,tn,"SELECT ConvexID,X,Y,Z,C,S FROM RegionHalfspace WHERE RegionID=1");
+            </code>
+            </example>
+            <returns>The region is not simplified.</returns>
+        </member>
+        <member name="F:Spherical.IO.SqlIO.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="T:Spherical.Convex">
+            <summary>
+            Represents the intersection of a set of halfspaces.
+            </summary>
+        </member>
+        <member name="F:Spherical.Convex.halfspaceList">
+            <summary>
+            List of halfspaces
+            </summary>
+        </member>
+        <member name="F:Spherical.Convex.patchList">
+            <summary>
+            List of patches
+            </summary>
+        </member>
+        <member name="F:Spherical.Convex.sorted">
+            <summary>
+            Determines whether halfspaces are sorted (by ComparisonRadiusXYZ)
+            </summary>
+        </member>
+        <member name="F:Spherical.Convex.simplified">
+            <summary>
+            Determines whether convex is simplified
+            </summary>
+        </member>
+        <member name="F:Spherical.Convex.eSign">
+            <summary>
+            Extended sign
+            </summary>
+        </member>
+        <member name="F:Spherical.Convex.area">
+            <summary>
+            Area of convex, null if not simplified
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.#ctor">
+            <summary>
+            Creates an empty convex.
+            </summary>
+            <remarks>Default capacity is 4.</remarks>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(System.Int32)">
+            <summary>
+            Creates an empty convex of given capacity.
+            </summary>
+            <param name="capacity">The number of halfspaces to hold.</param>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(Spherical.Halfspace)">
+            <summary>
+            Creates a convex with a single halfspace in it.
+            </summary>
+            <param name="halfspace">The input halfspace.</param>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(Spherical.Halfspace,System.Boolean)">
+            <summary>
+            Creates a convex with a single halfspace in it.
+            </summary>
+            <param name="halfspace">The input halfspace.</param>
+            <param name="simplify">The flag determining whether the convex should be simplified.</param>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Creates a circle of specified center (RA, Dec) and radius (arcmin).
+            </summary>
+            <param name="ra">Right Ascension (in degrees)</param>
+            <param name="dec">Declination (in degrees)</param>
+            <param name="arcmin">Radius (in arcminutes)</param>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(System.Collections.Generic.IEnumerable{Spherical.Halfspace})">
+            <summary>
+            Creates a convex from a collection of halfspaces.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(System.Collections.Generic.IList{Spherical.Halfspace})">
+            <summary>
+            Creates a convex from a list of halfspaces.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(Spherical.Convex)">
+            <summary>
+            Creates a convex from another one.
+            </summary>
+            <param name="convex">The input convex.</param>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(System.Collections.Generic.List{Spherical.Cartesian},Spherical.PointOrder)">
+            <summary>
+            Creates a polygon from a list of points.
+            </summary>
+            <param name="list">The list of points.</param>
+            <param name="order">The ordering of points.</param>
+            <remarks>The points are connected with great circles.</remarks>
+        </member>
+        <member name="M:Spherical.Convex.#ctor(Spherical.Cartesian,Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Creates a triangle from three points.
+            </summary>
+            <remarks>The points are connected with great circles. 
+            The convex is simplified and the area is set.</remarks>
+        </member>
+        <member name="M:Spherical.Convex.Clone(Spherical.Convex)">
+            <summary>
+            Returns a clone of the given convex.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.Add(Spherical.Halfspace)">
+            <summary>
+            Adds a halfspace to the convex.
+            </summary>
+            <remarks>See also Intersect(...)</remarks>
+        </member>
+        <member name="M:Spherical.Convex.AddRange(System.Collections.Generic.IEnumerable{Spherical.Halfspace})">
+            <summary>
+            Adds a collection of halfspaces to the convex.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            Removes a range of halfspaces.
+            </summary>
+            <param name="index">The zero-based starting index of halfspaces to remove.</param>
+            <param name="count">The number of elements to remove.</param>
+        </member>
+        <member name="M:Spherical.Convex.TrueForAll(System.Predicate{Spherical.Halfspace})">
+            <summary>
+            Determines whether every halfspace matches the specified conditions.
+            </summary>
+            <param name="match">The predicate that defines the condition.</param>
+        </member>
+        <member name="M:Spherical.Convex.Exists(System.Predicate{Spherical.Halfspace})">
+            <summary>
+            Determines whether a halfspace matches the specified conditions.
+            </summary>
+            <param name="match">The predicate that defines the condition.</param>
+        </member>
+        <member name="M:Spherical.Convex.RemoveAt(System.Int32)">
+            <summary>
+            Removes the halfspace at the specified index.
+            </summary>
+            <param name="index">The zero=based index of the halfspace to remove.</param>
+        </member>
+        <member name="M:Spherical.Convex.Sort">
+            <summary>
+            Sorts the halfspaces of the convex by radius, x, y and z.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.Clear">
+            <summary>
+            Removes all halfspaces.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.HasESignNegative">
+            <summary>
+            Determines whether the list of halfspaces contains a hole.
+            </summary>
+            <remarks>Sorts and checks last halfspace for ESign.Negative</remarks>
+        </member>
+        <member name="M:Spherical.Convex.HasOnlyOneESignNegative">
+            <summary>
+            Determines whether only one halfspace is a hole.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.Same(Spherical.Convex)">
+            <summary>
+            Determines whether two convexes are the same within the specified accuracy.
+            </summary>
+            <param name="c">The other convex to check this against.</param>
+        </member>
+        <member name="M:Spherical.Convex.HasCommonHalfspace(Spherical.Convex)">
+            <summary>
+            Determines whether two convexes have a common halfspace.
+            </summary>
+            <param name="c">The other convex to check this against.</param>
+        </member>
+        <member name="M:Spherical.Convex.HasOnlyOneCommonHalfspace(Spherical.Convex)">
+            <summary>
+            Determines whether two convexes have only one common halfspace within specified accuracy.
+            </summary>
+            <param name="c">The other convex to check this against.</param>
+        </member>
+        <member name="M:Spherical.Convex.IndexFirstCommonHalfspacePair(Spherical.Convex,System.Int32@)">
+            <summary>
+            Returns the indices of the first pair of halfspaces that are common.
+            </summary>
+            <param name="c">The other convex to check this against.</param>
+            <param name="idx">The index in the other convex. (Output)</param>
+            <returns>The index in this convex. (Output)</returns>
+        </member>
+        <member name="M:Spherical.Convex.InvertHalfspaces">
+            <summary>
+            Inverts all halfspaces of convex.
+            </summary>
+            <remarks>Used in Unify(...)</remarks>
+        </member>
+        <member name="M:Spherical.Convex.Intersect(Spherical.Halfspace)">
+            <summary>
+            Intersects the convex with the specified halfspace.
+            </summary>
+            <remarks>Simply adds the halfspace to its list.</remarks>
+            <param name="h">The halfspace to intersect with.</param>
+        </member>
+        <member name="M:Spherical.Convex.Intersect(Spherical.Convex)">
+            <summary>
+            Intersects the convex with the specified convex.
+            </summary>
+            <remarks>Simply adds all halfspaces to its list.</remarks>
+            <param name="c">The input convex.</param>
+        </member>
+        <member name="M:Spherical.Convex.Difference(Spherical.Convex)">
+            <summary>
+            Returns the difference of this convex and another.
+            </summary>
+            <remarks>In I but not in C: X = I\C Algorithmically: 
+            <code>X = (I*~h1)|(I*h1*~h2)|(I*h1*h2*~h3)|... , where C=h1*h2*...</code>
+            </remarks>
+            <param name="convex">The convex to subtract.</param>
+            <returns>The difference is a region in general.</returns>
+        </member>
+        <member name="M:Spherical.Convex.SmartDifference(Spherical.Convex,System.Boolean@)">
+            <summary>
+            Returns the difference of this convex and the specified one.
+            </summary>
+            <param name="convex"></param>
+            <param name="flag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Convex.Grow(System.Double)">
+            <summary>
+            Increases the angles of all halfspaces by the given amount.
+            </summary>
+            <param name="arcmin">The change of radius in arcminutes.</param>
+            <returns>The reference to self.</returns>
+        </member>
+        <member name="M:Spherical.Convex.Contains(Spherical.Cartesian,System.Double,System.Double)">
+            <summary>
+            Determines whether the convex covers a point.
+            </summary>
+            <param name="p">The unit vector.</param>
+            <param name="costol">The cosine of the tolerance.</param>
+            <param name="sintol">The sine of the tolerance.</param>
+        </member>
+        <member name="M:Spherical.Convex.Contains(Spherical.Cartesian)">
+            <summary>
+            Determines whether the convex covers a point.
+            </summary>
+            <param name="p">The unit vector.</param>
+        </member>
+        <member name="M:Spherical.Convex.ElimCovers(Spherical.Convex)">
+            <summary>
+            Determines whether the convex covers the specified convex entirely just by comparing halfspaces.
+            </summary>
+            <param name="that">The other convex to test against.</param>
+            <returns>Returns 'true' specified convexes contains all halfspaces, 'false' otherwise.</returns>
+        </member>
+        <member name="M:Spherical.Convex.SimpleSimplify">
+            <summary>
+            Simplifies the description of the convex by removing redundant halfspaces. 
+            </summary>
+            <returns>The return value is 'false' if the convex is empty, and 'true' otherwise.</returns>
+        </member>
+        <member name="M:Spherical.Convex.Simplify">
+            <summary>
+            Simplifies the description of convex by computing the roots and the optimal representation.
+            </summary>
+            <returns>The return value is 'false' if the convex is empty, and 'true' otherwise.</returns>
+        </member>
+        <member name="M:Spherical.Convex.Simplify(System.Boolean)">
+            <summary>
+            Simplifies the description of convex by computing the roots and the optimal representation.
+            </summary>
+            <returns>The return value is 'false' if the convex is empty, and 'true' otherwise.</returns>
+        </member>
+        <member name="M:Spherical.Convex.MecContains(Spherical.Cartesian,System.Double,System.Double)">
+            <summary>
+            Determines whether the minimal enclosing circles of the patches
+            contain the specified point.
+            </summary>
+            <param name="x">The point on unit sphere.</param>
+            <param name="costol">The cosine of the tolerance.</param>
+            <param name="sintol">The sine of the tolerance.</param>
+        </member>
+        <member name="M:Spherical.Convex.MecContains(Spherical.Cartesian)">
+            <summary>
+            Determines whether the minimal enclosing circles of the patches
+            contain the specified point.
+            </summary>
+            <param name="x">The point on unit sphere.</param>
+        </member>
+        <member name="M:Spherical.Convex.SmartContains(Spherical.Cartesian,System.Double,System.Double)">
+            <summary>
+            Determines whether the convex covers the specified point by 
+            first testing the minimal enclosing circles.
+            </summary>
+            <param name="x">The point on unit sphere.</param>
+            <param name="costol">The cosine of the tolerance.</param>
+            <param name="sintol">The sine of the tolerance.</param>
+        </member>
+        <member name="M:Spherical.Convex.SmartContains(Spherical.Cartesian)">
+            <summary>
+            Determines whether the convex covers the specified point by 
+            first testing the minimal enclosing circles.
+            </summary>
+            <param name="x">The point on unit sphere.</param>
+        </member>
+        <member name="M:Spherical.Convex.MecDisjoint(Spherical.Convex)">
+            <summary>
+            Determines whether the minimal enclosing circles of two convexes are disjoint.
+            </summary>
+            <remarks>The methods assumes the convexes are simplified.</remarks>
+            <param name="c">The other convex to test against.</param>
+        </member>
+        <member name="M:Spherical.Convex.SmartIntersect(Spherical.Convex)">
+            <summary>
+            Intersects the convex with another one by comparing the minimal enclosing circles first.
+            </summary>
+            <remarks>The method assumes that the convexes are simplified 
+            and the resulting convex is going to simplified, as well.</remarks>
+            <param name="c">The convex to intersect with.</param>
+            <returns>Returns 'false' if no intersection, 'true' otherwise.</returns>
+        </member>
+        <member name="M:Spherical.Convex.DoesCollide(Spherical.Convex)">
+            <summary>
+            Determines whether the convex collides with another.
+            </summary>
+            <param name="c">The other convex.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Convex.ComparisonAreaAscending(Spherical.Convex,Spherical.Convex)">
+            <summary>
+            Compares two convexes by area.
+            </summary>
+            <param name="c">Input convex #1.</param>
+            <param name="k">Input convex #2.</param>
+            <returns>The comparison value.</returns>
+        </member>
+        <member name="M:Spherical.Convex.ComparisonAreaDescending(Spherical.Convex,Spherical.Convex)">
+            <summary>
+            Compares two convexes by area.
+            </summary>
+            <param name="c">The first convex.</param>
+            <param name="k">The second convex.</param>
+            <returns>The comparison value.</returns>
+        </member>
+        <member name="M:Spherical.Convex.Parse(System.String,System.Boolean)">
+            <summary>
+            Parses a string of 'CONVEX x1 y1 z1 d1 x2... dN' into a Convex
+            </summary>
+            <param name="repr">The string representation.</param>
+            <param name="normalize">The flag that detemines whether the input vectors are normalized.</param>
+        </member>
+        <member name="M:Spherical.Convex.ToString">
+            <summary>
+            Returns the string representation.
+            </summary>
+        </member>
+        <member name="M:Spherical.Convex.ToString(System.String)">
+            <summary>
+            String representation.
+            </summary>
+            <param name="sep">The separator between the halfspaces.</param>
+            <returns></returns>
+        </member>
+        <member name="F:Spherical.Convex.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="P:Spherical.Convex.HalfspaceList">
+            <summary>
+            Gets a readonly collection of the halfspaces.
+            </summary>
+        </member>
+        <member name="P:Spherical.Convex.Sorted">
+            <summary>
+            Gets value determining whether halfspaces are sorted.
+            </summary>
+            <remarks>Sorting is by Halfspace.ComparisonRadiusXYZ().</remarks>
+        </member>
+        <member name="P:Spherical.Convex.ESign">
+            <summary>
+            Gets the extended sign property.
+            </summary>
+            <remarks>Lazy evaluation: if unknown, computes it.</remarks>
+        </member>
+        <member name="P:Spherical.Convex.Simplified">
+            <summary>
+            Gets value determining whether convex is simplified.
+            </summary>
+        </member>
+        <member name="P:Spherical.Convex.Area">
+            <summary>
+            Gets the area of the convex.
+            </summary>
+            <remarks>Returns NULL unless simplified.</remarks>
+        </member>
+        <member name="P:Spherical.Convex.XmlSerialization">
+            <summary>
+            Used by the XML serializer.
+            </summary>
+        </member>
+        <member name="P:Spherical.Convex.PatchList">
+            <summary>
+            Gets the list of patches.
+            </summary>
+        </member>
+        <member name="P:Spherical.Convex.Capacity">
+            <summary>
+            Gets or sets the total number of halfspaces the internal data structure can hold without resizing.
+            </summary>
+        </member>
+        <member name="P:Spherical.Convex.Count">
+            <summary>
+            Gets the number of halfspaces.
+            </summary>
+        </member>
+        <member name="T:Spherical.Constant">
+            <summary>
+            Holds relevant constants for the project.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.NameSpace">
+            <summary>
+            The XML namespace for serialization of classes.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.DoublePrecision">
+            <summary>
+            Constant for the theoretical limit of the relative error of double precision numbers.
+            </summary>
+            <remarks>
+            With p=53 significand (IEEE-754), it is <c>Math.Pow(2,-53)</c>, which is roughly 1.1e-16.
+            </remarks>
+        </member>
+        <member name="F:Spherical.Constant.DoublePrecision2x">
+            <summary>
+            Constant for the theoretical limit of the relative error of double precision numbers times two.
+            </summary>
+            <remarks>
+            This is, for example, the maximum relative error in the difference of two numbers, <c>z = x-y</c>.
+            </remarks>
+        </member>
+        <member name="F:Spherical.Constant.Tolerance">
+            <summary>
+            Constant factor in radians for determining when two points are the same.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.CosTolerance">
+            <summary>
+            Constant is the cosine of the tolerance.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.SinTolerance">
+            <summary>
+            Constant is the sine of the tolerance.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.Degree2Radian">
+            <summary>
+            Constant factor for converting degrees to radians.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.Radian2Degree">
+            <summary>
+            Constant factor for converting radians to degrees.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.Arcmin2Radian">
+            <summary>
+            Constant factor for converting arc minutes to radians.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.Radian2Arcmin">
+            <summary>
+            Constant factor for converting radians to arc minutes.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.SquareRadian2SquareDegree">
+            <summary>
+            Constant factor for converting square radians to square degrees.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.WholeSphereInSquareDegree">
+            <summary>
+            Constant factor for area of surface of the unit sphere in square degrees.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.KeywordRegion">
+            <summary>
+            Region keyword.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.KeywordConvex">
+            <summary>
+            Convex keyword.
+            </summary>
+        </member>
+        <member name="F:Spherical.Constant.Revision">
+            <summary>
+            Revision from CVS.
+            </summary>
+        </member>
+        <member name="T:Spherical.Nodes.Node`1">
+            <summary>
+            Represents a node.
+            </summary>
+            <typeparam name="T">The type of the node data.</typeparam>
+        </member>
+        <member name="M:Spherical.Nodes.Node`1.#ctor">
+            <summary>
+            Creates a node.
+            </summary>
+        </member>
+        <member name="M:Spherical.Nodes.Node`1.#ctor(`0)">
+            <summary>
+            Creates a node.
+            </summary>
+            <param name="data">The data to store.</param>
+        </member>
+        <member name="M:Spherical.Nodes.Node`1.#ctor(`0,Spherical.Nodes.NodeList{`0})">
+            <summary>
+            Creates a node.
+            </summary>
+            <param name="data">The data to store.</param>
+            <param name="links">The nodes to link to.</param>
+        </member>
+        <member name="M:Spherical.Nodes.Node`1.NodeHasLinks(Spherical.Nodes.Node{`0})">
+            <summary>
+            Determines whether the node has links to other nodes.
+            </summary>
+            <param name="node">The node.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Nodes.Node`1.ToString">
+            <summary>
+            Returns the string representation of the node.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Spherical.Nodes.Node`1.Data">
+            <summary>
+            Gets or sets the data of the node.
+            </summary>
+        </member>
+        <member name="P:Spherical.Nodes.Node`1.Links">
+            <summary>
+            Gets or sets the links of the node.
+            </summary>
+        </member>
+        <member name="P:Spherical.Nodes.Node`1.HasLinks">
+            <summary>
+            Determines whether the node has links to other nodes.
+            </summary>
+        </member>
+        <member name="T:Spherical.Region">
+             <summary>
+             Represents the union of a set of convexes.
+             </summary>
+             <example>
+             The simple example below demonstrates how to compute
+             the intersection and union of two great circles:
+             <code>
+             // The centers of the circles
+             Cartesian x = new Cartesian(1, 0, 0, false);
+             Cartesian y = new Cartesian(0, 1, 0, false);
+            
+             // The two great circles
+             Halfspace hx = new Halfspace(x, 0);
+             Halfspace hy = new Halfspace(y, 0);
+            
+             // The intersection of the two circles is a convex
+             Convex c = new Convex(new Halfspace[] { hx, hy });
+             c.Simplify();
+             Console.Out.WriteLine("Area: {0}", c.Area);
+             Console.Out.WriteLine(c);
+            
+             // The union of the circles is a region
+             Region r = new Region();
+             r.Add(new Convex(hx));
+             r.Add(new Convex(hy));
+             r.Simplify();
+             Console.Out.WriteLine("Area: {0}", r.Area);
+             Console.Out.WriteLine(r);</code>
+             The output for this code is:
+             <code>
+             Area: 10313.2403123548
+             CONVEX
+              0 1 0 0
+              1 0 0 0
+             
+             Area: 30939.7209370645
+             REGION
+              CONVEX
+              0 1 0 0
+              CONVEX
+              0 -1 0 0
+              1 0 0 0</code>
+             </example>
+        </member>
+        <member name="F:Spherical.Region.convexList">
+            <summary>
+            List of convexes
+            </summary>
+        </member>
+        <member name="F:Spherical.Region.area">
+            <summary>
+            Area of convex, nullable and has no value when not simplified
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.EnumPatches">
+            <summary>
+            Yields all patches of the region.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.EnumIPatches">
+            <summary>
+            Yields all patch interfaces of the region.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.#ctor">
+            <summary>
+            Creates an empty region.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.#ctor(System.Int32)">
+            <summary>
+            Creates an empty region of given capacity.
+            </summary>
+            <param name="capacity">The number of convexes to hold.</param>
+        </member>
+        <member name="M:Spherical.Region.#ctor(Spherical.Convex,System.Boolean)">
+            <summary>
+            Creates a region with a single convex in it.
+            </summary>
+            <param name="convex">The convex to be stored.</param>
+            <param name="clone">The flag determines whether the convex is cloned before storing the reference.</param>
+        </member>
+        <member name="M:Spherical.Region.#ctor(System.Collections.Generic.List{Spherical.Convex})">
+            <summary>
+            Creates a region from a list of convexes.
+            </summary>
+            <param name="list">The list of convexes.</param>
+            <remarks>Does not clone the convexes, just copies the references for efficiency.</remarks>
+        </member>
+        <member name="M:Spherical.Region.#ctor(System.Collections.Generic.IEnumerable{Spherical.Convex})">
+            <summary>
+            Creates a region from a collection of convexes.
+            </summary>
+            <param name="collection">The collection of convexes.</param>
+            <remarks>Does not clone the convexes, just copies the references for efficiency.</remarks>
+        </member>
+        <member name="M:Spherical.Region.#ctor(Spherical.Region)">
+            <summary>
+            Creates a region by copying the specified region.
+            </summary>
+            <param name="region">The region to copy.</param>
+        </member>
+        <member name="M:Spherical.Region.#ctor(Spherical.Halfspace)">
+            <summary>
+            Creates a region with a single halfspace in it.
+            </summary>
+            <param name="halfspace">The halfspace to store.</param>
+        </member>
+        <member name="M:Spherical.Region.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Creates a region with a single halfspace in it.
+            </summary>
+            <param name="ra">The Right Ascension of the center in degrees.</param>
+            <param name="dec">The Declination of the center in degrees.</param>
+            <param name="arcmin">The radius in arcminues.</param>
+        </member>
+        <member name="M:Spherical.Region.Add(Spherical.Convex)">
+            <summary>
+            Adds a convex to the list.
+            </summary>
+            <param name="c">The convex to be added.</param>
+        </member>
+        <member name="M:Spherical.Region.AddRange(System.Collections.Generic.IEnumerable{Spherical.Convex})">
+            <summary>
+            Adds a collection of convexes to the region.
+            </summary>
+            <param name="collection">The convexes to be added.</param>
+        </member>
+        <member name="M:Spherical.Region.AddRange(System.Collections.Generic.IList{Spherical.Convex})">
+            <summary>
+            Adds a list of convexes to the region.
+            </summary>
+            <param name="collection">The convexes to be added.</param>
+        </member>
+        <member name="M:Spherical.Region.RemoveAt(System.Int32)">
+            <summary>
+            Removes the convex at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the convex to remove.</param>
+        </member>
+        <member name="M:Spherical.Region.Remove(Spherical.Convex)">
+            <summary>
+            Removes the first occurance of the specified convex.
+            </summary>
+            <param name="item">The convex to remove from the region.</param>
+        </member>
+        <member name="M:Spherical.Region.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            Removes a range of convexes.
+            </summary>
+            <param name="index">The zero-based starting index of the range of convexes to remove.</param>
+            <param name="count">The number of convexes to remove.</param>
+        </member>
+        <member name="M:Spherical.Region.Clear">
+            <summary>
+            Removes all convexes.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.Sort(System.Comparison{Spherical.Convex})">
+            <summary>
+            Sorts convexes by the specified comparison.
+            </summary>
+            <param name="comparison">The comparison function to use.</param>
+        </member>
+        <member name="M:Spherical.Region.Sort">
+            <summary>
+            Sorts convexes by the descending area.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.Grow(System.Double)">
+            <summary>
+            Increases the angles of all halfspaces in all convexes by the specified angle.
+            </summary>
+            <param name="arcmin">The angle of change.</param>
+        </member>
+        <member name="M:Spherical.Region.Contains(Spherical.Cartesian,System.Double,System.Double)">
+            <summary>
+            Determines whether the region covers the specified point on the unit sphere.
+            </summary>
+            <param name="p">The unit vector.</param>
+            <param name="costol">The cosine of the tolerance.</param>
+            <param name="sintol">The sine of the tolerance.</param>
+        </member>
+        <member name="M:Spherical.Region.Contains(Spherical.Cartesian)">
+            <summary>
+            Determines whether the region covers the specified point on the unit sphere.
+            </summary>
+            <param name="p">The unit vector.</param>
+        </member>
+        <member name="M:Spherical.Region.Intersect(Spherical.Halfspace)">
+            <summary>
+            Intersects the region with the specified halfspace in place.
+            </summary>
+            <param name="h">The halfspace to intersect with.</param>
+        </member>
+        <member name="M:Spherical.Region.Intersect(Spherical.Convex)">
+            <summary>
+            Intersects the region with the specified convex.
+            </summary>
+            <param name="c">The convex to intersect with.</param>
+        </member>
+        <member name="M:Spherical.Region.Intersect(Spherical.Region)">
+            <summary>
+            Intersects the region with the specified region.
+            </summary>
+            <remarks>The operation leaves both regions intact.</remarks>
+            <param name="region">The other region to intersect with.</param>
+            <returns>The region of intersection.</returns>
+        </member>
+        <member name="M:Spherical.Region.Union(Spherical.Convex)">
+            <summary>
+            Derives the union of the region and the specified convex.
+            </summary>
+            <remarks>The method simply adds a clone of the convex to the list.</remarks>
+            <param name="convex">The convex to add.</param>
+        </member>
+        <member name="M:Spherical.Region.Union(Spherical.Region)">
+            <summary>
+            Derives the union of the region and another one in place.
+            </summary>
+            <remarks>The method adds clones of the convexes.</remarks>
+            <param name="region">The region to add.</param>
+        </member>
+        <member name="M:Spherical.Region.Difference(Spherical.Halfspace)">
+            <summary>
+            Derives the difference of the region and the specified halfspace.
+            </summary>
+            <remarks>Same as intersecting with the inverse of the halfspace.</remarks>
+            <param name="h">The halspace to subtract.</param>
+        </member>
+        <member name="M:Spherical.Region.Difference(Spherical.Convex)">
+            <summary>
+            Derives the difference of the region and the specified convex.
+            </summary>
+            <remarks>The algorithm is
+            <code>X = (I*~h1)|(I*h1*~h2)|(I*h1*h2*~h3)|... , where C=h1*h2*...</code>
+            </remarks>
+            <param name="C">The convex to subtract.</param>
+            <returns>The region of difference.</returns>
+        </member>
+        <member name="M:Spherical.Region.EliminateConvexes(Spherical.CollisionGraph)">
+            <summary>
+            Removes the redundant convexes.
+            </summary>
+            <param name="collision">The collision matrix.</param>
+        </member>
+        <member name="M:Spherical.Region.StitchConvexes">
+            <summary>
+            Stitches together mergable convexes.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.Simplify">
+            <summary>
+            Performs full simplification of the region.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.Simplify(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Performs full simplification of the region.
+            </summary>
+            <param name="simple_simplify">The flag determines whether simple simplification is performed.</param>
+            <param name="eliminate">The flag determines whether to eliminate redundant convexes.</param>
+            <param name="make_disjoint">The flag determines whether to make convexes disjoint.</param>
+            <param name="unify">The flag determines whether to merge convexes if possible.</param>
+        </member>
+        <member name="M:Spherical.Region.Simplify(System.Boolean,System.Boolean,System.Boolean,System.Boolean,Spherical.CollisionGraph)">
+            <summary>
+            Performs full simplification of the region.
+            </summary>
+            <param name="simple_simplify">The flag determines whether simple simplification is performed.</param>
+            <param name="eliminate">The flag determines whether to eliminate redundant convexes.</param>
+            <param name="make_disjoint">The flag determines whether to make convexes disjoint.</param>
+            <param name="unify">The flag determines whether to merge convexes if possible.</param>
+            <param name="collision">The collision matrix of the convexes. If NULL, computed.</param>
+        </member>
+        <member name="M:Spherical.Region.UpdateArea">
+            <summary>
+            Updates the area of the region.
+            </summary>
+            <remarks>It simply adds up the areas of the convexes.</remarks>
+        </member>
+        <member name="M:Spherical.Region.MakeDisjoint(Spherical.CollisionGraph)">
+            <summary>
+            Makes sure the region has disjoint convexes.
+            </summary>
+        </member>
+        <member name="M:Spherical.Region.MecContains(Spherical.Cartesian)">
+            <summary>
+            Determines whether the minimal enclosing circles of the patches
+            contain the specified point.
+            </summary>
+            <param name="x">The unit vector.</param>
+        </member>
+        <member name="M:Spherical.Region.GetNumberOfPatches">
+            <summary>
+            Returns the total number of patches of all convexes.
+            </summary>
+            <returns>The number of patches.</returns>
+        </member>
+        <member name="M:Spherical.Region.GetNumberOfHalfspaces">
+            <summary>
+            Returns the total number of halfspaces of all convexes.
+            </summary>
+            <returns>The number of halfspaces.</returns>
+        </member>
+        <member name="M:Spherical.Region.SmartContains(Spherical.Cartesian)">
+            <summary>
+            Determines whether the region covers the specified point 
+            by first testing the minimal enclosing circles for overlap.
+            </summary>
+            <param name="x">The unit vector.</param>
+        </member>
+        <member name="M:Spherical.Region.SmartContains(Spherical.Cartesian,System.Double,System.Double)">
+            <summary>
+            Determines whether the region covers the specified point 
+            by first testing the minimal enclosing circles for overlap.
+            </summary>
+            <param name="x">The unit vector.</param>
+            <param name="costol">The cosine of the tolerance.</param>
+            <param name="sintol">The sine of the tolerance.</param>
+        </member>
+        <member name="M:Spherical.Region.SmartIntersect(Spherical.Convex)">
+            <summary>
+            Intersects the region with the specified convex by first 
+            testing the minimal circles for overlap.
+            </summary>
+            <param name="convex">The convex to intersect with.</param>
+        </member>
+        <member name="M:Spherical.Region.SmartIntersect(Spherical.Region,System.Boolean)">
+            <summary>
+            Intersects the region with the specified region.
+            </summary>
+            <param name="region">The fully simplified region to intersect.</param>
+            <param name="unify">The flag determines whether to stich convexes of resulting region, if possible.</param>
+            <returns>The region of intersection fully simplified.</returns>
+        </member>
+        <member name="M:Spherical.Region.SmartUnion(Spherical.Region,System.Boolean)">
+            <summary>
+            Derives the union of two simplified regions.
+            </summary>
+            <param name="region">The fully simplified region to union.</param>
+            <param name="unify">The flag determines whether to stich convexes of resulting region, if possible.</param>
+        </member>
+        <member name="M:Spherical.Region.SmartUnion(Spherical.Region)">
+            <summary>
+            Derives the union of two simplified regions.
+            </summary>
+            <param name="region">The fully simplified region to union.</param>
+        </member>
+        <member name="M:Spherical.Region.SmartUnion(Spherical.Region,System.Boolean,System.Boolean)">
+            <summary>
+            Derives the union of two simplified regions.
+            </summary>
+            <param name="region">The fully simplified region to union.</param>
+            <param name="eliminate">The flag determines whether to eliminate convexes, if possible.</param>
+            <param name="unify">The flag determines whether to stich convexes of resulting region, if possible.</param>
+        </member>
+        <member name="M:Spherical.Region.SmartDifference(Spherical.Convex)">
+            <summary>
+            Derives the difference of the region and the specified convex.
+            </summary>
+            <param name="c">The convex.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Region.DoesCollide(Spherical.Convex)">
+            <summary>
+            Determines whether the region collides with the specified convex.
+            </summary>
+            <param name="c">The convex.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Region.Parse(System.String,System.Boolean)">
+            <summary>
+            Parses string "REGION {CONVEX ...}" into a region.
+            </summary>
+            <param name="repr">The string representation of the region.</param>
+            <param name="normalize">The flag determines whether to normalize vector while reading.</param>
+            <returns>The read region.</returns>
+        </member>
+        <member name="M:Spherical.Region.ToString(System.String)">
+            <summary>
+            Returns a string representation.
+            </summary>
+            <param name="sep">The separator string.</param>
+        </member>
+        <member name="M:Spherical.Region.ToString">
+            <summary>
+            Returns the string representation.
+            </summary>
+            <remarks>
+            The format is: <c>REGION CONVEX... CONVEX...</c>
+            </remarks>
+        </member>
+        <member name="M:Spherical.Region.Format">
+            <summary>
+            Returns a string representation with the CARTESIAN keyword for compliance to legacy code.
+            </summary>
+        </member>
+        <member name="F:Spherical.Region.Revision">
+            <summary>
+            Revision from CVS.
+            </summary>
+        </member>
+        <member name="P:Spherical.Region.ConvexList">
+            <summary>
+            Gets a readonly collection of the convexes.
+            </summary>
+        </member>
+        <member name="P:Spherical.Region.Area">
+            <summary>
+            Gets the area of the region.
+            </summary>
+            <remarks>The return value is NULL, unless simplified.</remarks>
+        </member>
+        <member name="P:Spherical.Region.XmlSerialization">
+            <summary>
+            Used only by the XML serializer.
+            </summary>
+        </member>
+        <member name="P:Spherical.Region.Simplified">
+            <summary>
+            Gets value determining whether all convexes are simplified.
+            </summary>
+        </member>
+        <member name="P:Spherical.Region.Capacity">
+            <summary>
+            Gets or sets the capacity of the convex list.
+            </summary>
+        </member>
+        <member name="T:Spherical.Cartesian">
+            <summary>
+            Represents a 3D cartesian vector.
+            </summary>
+            <example>
+            This is how to compute the 3D cross product of two vectors and normalize it:
+            <code>
+            Cartesian r = new Cartesian(1,1,0,true);
+            Cartesian x = new Cartesian(1,0,0,false);
+            Cartesian z = x.Cross(r,true);</code>
+            </example>
+            <remarks>
+            <para>
+            A unit vector describes a point on the surface of the unit sphere. 
+            These concepts are used interchangeably throughout this project.
+            </para>
+            <para>
+            Cartesian is a mutable value type.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Spherical.Cartesian.#ctor(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Creates a vector from coordinates (x,y,z).
+            </summary>
+            <param name="x">Coordinate of vector</param>
+            <param name="y">Coordinate of vector</param>
+            <param name="z">Coordinate of vector</param>
+            <param name="normalize">The flag determines whether vector is normalized.</param>
+        </member>
+        <member name="M:Spherical.Cartesian.#ctor(Spherical.Cartesian,System.Boolean)">
+            <summary>
+            Creates a vector from another instance.
+            </summary>
+            <param name="p">The input vector</param>
+            <param name="normalize">The flag determines whether vector is normalized.</param>
+        </member>
+        <member name="M:Spherical.Cartesian.#ctor(System.Double,System.Double)">
+            <summary>
+            Creates a unit vector from angular coordinates (RA, Dec).
+            </summary>
+            <param name="ra">Right Ascension (in degrees)</param>
+            <param name="dec">Declination (in degrees)</param>
+            <remarks>The equations of the conversion are
+            <code>
+            x = Cos(Dec)*Cos(RA)
+            y = Cos(Dec)*Sin(RA)
+            z = Sin(Dec)
+            </code>
+            </remarks>
+        </member>
+        <member name="M:Spherical.Cartesian.Get(System.Int32)">
+            <summary>
+            Get the ith component of this vector.
+            </summary>
+            <param name="i">the index of the desired component</param>
+            <returns>value of the ith component</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Set(Spherical.Cartesian,System.Boolean)">
+            <summary>
+            Sets the vector from another.
+            </summary>
+            <param name="v">Input vector</param>
+            <param name="normalize">Flag determines whether the vector should be normalized</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Set(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Sets the vector from (x,y,z)
+            </summary>
+            <param name="x">The X coordinate.</param>
+            <param name="y">The Y coordinate.</param>
+            <param name="z">The Z coordinate.</param>
+            <param name="normalize">Flag determines whether the vector should be normalized</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Set(System.Double,System.Double)">
+            <summary>
+            Sets the vector to point from angular position (RA,Dec).
+            </summary>
+            <param name="ra">Right Ascension</param>
+            <param name="dec">Declination</param>
+            <remarks>The equations of the conversion are
+            <code>
+            x = Cos(Dec)*Cos(RA)
+            y = Cos(Dec)*Sin(RA)
+            z = Sin(Dec)
+            </code>
+            </remarks>
+        </member>
+        <member name="M:Spherical.Cartesian.SetMiddlePoint(Spherical.Cartesian,Spherical.Cartesian,System.Boolean)">
+            <summary>
+            Sets the vector to be the sum of the specified points.
+            </summary>
+            <param name="p">Input vector</param>
+            <param name="q">Input vector</param>
+            <param name="normalize">Flag determines whether the result is normalized</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Normalize">
+            <summary>
+            Normalizes the vector.
+            </summary>
+            <returns>The original length of the vector</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Mirror">
+            <summary>
+            Mirrors the vector.
+            </summary>
+            <remarks>Coordinates are multiplied by -1.</remarks>
+        </member>
+        <member name="M:Spherical.Cartesian.Mirrored">
+            <summary>
+            Returns a mirrored vector.
+            </summary>
+        </member>
+        <member name="M:Spherical.Cartesian.Scale(System.Double)">
+            <summary>
+            Multiplies the coordinates by the specified amount.
+            </summary>
+            <param name="s">The multiplication factor.</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Scaled(System.Double)">
+            <summary>
+            Returns a vector that is scaled by the specified amount.
+            </summary>
+            <param name="s">The multiplication factor.</param>
+            <returns>The scaled vector.</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Tangent(Spherical.Cartesian@,Spherical.Cartesian@)">
+            <summary>
+            Returns the tangent vectors pointing to west and north.
+            </summary>
+            <param name="west">The west vector.</param>
+            <param name="north">The north vector.</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Dot(Spherical.Cartesian)">
+            <summary>
+            Computes the 3D dot product of the two vectors
+            </summary>
+            <param name="p">Input vector</param>
+            <returns>Dot product</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.GetMiddlePoint(Spherical.Cartesian,System.Boolean)">
+            <summary>
+            Returns middle point of two points (this and that)
+            </summary>
+            <param name="that">The other input point</param>
+            <param name="normalize">Flag determines whether the result is normalized</param>
+            <returns>Middle point</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Add(Spherical.Cartesian)">
+            <summary>
+            Adds another vector 
+            </summary>
+            <param name="that">Input vector</param>
+            <returns>Sum of the vectors (this and that)</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Sub(Spherical.Cartesian)">
+            <summary>
+            Subtracts another vector
+            </summary>
+            <param name="that">Input vector</param>
+            <returns>Result</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Cross(Spherical.Cartesian,System.Boolean)">
+            <summary>
+            Computes the cross product with another vector
+            </summary>
+            <param name="p">Input vector</param>
+            <param name="normalize">Flag determines whether the result is normalized</param>
+            <returns>Cross product</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.AngleInRadian(Spherical.Cartesian)">
+            <summary>
+            Calculates the angle to the specified point on the unit sphere
+            </summary>
+            <param name="p">Input unit vector</param>
+            <returns>Angle in radians</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Distance(Spherical.Cartesian)">
+            <summary>
+            Calculates Euclidean distance between two points.
+            </summary>
+            <param name="p">The other vector.</param>
+            <returns>The distance.</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.AngleInDegree(Spherical.Cartesian)">
+            <summary>
+            Calculates the angle to the specified point on the unit sphere
+            </summary>
+            <param name="p">Input unit vector</param>
+            <returns>Angle in degrees</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.AngleInArcmin(Spherical.Cartesian)">
+            <summary>
+            Calculates the angle to the specified point on the unit sphere
+            </summary>
+            <param name="p">Input unit vector</param>
+            <returns>Angle in arcminutes</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Same(Spherical.Cartesian)">
+            <summary>
+            Determines whether two unit vectors are identical.
+            </summary>
+            <param name="that">The unit vector to test.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Cartesian.TripleProduct(Spherical.Cartesian,Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Computes the triple product of three vectors.
+            </summary>
+            <remarks>The triple product is the volume of the parallelepipedon defined by the input vectors.</remarks>
+            <param name="p1">Input vector 1.</param>
+            <param name="p2">Input vector 2.</param>
+            <param name="p3">Input vector 3.</param>
+            <returns>The triple product.</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Xyz2Radec(System.Double,System.Double,System.Double,System.Double@,System.Double@)">
+            <summary>
+            Converts normalized (x, y, z) coordinates to (RA, Dec) angles.
+            </summary>
+            <param name="x">Coordinate</param>
+            <param name="y">Coordinate</param>
+            <param name="z">Coordinate</param>
+            <param name="ra">Right Ascension in degrees (out)</param>
+            <param name="dec">Declination in degrees (out)</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Xyz2RadecRadian(System.Double,System.Double,System.Double,System.Double@,System.Double@)">
+            <summary>
+            Converts normalized (x, y, z) coordinates to (RA, Dec) angles.
+            </summary>
+            <param name="x">Coordinate</param>
+            <param name="y">Coordinate</param>
+            <param name="z">Coordinate</param>
+            <param name="ra">Right Ascension in radians (out)</param>
+            <param name="dec">Declination in radians (out)</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Radec2Xyz(System.Double,System.Double,System.Double@,System.Double@,System.Double@)">
+            <summary>
+            Converts (RA, Dec) to (x, y, z).
+            </summary>
+            <param name="ra">Right Ascension in degrees</param>
+            <param name="dec">Declination in degrees</param>
+            <param name="x">Coordinate (out)</param>
+            <param name="y">Coordinate (out)</param>
+            <param name="z">Coordinate (out)</param>
+            <remarks>The equations of the conversion are essentially as below
+            <code>
+            x = Cos(Dec)*Cos(RA)
+            y = Cos(Dec)*Sin(RA)
+            z = Sin(Dec)
+            </code>
+            </remarks>
+        </member>
+        <member name="M:Spherical.Cartesian.Cartesian2Radec(Spherical.Cartesian,System.Double@,System.Double@)">
+            <summary>
+            Converts a unit vector to (RA, Dec) angles.
+            </summary>
+            <param name="p">Input point</param>
+            <param name="ra">Right Ascension</param>
+            <param name="dec">Declination</param>
+        </member>
+        <member name="M:Spherical.Cartesian.Cartesian2RadecRadian(Spherical.Cartesian,System.Double@,System.Double@)">
+            <summary>
+            Converts a unit vector to (RA, Dec) angles.
+            </summary>
+            <param name="p">Input point</param>
+            <param name="ra">Right Ascension</param>
+            <param name="dec">Declination</param>
+        </member>
+        <member name="M:Spherical.Cartesian.CenterOfMass(System.Collections.Generic.IEnumerable{Spherical.Cartesian},System.Boolean)">
+            <summary>
+            Computes the center of mass of specified vectors.
+            </summary>
+            <param name="plist">The list of vectors.</param>
+            <param name="normalize">The flag determines whether the result is normalized.</param>
+        </member>
+        <member name="M:Spherical.Cartesian.MinimalEnclosingCircleOptimalSlow(System.Collections.Generic.IList{Spherical.Cartesian})">
+            <summary>
+            Computes the minimal enclosing circle of a list of points.
+            </summary>
+            <remarks>
+            Brute-force algorithm scales with N^4 (means slow).
+            </remarks>
+        </member>
+        <member name="M:Spherical.Cartesian.MinimalEnclosingCircle(System.Collections.Generic.IList{Spherical.Cartesian})">
+            <summary>
+            Computes the minimal enclosing circle of a list of points.
+            </summary>
+            <param name="plist"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Cartesian.FindBoundingSphere(System.Collections.Generic.IList{Spherical.Cartesian},Spherical.Cartesian@,System.Double@)">
+            <summary>
+            Computes the near-optimal bounding sphere of a list of points.
+            </summary>
+            <remarks>Based on code by Jack Ritter from Graphics Gems, Academic Press, 1990</remarks>
+            <param name="plist"></param>
+            <param name="center"></param>
+            <param name="radius"></param>
+        </member>
+        <member name="M:Spherical.Cartesian.GirardArea(System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the Girard area.
+            </summary>
+            <remarks>It uses the most robust formula.</remarks>
+            <param name="a">The first side of the triangle in radians.</param>
+            <param name="b">The second side of the triangle in radians.</param>
+            <param name="c">The third side of the triangle in radians.</param>
+            <returns>The area in steradians.</returns>
+        </member>
+        <member name="M:Spherical.Cartesian.SphericalTriangleArea(Spherical.Cartesian,Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Computes the area of the triangle defined by three points connected with great circles.
+            </summary>
+            <param name="p1">Input unit vector</param>
+            <param name="p2">Input unit vector</param>
+            <param name="p3">Input unit vector</param>
+            <returns>The area</returns>
+        </member>
+        <member name="F:Spherical.Cartesian.NaN">
+            <summary>
+            Is a vector of NaN coordinates.
+            </summary>
+        </member>
+        <member name="F:Spherical.Cartesian.Xaxis">
+            <summary>
+            Is the unit vector of the X axis: (1,0,0).
+            </summary>
+        </member>
+        <member name="F:Spherical.Cartesian.Yaxis">
+            <summary>
+            Is the unit vector of the Y axis: (0,1,0).
+            </summary>
+        </member>
+        <member name="F:Spherical.Cartesian.Zaxis">
+            <summary>
+            Is the unit vector of the Z axis: (0,0,1).
+            </summary>
+        </member>
+        <member name="M:Spherical.Cartesian.Equals(Spherical.Cartesian)">
+            <summary>
+            Determines whether the the vector is equal to the specified vector.
+            </summary>
+        </member>
+        <member name="M:Spherical.Cartesian.Equals(System.Object)">
+            <summary>
+            Determines whether the vector is equal to the specified object.
+            </summary>
+        </member>
+        <member name="M:Spherical.Cartesian.GetHashCode">
+            <summary>
+            Provides hashcode for the vector.
+            </summary>
+        </member>
+        <member name="M:Spherical.Cartesian.op_Equality(Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Determines whether two vectors are the same.
+            </summary>
+        </member>
+        <member name="M:Spherical.Cartesian.op_Inequality(Spherical.Cartesian,Spherical.Cartesian)">
+            <summary>
+            Determines whether two vectors are different.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+        </member>
+        <member name="M:Spherical.Cartesian.IsNaN(Spherical.Cartesian)">
+            <summary>
+            Determines whether the coordinates of the vectors are NaN.
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Cartesian.Parse(System.String,System.Boolean)">
+            <summary>
+            Parses an input string of "x y z" into a Cartesian 
+            </summary>
+            <param name="repr"></param>
+            <param name="normalize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Cartesian.ToString">
+            <summary>
+            String representation is the three coordinates: x y z
+            </summary>
+            <remarks>Coordinates are written with a precision to reconstruct the same binary representation when read back in</remarks>
+        </member>
+        <member name="F:Spherical.Cartesian.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="P:Spherical.Cartesian.X">
+            <summary>
+            Gets or sets the X coordinate of the vector.
+            </summary>
+        </member>
+        <member name="P:Spherical.Cartesian.Y">
+            <summary>
+            Gets or sets the Y coordinate of the vector.
+            </summary>
+        </member>
+        <member name="P:Spherical.Cartesian.Z">
+            <summary>
+            Gets or sets the Z coordinate of the vector.
+            </summary>
+        </member>
+        <member name="P:Spherical.Cartesian.Norm">
+            <summary>
+            Gets the length of the vector.
+            </summary>
+        </member>
+        <member name="P:Spherical.Cartesian.Norm2">
+            <summary>
+            Gets the square of the length of the vector.
+            </summary>
+        </member>
+        <member name="P:Spherical.Cartesian.RA">
+            <summary>
+            Gets the angular coordinate RA, 
+            which is computed on the fly.
+            </summary>
+        </member>
+        <member name="P:Spherical.Cartesian.Dec">
+            <summary>
+            Gets the angular coordinate Dec, 
+            which is computed on the fly.
+            </summary>
+        </member>
+        <member name="T:Spherical.IO.RegionWriter">
+            <summary>
+            Implements binary serialization of regions and the kind.
+            </summary>
+            <example>
+            An example might look like this
+            <code>
+            FileStream f = new FileStream("north.bin", FileMode.Create);
+            RegionWriter w = new RegionWriter(f);
+            w.Write(new Region(new Halfspace(Cartesian.Zaxis,0,1));
+            </code>
+            </example>
+        </member>
+        <member name="F:Spherical.IO.RegionWriter.VersionNumber">
+            <summary>
+            The version number of binary formatting
+            </summary>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.#ctor(System.IO.Stream)">
+            <summary>
+            Creates writer for specified stream
+            </summary>
+            <param name="output"></param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.Cartesian)">
+            <summary>
+            Writes the specified vector.
+            </summary>
+            <param name="c">The vector.</param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.Halfspace)">
+            <summary>
+            Writes the specified halfspace.
+            </summary>
+            <param name="h">The halfspace.</param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.Arc)">
+            <summary>
+            Writes the specified arc.
+            </summary>
+            <param name="a">The arc</param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.Patch)">
+            <summary>
+            Writes the specified patch.
+            </summary>
+            <param name="p"></param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.Convex)">
+            <summary>
+            Writes the specified convex.
+            </summary>
+            <param name="c">The convex.</param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.Region)">
+            <summary>
+            Writes the specified region.
+            </summary>
+            <param name="region">The region.</param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.PatchPart)">
+            <summary>
+            Writes the specified patchpart.
+            </summary>
+            <param name="p"></param>
+        </member>
+        <member name="M:Spherical.IO.RegionWriter.Write(Spherical.Outline)">
+            <summary>
+            Writes the specified outline.
+            </summary>
+            <param name="outline">The outline.</param>
+        </member>
+        <member name="F:Spherical.IO.RegionWriter.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="T:Spherical.IO.RegionReader">
+            <summary>
+            Reads description into region.
+            </summary>
+        </member>
+        <member name="M:Spherical.IO.RegionReader.#ctor(System.IO.Stream)">
+            <summary>
+            Creates the region reader with a specified stream
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:Spherical.IO.RegionReader.ReadRegion">
+            <summary>
+            Reads a region
+            </summary>
+        </member>
+        <member name="M:Spherical.IO.RegionReader.Spherical#IO#IRegionReader#ReadRegion(Spherical.Region)">
+            <summary>
+            Reads a region into the specified reference.
+            </summary>
+            <param name="r"></param>
+        </member>
+        <member name="F:Spherical.IO.RegionReader.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="T:Spherical.PatchPart">
+            <summary>
+            Represents a segment of an outline.
+            </summary>
+        </member>
+        <member name="M:Spherical.PatchPart.#ctor">
+            <summary>
+            Creates an empty instance.
+            </summary>
+        </member>
+        <member name="M:Spherical.PatchPart.ToString">
+            <summary>
+            Returns the string representation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.PatchPart.ContainsOnEdge(Spherical.Cartesian)">
+            <summary>
+            Determines whether specified point is on the edge.
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Spherical.PatchPart.ArcList">
+            <summary>
+            Gets the list of arcs.
+            </summary>
+        </member>
+        <member name="P:Spherical.PatchPart.Mec">
+            <summary>
+            Gets the minimcal enclosing circle of the patch.
+            </summary>
+        </member>
+        <member name="P:Spherical.PatchPart.Length">
+            <summary>
+            Gets the circumference.
+            </summary>
+        </member>
+        <member name="P:Spherical.PatchPart.Spherical#IPatch#ArcList">
+            <summary>
+            Gets the list of arcs.
+            </summary>
+        </member>
+        <member name="T:Spherical.Outline">
+            <summary>
+            Represents the outline of a region.
+            </summary>
+        </member>
+        <member name="M:Spherical.Outline.EnumIPatches">
+            <summary>
+            Yields all IPatch
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Spherical.Outline.#ctor(System.Collections.Generic.IEnumerable{Spherical.Patch})">
+            <summary>
+            Creates an outline.
+            </summary>
+            <param name="patches">The patch to copy.</param>
+        </member>
+        <member name="M:Spherical.Outline.Build">
+            <summary>
+            Reduces the arcs to represent the outline.
+            </summary>
+        </member>
+        <member name="M:Spherical.Outline.ToString">
+            <summary>
+            Returns the string representation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Spherical.Outline.Revision">
+            <summary>
+            Revision from CVS
+            </summary>
+        </member>
+        <member name="P:Spherical.Outline.PartList">
+            <summary>
+            Gets the list of segments.
+            </summary>
+        </member>
+        <member name="P:Spherical.Outline.Length">
+            <summary>
+            Gets the circumference of the outline in radians.
+            </summary>
+        </member>
+        <member name="T:Spherical.Nodes.TreeNode`1">
+            <summary>
+            Represents a node in a tree.
+            </summary>
+            <typeparam name="T">The data type.</typeparam>
+        </member>
+        <member name="M:Spherical.Nodes.TreeNode`1.#ctor(`0)">
+            <summary>
+            Creates a node.
+            </summary>
+            <param name="data">The data.</param>
+        </member>
+        <member name="M:Spherical.Nodes.TreeNode`1.AddChild(Spherical.Nodes.TreeNode{`0})">
+            <summary>
+            Adds a tree node to the link collection.
+            </summary>
+            <param name="node">The node.</param>
+            <remarks>Sets the parent to be this.</remarks>
+        </member>
+        <member name="M:Spherical.Nodes.TreeNode`1.ToString">
+            <summary>
+            Returns the string representation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Spherical.Nodes.TreeNode`1.Parent">
+            <summary>
+            Gets the parent node.
+            </summary>
+        </member>
+        <member name="P:Spherical.Nodes.TreeNode`1.Root">
+            <summary>
+            Gets the root.
+            </summary>
+        </member>
+        <member name="P:Spherical.Nodes.TreeNode`1.DepthFirst">
+            <summary>
+            Gets nodes from depth-first traversal.
+            </summary>
+        </member>
+        <member name="P:Spherical.Nodes.TreeNode`1.BreadthFirst">
+            <summary>
+            Gets nodes from breadth-first traversal.
+            </summary>
+        </member>
+        <member name="P:Spherical.Nodes.TreeNode`1.Leaves">
+            <summary>
+            Gets all leaves.
+            </summary>
+        </member>
+        <member name="P:Spherical.Nodes.TreeNode`1.LeavesDepthFirst">
+            <summary>
+            Gets all leaves from depth-first traversal.
+            </summary>
+        </member>
+        <member name="T:Spherical.InternalErrorException">
+            <summary>
+            Represents errors that occur internal to SphericalLib.
+            </summary>
+        </member>
+        <member name="M:Spherical.InternalErrorException.#ctor(System.String)">
+            <summary>
+            Initializes an instance with specified message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Spherical.InternalErrorException.#ctor(System.String,Spherical.Convex)">
+            <summary>
+            Initializes an instance with specified message.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="c">The convex.</param>
+        </member>
+        <member name="T:Spherical.CollisionGraph">
+            <summary>
+            Represents the collisions of convexes.
+            </summary>
+        </member>
+        <member name="M:Spherical.CollisionGraph.#ctor">
+            <summary>
+            Creates an empty instance.
+            </summary>
+        </member>
+        <member name="M:Spherical.CollisionGraph.#ctor(System.Int32)">
+            <summary>
+            Creates an empty instance.
+            </summary>
+            <param name="capacity">The initial capacity.</param>
+        </member>
+        <member name="M:Spherical.CollisionGraph.#ctor(System.Collections.Generic.IList{Spherical.Nodes.Node{Spherical.Convex}})">
+            <summary>
+            Creates an instance.
+            </summary>
+            <param name="nodes">The collection of nodes to copy.</param>
+        </member>
+        <member name="M:Spherical.CollisionGraph.#ctor(System.Collections.Generic.IList{Spherical.Convex})">
+            <summary>
+            Creates an instance.
+            </summary>
+            <param name="convexList">The convexes for which the collisions are to be calculated.</param>
+        </member>
+    </members>
+</doc>

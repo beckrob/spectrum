@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73D0F3D5-DB1A-48EC-BFC1-85BD7C0347BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jhu.SpecSvc</RootNamespace>
+    <AssemblyName>Jhu.SpecSvc.SpectrumLib</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\..\lib\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="SphericalHtm">
+      <HintPath>..\..\lib\SphericalHtm.dll</HintPath>
+    </Reference>
+    <Reference Include="SphericalLib">
+      <HintPath>..\..\lib\SphericalLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alglib\alglibinternal.cs" />
+    <Compile Include="Alglib\alglibmisc.cs" />
+    <Compile Include="Alglib\ap.cs" />
+    <Compile Include="Alglib\dataanalysis.cs" />
+    <Compile Include="Alglib\diffequations.cs" />
+    <Compile Include="Alglib\fasttransforms.cs" />
+    <Compile Include="Alglib\integration.cs" />
+    <Compile Include="Alglib\interpolation.cs" />
+    <Compile Include="Alglib\linalg.cs" />
+    <Compile Include="Alglib\optimization.cs" />
+    <Compile Include="Alglib\solvers.cs" />
+    <Compile Include="Alglib\specialfunctions.cs" />
+    <Compile Include="Alglib\statistics.cs" />
+    <Compile Include="Alglib\Wrappers\BLEICMinimizer.cs" />
+    <Compile Include="Alglib\Wrappers\Delegates.cs" />
+    <Compile Include="Alglib\Wrappers\Enum.cs" />
+    <Compile Include="Alglib\Wrappers\FunctionIntegrator.cs" />
+    <Compile Include="Alglib\Wrappers\FunctionMinimizer.cs" />
+    <Compile Include="Alglib\Wrappers\FunctionOptimizationProblem.cs" />
+    <Compile Include="Alglib\Wrappers\LevenbergMarquardtMinimizer.cs" />
+    <Compile Include="Alglib\Wrappers\ScalarFunctionOptimizationProblem.cs" />
+    <Compile Include="Alglib\Wrappers\SmoothFunctionIntegrator.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="SpectrumLib\AstroUtil.cs" />
+    <Compile Include="SpectrumLib\ContinuumFit.cs" />
+    <Compile Include="SpectrumLib\SpectralLineDefinition.cs" />
+    <Compile Include="SpectrumLib\Magnitudes.cs" />
+    <Compile Include="SpectrumLib\LineFit.cs" />
+    <Compile Include="SpectrumLib\Enum.cs" />
+    <Compile Include="SpectrumLib\PcaParameters.cs" />
+    <Compile Include="SpectrumLib\PcaResults.cs" />
+    <Compile Include="SpectrumLib\SpectralIndexDefinition.cs" />
+    <Compile Include="SpectrumLib\SpectralIndices.cs" />
+    <Compile Include="SpectrumLib\Spectrum.cs" />
+    <Compile Include="SpectrumLib\SpectrumException.cs" />
+    <Compile Include="SpectrumLib\SynthMagResults.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Fit.cs" />
+    <Compile Include="Util\Functions.cs" />
+    <Compile Include="Util\Grid.cs" />
+    <Compile Include="Util\Integral.cs" />
+    <Compile Include="Util\Libs\AP.cs" />
+    <Compile Include="Util\Libs\LevenbergMarquardt.cs" />
+    <Compile Include="Util\Vector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jhu.SpecSvc.FilterLib\Jhu.SpecSvc.FilterLib.csproj">
+      <Project>{AB174205-D7D0-4BE6-AF11-D7BC619C054A}</Project>
+      <Name>Jhu.SpecSvc.FilterLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jhu.SpecSvc.Schema\Jhu.SpecSvc.Schema.csproj">
+      <Project>{4AFBD644-DD6E-4661-A488-A0975F4AC723}</Project>
+      <Name>Jhu.SpecSvc.Schema</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
