@@ -75,6 +75,61 @@ namespace Jhu.SpecSvc.IO
             return ssa.Spectra.Cast<Spectrum>();
         }
 
+        public override IEnumerable<Spectrum> FindSpectrum(AdvancedSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(AllSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(FolderSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(HtmRangeSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(IdSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(ModelSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(ObjectSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(RedshiftSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(SimilarSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(SqlSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Spectrum GetSpectrum(Guid userGuid, string spectrumId, bool loadPoints, string[] pointsMask, bool loadDetails)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
 #region Revision History

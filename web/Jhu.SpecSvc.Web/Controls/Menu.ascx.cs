@@ -7,6 +7,7 @@ namespace Jhu.SpecSvc.Web.Controls
         protected void Page_Load(object sender, EventArgs e)
         {
             Home.NavigateUrl = Jhu.SpecSvc.Web.Default.GetUrl();
+            Search.NavigateUrl = Jhu.SpecSvc.Web.Search.Default.GetUrl();
             /*Schema.NavigateUrl = Jhu.Graywulf.Web.UI.Schema.Default.GetUrl();
             Query.NavigateUrl = Jhu.Graywulf.Web.UI.Query.Default.GetUrl();
             Jobs.NavigateUrl = Jhu.Graywulf.Web.UI.Jobs.Default.GetUrl();

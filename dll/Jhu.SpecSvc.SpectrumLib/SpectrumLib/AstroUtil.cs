@@ -16,28 +16,52 @@ using System;
 
 namespace Jhu.SpecSvc.SpectrumLib
 {
-	/// <summary>
-	/// Summary description for AstroUtil.
-	/// </summary>
-	public static class AstroUtil
-	{
-		/// Converts ra into decimal degrees.
-		/// </summary>
-		public static double hms2deg(String s) 
-		{	
-			string[] a = s.Split(':');
-			double v = 15.0 * Convert.ToDouble(a[0]) + Convert.ToDouble(a[1])/ 4.0 + Convert.ToDouble(a[2]) / 240.0;
+    /// <summary>
+    /// Summary description for AstroUtil.
+    /// </summary>
+    public static class AstroUtil
+    {
+        public static bool TryParseRaDec(string radec, out double ra, out double dec)
+        {
+            // split into multiple parts
+            var parts = radec.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-			return v;
-		}
+            if (parts.Length != 2)
+            {
+                ra = dec = 0;
+                return false;
+            }
 
-		public static double rastring2deg(string s)
-		{
-			if (s.IndexOf(":") < 0)
-				return double.Parse(s);
-			else
-				return hms2deg(s);
-		}
+            // Try parse as decimals
+            if (double.TryParse(parts[0], out ra) &&
+                double.TryParse(parts[1], out dec))
+            {
+                return true;
+            }
+
+            // Try as sexagesimals
+            ra = hms2deg(parts[0]);
+            dec = dms2deg(parts[1]);
+            return true;
+        }
+
+        /// Converts ra into decimal degrees.
+        /// </summary>
+        public static double hms2deg(String s)
+        {
+            string[] a = s.Split(':');
+            double v = 15.0 * Convert.ToDouble(a[0]) + Convert.ToDouble(a[1]) / 4.0 + Convert.ToDouble(a[2]) / 240.0;
+
+            return v;
+        }
+
+        public static double rastring2deg(string s)
+        {
+            if (s.IndexOf(":") < 0)
+                return double.Parse(s);
+            else
+                return hms2deg(s);
+        }
 
         public static string deg2hms(double deg)
         {
@@ -50,32 +74,32 @@ namespace Jhu.SpecSvc.SpectrumLib
                 sec.ToString("00.00");
         }
 
-		/// <summary>
-		/// Converts dec into decimal degrees.
-		/// </summary>
-		public static double dms2deg(String s) 
-		{	
-			string[] a = s.Split(':');
-			double v; 
+        /// <summary>
+        /// Converts dec into decimal degrees.
+        /// </summary>
+        public static double dms2deg(String s)
+        {
+            string[] a = s.Split(':');
+            double v;
 
-			if (s.LastIndexOf("-") == 0)
-				v = -(-1.0 * Convert.ToDouble(a[0]) + 
-					Convert.ToDouble(a[1]) / 60.0   + 
-					Convert.ToDouble(a[2]) / 3600.0);
-			else
-				v = (Convert.ToDouble(a[0])         + 
-					Convert.ToDouble(a[1]) / 60.0   + 
-					Convert.ToDouble(a[2]) / 3600.0 );
-			return v;			
-		}
+            if (s.LastIndexOf("-") == 0)
+                v = -(-1.0 * Convert.ToDouble(a[0]) +
+                    Convert.ToDouble(a[1]) / 60.0 +
+                    Convert.ToDouble(a[2]) / 3600.0);
+            else
+                v = (Convert.ToDouble(a[0]) +
+                    Convert.ToDouble(a[1]) / 60.0 +
+                    Convert.ToDouble(a[2]) / 3600.0);
+            return v;
+        }
 
-		public static double decstring2deg(string s)
-		{
-			if (s.IndexOf(":") < 0)
-				return double.Parse(s);
-			else
-				return dms2deg(s);
-		}
+        public static double decstring2deg(string s)
+        {
+            if (s.IndexOf(":") < 0)
+                return double.Parse(s);
+            else
+                return dms2deg(s);
+        }
 
         public static string deg2dms(double deg)
         {
@@ -145,7 +169,7 @@ namespace Jhu.SpecSvc.SpectrumLib
             }
         }
 
-	}
+    }
 }
 #region Revision History
 /* Revision History

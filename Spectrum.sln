@@ -68,6 +68,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "voservices.net", "voservice
 		config\voservices.net\web.config = config\voservices.net\web.config
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dev.voservices.net", "dev.voservices.net", "{DA3A6BAC-6BB8-4CF8-B0BE-A22BA9B29789}"
+	ProjectSection(SolutionItems) = preProject
+		config\dev.voservices.net\activities.config = config\dev.voservices.net\activities.config
+		config\dev.voservices.net\cluster.config = config\dev.voservices.net\cluster.config
+		config\dev.voservices.net\connectionStrings.config = config\dev.voservices.net\connectionStrings.config
+		config\dev.voservices.net\domain.config = config\dev.voservices.net\domain.config
+		config\dev.voservices.net\federation.config = config\dev.voservices.net\federation.config
+		config\dev.voservices.net\mailSettings.config = config\dev.voservices.net\mailSettings.config
+		config\dev.voservices.net\remoteService.config = config\dev.voservices.net\remoteService.config
+		config\dev.voservices.net\scheduler.config = config\dev.voservices.net\scheduler.config
+		config\dev.voservices.net\web.config = config\dev.voservices.net\web.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,7 +129,6 @@ Global
 		{7CB2799F-5B60-4CE9-A71F-1B3C8C868EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71599792-21CC-4E63-AFB5-2AFBDB3DF418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71599792-21CC-4E63-AFB5-2AFBDB3DF418}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71599792-21CC-4E63-AFB5-2AFBDB3DF418}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{71599792-21CC-4E63-AFB5-2AFBDB3DF418}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71599792-21CC-4E63-AFB5-2AFBDB3DF418}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71599792-21CC-4E63-AFB5-2AFBDB3DF418}.Release|Any CPU.Deploy.0 = Release|Any CPU
@@ -147,5 +159,6 @@ Global
 		{7CB2799F-5B60-4CE9-A71F-1B3C8C868EDC} = {BBFB9E02-070E-463D-AAFE-3319A24F7EBF}
 		{47D7A028-1739-4ABE-A45C-0E968D7BE94D} = {7D0C3971-0192-41D5-9BAD-155E0B4F7219}
 		{CA015183-73FA-485F-96DF-DF6C0B72A68F} = {7D0C3971-0192-41D5-9BAD-155E0B4F7219}
+		{DA3A6BAC-6BB8-4CF8-B0BE-A22BA9B29789} = {7D0C3971-0192-41D5-9BAD-155E0B4F7219}
 	EndGlobalSection
 EndGlobal

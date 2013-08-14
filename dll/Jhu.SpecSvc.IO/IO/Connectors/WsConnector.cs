@@ -106,6 +106,33 @@ namespace Jhu.SpecSvc.IO
             return search.FindSpectrum_Similar(par);
         }
 
+        public override IEnumerable<Spectrum> FindSpectrum(SqlSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(HtmRangeSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(ObjectSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(ModelSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(AllSearchParameters par)
+        {
+            throw new NotImplementedException();
+        }
+
+        //
+
         public override long SaveSpectrum(Spectrum spec, Guid userGuid)
         {
             spec.UserGuid = userGuid;

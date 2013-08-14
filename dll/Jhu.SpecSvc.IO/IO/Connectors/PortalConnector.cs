@@ -1,17 +1,3 @@
-#region Written by László Dobos (dobos@complex.elte.hu)
-/*
- * 
- * VoService.Spectrum.IO classes are designed for persisting
- * astonomical spectra in different storage systems
- * 
- * See bottom of file for revision history
- * 
- * Current revision:
- *   ID:          $Id: PortalConnector.cs,v 1.4 2008/09/11 17:21:35 dobos Exp $
- *   Revision:    $Revision: 1.4 $
- *   Date:        $Date: 2008/09/11 17:21:35 $
- */
-#endregion
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +6,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Xml.Serialization;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.IO
@@ -28,34 +16,22 @@ namespace Jhu.SpecSvc.IO
     {
         #region Member variables
 
-        private SqlConnection cn;
-        private SqlTransaction tn;
-
-        private List<Exception> exceptions;
-
-        // remove : private List<ConnectorBase> connectorCache;
+        private SqlConnection databaseConnection;
+        private SqlTransaction databaseTransaction;
 
         #endregion
         #region Properties
 
         public SqlConnection DatabaseConnection
         {
-            get { return this.cn; }
-            set { this.cn = value; }
+            get { return this.databaseConnection; }
+            set { this.databaseConnection = value; }
         }
 
         public SqlTransaction DatabaseTransaction
         {
-            get { return this.tn; }
-            set { this.tn = value; }
-        }
-
-        public List<Exception> Exceptions
-        {
-            get
-            {
-                return this.exceptions;
-            }
+            get { return this.databaseTransaction; }
+            set { this.databaseTransaction = value; }
         }
 
         #endregion
@@ -68,17 +44,18 @@ namespace Jhu.SpecSvc.IO
 
         public PortalConnector(SqlConnection cn, SqlTransaction tn)
         {
-            this.cn = cn;
-            this.tn = tn;
+            this.databaseConnection = cn;
+            this.databaseTransaction = tn;
         }
 
         private void InitializeMembers()
         {
-            this.cn = null;
-            this.tn = null;
+            this.databaseConnection = null;
+            this.databaseTransaction = null;
+        }
 
-            this.exceptions = new List<Exception>();
-            //this.connectorCache = null;
+        public override void Dispose()
+        {
         }
 
         #endregion
@@ -86,11 +63,11 @@ namespace Jhu.SpecSvc.IO
 
         public override Spectrum GetSpectrum(Guid userGuid, string spectrumId, bool loadPoints, string[] pointsMask, bool loadDetails)
         {
-            Collection coll = new Collection();
+            var coll = new Collection();
             coll.Id = GetCollectionId(spectrumId);
             LoadCollection(coll);
 
-            using (ConnectorBase conn = coll.GetConnector())
+            using (var conn = coll.GetConnector())
             {
                 Spectrum spec = conn.GetSpectrum(userGuid, spectrumId, loadPoints, pointsMask, loadDetails);
                 PrefixCollectionId(coll.Id, spec);
@@ -100,7 +77,7 @@ namespace Jhu.SpecSvc.IO
 
         public override IEnumerable<Spectrum> FindSpectrum(IdSearchParameters par)
         {
-            return null;
+            throw new NotImplementedException();
 
 #if false
             // grouping parameters by collection to send requests in a batch
@@ -206,7 +183,7 @@ namespace Jhu.SpecSvc.IO
             return FindSpectrum((SearchParametersBase)par);
         }
 
-        public IEnumerable<Spectrum> FindSpectrum(HtmRangeSearchParameters par)
+        public override IEnumerable<Spectrum> FindSpectrum(HtmRangeSearchParameters par)
         {
             return FindSpectrum((SearchParametersBase)par);
         }
@@ -241,7 +218,7 @@ namespace Jhu.SpecSvc.IO
         }
          * */
 
-        public IEnumerable<Spectrum> FindSpectrum(SqlSearchParameters par)
+        public override IEnumerable<Spectrum> FindSpectrum(SqlSearchParameters par)
         {
             return FindSpectrum((SearchParametersBase)par);
         }
@@ -311,161 +288,136 @@ namespace Jhu.SpecSvc.IO
 #endif
         }
 
-        private IEnumerable<Spectrum> FindSpectrum(SearchParametersBase par)
+        public override IEnumerable<Spectrum> FindSpectrum(SimilarSearchParameters par)
         {
-            exceptions.Clear();
-
-            //List<IEnumerable<Spectrum>> results =                new List<IEnumerable<Spectrum>>();
-
-            //connectorCache = new List<ConnectorBase>();
-
-            IEnumerable<Spectrum> res = null;
-
-            foreach (string collid in par.Collections)
-            {
-                /*try
-                {*/
-                    //
-                    Collection coll = new Collection();
-                    coll.Id = collid;
-                    LoadCollection(coll);
-
-                    //********** USING
-                    ConnectorBase conn = coll.GetConnector();
-                    //connectorCache.Add(conn);
-
-                    IEnumerable<Spectrum> temp = null;
-
-                    switch (par.Type)
-                    {
-                        case SearchMethods.Cone:
-                            temp = conn.FindSpectrum((ConeSearchParameters)par);
-                            break;
-                        case SearchMethods.Redshift:
-                            temp = conn.FindSpectrum((RedshiftSearchParameters)par);
-                            break;
-                        case SearchMethods.Advanced:
-                            temp = conn.FindSpectrum((AdvancedSearchParameters)par);
-                            break;
-                        case SearchMethods.Model:
-                            temp = conn.FindSpectrum((ModelSearchParameters)par);
-                            break;
-                        case SearchMethods.Folder:
-                            temp = conn.FindSpectrum((FolderSearchParameters)par);
-                            break;
-                        case SearchMethods.All:
-                            temp = conn.FindSpectrum((AllSearchParameters)par);
-                            break;
-                        case SearchMethods.HtmRange:
-                            temp = conn.FindSpectrum((HtmRangeSearchParameters)par);
-                            break;
-                        case SearchMethods.Similar:
-                            temp = conn.FindSpectrum((SimilarSearchParameters)par);
-                            break;
-                        case SearchMethods.Sql:
-                            temp = conn.FindSpectrum((SqlSearchParameters)par);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
-
-                    // Prefix with collection id
-                    temp = temp.Select(s =>
-                    {
-                        PrefixCollectionId(coll.Id, s);
-                        return s;
-                    });
-
-                    // Concat results
-                    if (res == null)
-                    {
-                        res = temp;
-                    }
-                    else
-                    {
-                        res = res.Concat(temp);
-                    }
-
-                    // delete if works
-                    /*if (temp != null)
-                        results.Add(PrefixCollectionId(coll.Id, temp));*/
-                /*}
-                catch (System.Exception ex)
-                {
-                    if (coll != null)
-                        exs.Add(new System.Exception(coll.Name, ex));
-                    else
-                        exs.Add(new System.Exception("Unknown collection", ex));
-                }*/
-            }
-
-            /*
-            ///*******************
-            foreach (IEnumerable<Spectrum> res in results)
-            {
-                foreach (Spectrum spec in res)
-                {
-                    yield return spec;
-                }
-            }
-             * */
-
-            /*
-            foreach (ConnectorBase conn in connectorcache)
-            {
-                conn.Dispose();
-            }*/
-
-            return res;
+            throw new NotImplementedException();
         }
 
-        private bool GetRaDecFromString(string objectName, out double ra, out double dec)
+        //
+
+        public IEnumerable<Spectrum> FindSpectrum(SearchParametersBase par)
         {
-            // parsing coord string
-            // trying ra,dec decimal
-            try
-            {
-                string[] radec = objectName.Split(',');
-                ra = double.Parse(radec[0]);
-                dec = double.Parse(radec[1]);
+            Exceptions.Clear();
 
+            // Create queue to buffer results as they arrive from the collections
+            var buffer = new System.Collections.Concurrent.BlockingCollection<Spectrum>();
+
+            // Query all collections in parallel on a separate thread
+            var queries = Task.Factory.StartNew(() =>
+                {
+                Parallel.For(0, par.Collections.Length, i =>
+                    {
+                        // load collection
+                        var coll = new Collection();
+                        coll.Id = par.Collections[i];
+                        LoadCollection(coll);
+
+                        // Get connector
+                        using (var conn = coll.GetConnector())
+                        {
+                            // Dispatch search
+                            IEnumerable<Spectrum> temp = null;
+
+                            switch (par.Type)
+                            {
+                                case SearchMethods.Cone:
+                                    temp = conn.FindSpectrum((ConeSearchParameters)par);
+                                    break;
+                                case SearchMethods.Redshift:
+                                    temp = conn.FindSpectrum((RedshiftSearchParameters)par);
+                                    break;
+                                case SearchMethods.Advanced:
+                                    temp = conn.FindSpectrum((AdvancedSearchParameters)par);
+                                    break;
+                                case SearchMethods.Model:
+                                    temp = conn.FindSpectrum((ModelSearchParameters)par);
+                                    break;
+                                case SearchMethods.Folder:
+                                    temp = conn.FindSpectrum((FolderSearchParameters)par);
+                                    break;
+                                case SearchMethods.All:
+                                    temp = conn.FindSpectrum((AllSearchParameters)par);
+                                    break;
+                                case SearchMethods.HtmRange:
+                                    temp = conn.FindSpectrum((HtmRangeSearchParameters)par);
+                                    break;
+                                case SearchMethods.Similar:
+                                    temp = conn.FindSpectrum((SimilarSearchParameters)par);
+                                    break;
+                                case SearchMethods.Sql:
+                                    temp = conn.FindSpectrum((SqlSearchParameters)par);
+                                    break;
+                                default:
+                                    throw new NotImplementedException();
+                            }
+
+                            foreach (var s in temp)
+                            {
+                                // Prefix with collection id
+                                PrefixCollectionId(coll.Id, s);
+
+                                // Enqueue in output queue
+                                bool queued = false;
+                                while (!queued)
+                                {
+                                    if (buffer.Count < 100)
+                                    {
+                                        buffer.Add(s);
+                                        queued = true;
+                                    }
+                                    else
+                                    {
+                                        Thread.Sleep(100);
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // All collections processed, now mark as done
+                    buffer.CompleteAdding();
+                });
+
+            // Read from the buffer
+            while (!buffer.IsCompleted)
+            {
+                yield return buffer.Take();
+            }
+
+            queries.Wait();
+        }
+
+        //
+
+        public static bool TryParseFreeText(string query, out double ra, out double dec, bool useNed, bool useSimbad)
+        {
+            if (AstroUtil.TryParseRaDec(query, out ra, out dec))
+            {
                 return true;
-            }
-            catch (System.Exception)
-            {
-
-            }
-
-            // trying ra,dec hms,dms
-            try
-            {
-                string[] radec = objectName.Split(',');
-                ra = AstroUtil.hms2deg(radec[0]);
-                dec = AstroUtil.dms2deg(radec[1]);
-
-                return true;
-            }
-            catch
-            {
             }
 
             // calling the NED service
-            try
+            if (useNed)
             {
-                Remote.NED ned = new Remote.NED();
+                try
+                {
+                    Remote.NED ned = new Remote.NED();
 
-                Remote.ObjInfo obj = ned.ObjByName(objectName);
-                ra = obj.ra;
-                dec = obj.dec;
+                    Remote.ObjInfo obj = ned.ObjByName(query);
+                    ra = obj.ra;
+                    dec = obj.dec;
 
-                return true;
+                    return true;
+                }
+                catch (System.Web.Services.Protocols.SoapException)
+                {
+
+                }
             }
-            catch (System.Web.Services.Protocols.SoapException)
-            {
 
-            }
+            // call Simbad
+            // *** TODO
 
-            ra = dec = 0;
             return false;
         }
 
@@ -478,16 +430,6 @@ namespace Jhu.SpecSvc.IO
         {
             spectrum.Curation.PublisherDID.Value = collectionId + "#" + spectrum.Id.ToString();
         }
-
-        /*
-        private static IEnumerable<Spectrum> PrefixCollectionId(string collectionId, IEnumerable<Spectrum> spectra)
-        {
-            foreach (Spectrum s in spectra)
-            {
-                PrefixCollectionId(collectionId, s);
-                yield return s;
-            }
-        }*/
 
         #endregion
         #region Resultset functions
@@ -502,6 +444,15 @@ namespace Jhu.SpecSvc.IO
                 cmd.ExecuteNonQuery();
 
                 return (int)cmd.Parameters["RETVAL"].Value;
+            }
+        }
+
+        public void SaveResultsetSpectra(int resultsetId, IEnumerable<Spectrum> spectra)
+        {
+            // TODO: make it parallel?
+            foreach (var s in spectra)
+            {
+                SaveResultsetSpectrum(resultsetId, s.GetCollectionId(), s);
             }
         }
 
@@ -914,7 +865,7 @@ namespace Jhu.SpecSvc.IO
 
         public void LoadCollection(Collection coll)
         {
-            using (SqlCommand cmd = new SqlCommand("sp_GetCollection", cn, tn))
+            using (SqlCommand cmd = new SqlCommand("sp_GetCollection", databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50).Value = coll.Id;
@@ -941,7 +892,7 @@ namespace Jhu.SpecSvc.IO
 
         private void CreateCollection(Collection coll)
         {
-            using (SqlCommand cmd = new SqlCommand("sp_CreateCollection", cn, tn))
+            using (SqlCommand cmd = new SqlCommand("sp_CreateCollection", databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 AppendCollectionCreateModifyParameters(cmd, coll);
@@ -951,7 +902,7 @@ namespace Jhu.SpecSvc.IO
 
         private void ModifyCollection(Collection coll, string oldId)
         {
-            using (SqlCommand cmd = new SqlCommand("sp_ModifyCollection", cn, tn))
+            using (SqlCommand cmd = new SqlCommand("sp_ModifyCollection", databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@OldID", SqlDbType.NVarChar, 50).Value = oldId;
@@ -982,7 +933,7 @@ namespace Jhu.SpecSvc.IO
             {
                 DeleteCollectionSearchMethods(collection);
 
-                using (SqlCommand cmd = new SqlCommand("sp_DeleteCollection", cn, tn))
+                using (SqlCommand cmd = new SqlCommand("sp_DeleteCollection", databaseConnection, databaseTransaction))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50).Value = collection.Id;
@@ -996,7 +947,7 @@ namespace Jhu.SpecSvc.IO
         public bool CheckDuplicateCollectionId(string oldId, string newId)
         {
             string sql = "SELECT COUNT(*) FROM Collections WHERE ID = @ID";
-            using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+            using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50).Value = newId;
@@ -1021,7 +972,7 @@ namespace Jhu.SpecSvc.IO
 
             string sql = "SELECT SearchMethodID FROM CollectionSearchMethods WHERE CollectionID = @CollectionID";
 
-            using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+            using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
             {
                 cmd.Parameters.Add("@CollectionID", SqlDbType.NVarChar, 50).Value = collection.Id;
 
@@ -1041,7 +992,7 @@ namespace Jhu.SpecSvc.IO
         {
             string sql = "SELECT COUNT(*) FROM Collections WHERE ID = @CollectionID AND UserGUID = @UserGUID";
 
-            using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+            using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
             {
                 cmd.Parameters.Add("@CollectionID", SqlDbType.NVarChar, 50).Value = collection.Id;
                 cmd.Parameters.Add("@UserGUID", SqlDbType.UniqueIdentifier).Value = collection.UserGuid;
@@ -1057,7 +1008,7 @@ FROM CollectionSearchMethods
 INNER JOIN Collections ON Collections.ID = CollectionSearchMethods.CollectionID
 WHERE UserGUID = @UserGUID";
 
-            using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+            using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
             {
                 cmd.Parameters.Add("@UserGUID", SqlDbType.UniqueIdentifier).Value = collection.UserGuid;
                 cmd.ExecuteNonQuery();
@@ -1073,7 +1024,7 @@ WHERE UserGUID = @UserGUID";
                 DeleteCollectionSearchMethods(collection);
 
                 string sql = "INSERT CollectionSearchMethods (CollectionID, SearchMethodID) VALUES (@CollectionID, @SearchMethodID)";
-                using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+                using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
                 {
                     cmd.Parameters.Add("@CollectionID", SqlDbType.NVarChar, 50).Value = collection.Id;
                     cmd.Parameters.Add("@SearchMethodID", SqlDbType.Int);
@@ -1092,7 +1043,7 @@ WHERE UserGUID = @UserGUID";
             Dictionary<int, string> res = new Dictionary<int, string>();
 
             string sql = "SELECT SearchMethods.* FROM SearchMethods ORDER BY ID";
-            using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+            using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
             {
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -1124,7 +1075,7 @@ WHERE UserGUID = @UserGUID";
 
         public void LoadTemplateSet(TemplateSet ts)
         {
-            using (SqlCommand cmd = new SqlCommand("sp_GetTemplateSet", cn, tn))
+            using (SqlCommand cmd = new SqlCommand("sp_GetTemplateSet", databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ts.Id;
@@ -1145,7 +1096,7 @@ WHERE UserGUID = @UserGUID";
 
         public string[] QueryTemplates(int id)
         {
-            using (SqlCommand cmd = new SqlCommand("sp_QueryTemplates", cn, tn))
+            using (SqlCommand cmd = new SqlCommand("sp_QueryTemplates", databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
@@ -1164,7 +1115,7 @@ WHERE UserGUID = @UserGUID";
 
         public TemplateSet[] QueryTemplateSets()
         {
-            using (SqlCommand cmd = new SqlCommand("sp_QueryTemplateSets", cn, tn))
+            using (SqlCommand cmd = new SqlCommand("sp_QueryTemplateSets", databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -1348,7 +1299,7 @@ WHERE UserGUID = @UserGUID";
 
             string sql = "SELECT * FROM Lines ORDER BY Wavelength";
 
-            using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+            using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
             {
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -1373,7 +1324,7 @@ WHERE UserGUID = @UserGUID";
                 string sql = "SELECT Dust.ext FROM Dust WHERE " + GetHtmRanges(ra, dec, sr);
                 object ext = null;
 
-                using (SqlCommand cmd = new SqlCommand(sql, cn, tn))
+                using (SqlCommand cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
                 {
                     ext = cmd.ExecuteScalar();
                 }
@@ -1407,39 +1358,5 @@ WHERE UserGUID = @UserGUID";
         }
 
         #endregion
-
-        #region IDisposable Members
-
-        public override void Dispose()
-        {
-            /*if (connectorCache != null)
-            {
-                foreach (ConnectorBase conn in connectorCache)
-                {
-                    conn.Dispose();
-                }
-            }*/
-        }
-
-        #endregion
     }
 }
-#region Revision History
-/* Revision History
-
-        $Log: PortalConnector.cs,v $
-        Revision 1.4  2008/09/11 17:21:35  dobos
-        SkyServer search LoadPoints/LoadDetails issue fixed
-
-        Revision 1.3  2008/09/11 10:44:59  dobos
-        Bugfixes and parallel execution added to PortalConnector
-
-        Revision 1.2  2008/01/10 22:04:14  dobos
-        Multiple search method editing support
-
-        Revision 1.1  2008/01/08 22:01:35  dobos
-        Initial checkin
-
-
-*/
-#endregion

@@ -120,6 +120,8 @@ namespace Jhu.SpecSvc.IO
 
             this.connectionString = collection.ConnectionString;
             this.collectionId = collection.Id;
+
+            Open();
         }
 
         /// <summary>
@@ -133,6 +135,11 @@ namespace Jhu.SpecSvc.IO
 
             this.cn = null;
             this.tn = null;
+        }
+
+        public override void Dispose()
+        {
+            Close();
         }
 
         #endregion
@@ -213,10 +220,10 @@ namespace Jhu.SpecSvc.IO
         /// <returns></returns>
         public override IEnumerable<Spectrum> FindSpectrum(IdSearchParameters par)
         {
-            exceptions.Clear();
+            Exceptions.Clear();
             par = par.GetStandardUnits();
 
-            return par.Ids.AsParallel().Select<string, Spectrum>(id =>
+            var res = par.Ids.AsParallel().Select(id =>
             {
                 Spectrum spec = new Spectrum(false);
                 spec.BasicInitialize();
@@ -228,10 +235,12 @@ namespace Jhu.SpecSvc.IO
                 }
                 catch (Exception ex)
                 {
-                    exceptions.Add(ex);
+                    Exceptions.Add(ex);
                     return null;
                 }
-            }).AsSequential();
+            });
+
+            return res.AsSequential();
 
             // Delete if code above works
             /*
@@ -277,20 +286,25 @@ namespace Jhu.SpecSvc.IO
         /// <returns></returns>
         public override IEnumerable<Spectrum> FindSpectrum(ConeSearchParameters par)
         {
+            // TODO: it's based on coarse HTM cover now. Exact region cuts are necessary
+
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra
+WHERE ({0})
+      AND (UserGUID = @UserGUID OR [Public] > 0)
+";
+
             par = par.GetStandardUnits();
 
-            string sql = "SELECT Spectra.* FROM Spectra WHERE ";
             string where = string.Empty;
-
             where = GetHtmRanges(par.Pos.Value.Ra, par.Pos.Value.Dec, par.Sr.Value);
-
             if (where == string.Empty)
             {
                 throw new IOException("Unable to construct cone HTM cover.");
             }
 
-            sql += "(" + where + ")";
-            sql += " AND (UserGUID = @UserGUID OR [Public] > 0)";	// access check
+            sql = String.Format(sql, where);
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -307,11 +321,14 @@ namespace Jhu.SpecSvc.IO
         /// <returns></returns>
         public override IEnumerable<Spectrum> FindSpectrum(RedshiftSearchParameters par)
         {
-            par = par.GetStandardUnits();
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra
+WHERE Redshift BETWEEN @RedshiftFrom AND @RedshiftTo
+      AND (UserGUID = @UserGUID OR [Public] > 0)
+";
 
-            string sql = "SELECT Spectra.* FROM Spectra WHERE ";
-            sql += "Redshift BETWEEN @RedshiftFrom AND @RedshiftTo ";
-            sql += " AND (UserGUID = @UserGUID OR [Public] > 0)";	// access check
+            par = par.GetStandardUnits();
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -332,11 +349,13 @@ namespace Jhu.SpecSvc.IO
         /// <returns></returns>
         public override IEnumerable<Spectrum> FindSpectrum(FolderSearchParameters par)
         {
-            par = par.GetStandardUnits();
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra
+WHERE (UserFolderID = @UserFolderID OR @UserFolderID IS NULL)
+      AND (UserGUID = @UserGUID)";
 
-            string sql = @"SELECT Spectra.* FROM Spectra
-	                       WHERE (UserFolderID = @UserFolderID OR @UserFolderID IS NULL)
-                           AND (UserGUID = @UserGUID)";
+            par = par.GetStandardUnits();
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -354,170 +373,180 @@ namespace Jhu.SpecSvc.IO
         /// <returns></returns>
         public override IEnumerable<Spectrum> FindSpectrum(AdvancedSearchParameters par)
         {
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra
+WHERE ({0})
+      AND (UserGUID = @UserGUID OR [Public] > 0)";
+
             par = par.GetStandardUnits();
 
-            string sql = string.Empty;
-
-            sql += " AND (UserGUID = '" + par.UserGuid.ToString() + "' OR [Public] > 0)";
+            var where = string.Empty;
 
             if (par.Keyword != null && par.Keyword != string.Empty)
-                sql += " AND ([Name] LIKE '%" + par.Keyword.Replace("'", string.Empty) + "%')";
+                where += " AND ([Name] LIKE '%" + par.Keyword.Replace("'", string.Empty) + "%')";
             if (par.Keyword != null && par.Name != string.Empty)
-                sql += " AND ([Name] LIKE '%" + par.Name.Replace("'", string.Empty) + "%')";
+                where += " AND ([Name] LIKE '%" + par.Name.Replace("'", string.Empty) + "%')";
 
             if (par.TargetClass != null && par.TargetClass.Length > 0)
             {
-                sql += " AND TargetClass IN (";
-                foreach (string tc in par.TargetClass) sql += "'" + tc.Trim().Replace("'", string.Empty) + "'";
-                sql += ") ";
+                where += " AND TargetClass IN (";
+                foreach (string tc in par.TargetClass) where += "'" + tc.Trim().Replace("'", string.Empty) + "'";
+                where += ") ";
             }
 
             if (par.SpectralClass != null && par.SpectralClass.Length > 0)
             {
-                sql += " AND SpectralClass IN (";
-                foreach (string tc in par.SpectralClass) sql += "'" + tc.Trim().Replace("'", string.Empty) + "'";
-                sql += ") ";
+                where += " AND SpectralClass IN (";
+                foreach (string tc in par.SpectralClass) where += "'" + tc.Trim().Replace("'", string.Empty) + "'";
+                where += ") ";
             }
 
             if (par.CreationType != null && par.CreationType.Length > 0)
             {
-                sql += " AND CreationType IN (";
-                foreach (string tc in par.CreationType) sql += "'" + tc.Trim().Replace("'", string.Empty) + "'";
-                sql += ") ";
+                where += " AND CreationType IN (";
+                foreach (string tc in par.CreationType) where += "'" + tc.Trim().Replace("'", string.Empty) + "'";
+                where += ") ";
             }
 
             if (par.Date != null && par.Date.Start != null)
-                sql += " AND (Date >= #" + par.Date.Start.Value.ToString() + "#)";
+                where += " AND (Date >= #" + par.Date.Start.Value.ToString() + "#)";
             if (par.Date != null && par.Date.Stop != null)
-                sql += " AND (Date <= #" + par.Date.Stop.Value.ToString() + "#)";
+                where += " AND (Date <= #" + par.Date.Stop.Value.ToString() + "#)";
 
 
             if (par.Version != null && par.Version != string.Empty)
-                sql += " AND (Version LIKE '" + par.Version.Replace("'", string.Empty).Replace("*", "%") + "')";
+                where += " AND (Version LIKE '" + par.Version.Replace("'", string.Empty).Replace("*", "%") + "')";
 
             // cone search
             if (par.Pos != null && par.Sr != null)
             {
                 string htm = GetHtmRanges(par.Pos.Value.Ra, par.Pos.Value.Dec, par.Sr.Value);
-                sql += " AND (" + htm + ")";
+                where += " AND (" + htm + ")";
             }
 
             if (par.Snr != null && par.Snr.Min != null)
-                sql += " AND (Snr >= " + par.Snr.Min.Value.ToString() + ")";
+                where += " AND (Snr >= " + par.Snr.Min.Value.ToString() + ")";
             if (par.Snr != null && par.Snr.Max != null)
-                sql += " AND (Snr <= " + par.Snr.Max.Value.ToString() + ")";
+                where += " AND (Snr <= " + par.Snr.Max.Value.ToString() + ")";
 
             if (par.VarAmpl != null && par.VarAmpl.Min != null)
-                sql += " AND (VarAmpl >= " + par.VarAmpl.Min.Value.ToString() + ")";
+                where += " AND (VarAmpl >= " + par.VarAmpl.Min.Value.ToString() + ")";
             if (par.VarAmpl != null && par.VarAmpl.Max != null)
-                sql += " AND (VarAmpl <= " + par.VarAmpl.Max.Value.ToString() + ")";
+                where += " AND (VarAmpl <= " + par.VarAmpl.Max.Value.ToString() + ")";
 
 
             if (par.Redshift != null && par.Redshift.Min != null)
-                sql += " AND (Redshift >= " + par.Redshift.Min.Value.ToString() + ")";
+                where += " AND (Redshift >= " + par.Redshift.Min.Value.ToString() + ")";
             if (par.Redshift != null && par.Redshift.Max != null)
-                sql += " AND (Redshift <= " + par.Redshift.Max.Value.ToString() + ")";
+                where += " AND (Redshift <= " + par.Redshift.Max.Value.ToString() + ")";
 
             if (par.RedshiftStatError != null && par.RedshiftStatError.Min != null)
-                sql += " AND (RedshiftStatError >= " + par.RedshiftStatError.Min.Value.ToString() + ")";
+                where += " AND (RedshiftStatError >= " + par.RedshiftStatError.Min.Value.ToString() + ")";
             if (par.RedshiftStatError != null && par.RedshiftStatError.Max != null)
-                sql += " AND (RedshiftStatError <= " + par.RedshiftStatError.Max.Value.ToString() + ")";
+                where += " AND (RedshiftStatError <= " + par.RedshiftStatError.Max.Value.ToString() + ")";
 
             if (par.RedshiftConfidence != null && par.RedshiftConfidence.Min != null)
-                sql += " AND (RedshiftConfidence >= " + par.RedshiftConfidence.Min.Value.ToString() + ")";
+                where += " AND (RedshiftConfidence >= " + par.RedshiftConfidence.Min.Value.ToString() + ")";
             if (par.RedshiftConfidence != null && par.RedshiftConfidence.Max != null)
-                sql += " AND (RedshiftConfidence <= " + par.RedshiftConfidence.Max.Value.ToString() + ")";
+                where += " AND (RedshiftConfidence <= " + par.RedshiftConfidence.Max.Value.ToString() + ")";
 
             if (par.SpectralCoverage != null && par.SpectralCoverage.Min != null)
-                sql += " AND (SpectralCoverageStart >= " + par.SpectralCoverage.Min.Value.ToString() + ")";
+                where += " AND (SpectralCoverageStart >= " + par.SpectralCoverage.Min.Value.ToString() + ")";
             if (par.SpectralCoverage != null && par.SpectralCoverage.Max != null)
-                sql += " AND (SpectralCoverageStop <= " + par.SpectralCoverage.Max.Value.ToString() + ")";
+                where += " AND (SpectralCoverageStop <= " + par.SpectralCoverage.Max.Value.ToString() + ")";
 
             if (par.SpectralResPower != null && par.SpectralResPower.Min != null)
-                sql += " AND (SpectralResPower >= " + par.SpectralResPower.Min.Value.ToString() + ")";
+                where += " AND (SpectralResPower >= " + par.SpectralResPower.Min.Value.ToString() + ")";
             if (par.SpectralResPower != null && par.SpectralResPower.Max != null)
-                sql += " AND (SpectralResPower <= " + par.SpectralResPower.Max.Value.ToString() + ")";
+                where += " AND (SpectralResPower <= " + par.SpectralResPower.Max.Value.ToString() + ")";
 
             if (par.FluxCalibration != null && par.FluxCalibration.Length > 0)
             {
-                sql += " AND FluxCalibration IN (";
-                foreach (string fc in par.FluxCalibration) sql += "'" + fc.Trim().Replace("'", string.Empty) + "'";
-                sql += ") ";
+                where += " AND FluxCalibration IN (";
+                foreach (string fc in par.FluxCalibration) where += "'" + fc.Trim().Replace("'", string.Empty) + "'";
+                where += ") ";
             }
 
-            sql = "SELECT Spectra.* FROM Spectra WHERE " + sql.Substring(5);
+            sql = String.Format(sql, where);
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
+                AddCommandParameter(cmd, "@UserGUID", DbType.Guid, null, par.UserGuid);
+
                 return LoadSpectraFromCommand(cmd, par.UserGuid, par.LoadPoints, par.PointsMask, par.LoadDetails);
             }
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(ModelSearchParameters par)
         {
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra
+INNER JOIN SpectrumModelParameters ON Spectra.ID = SpectrumModelParameters.SpectrumID
+WHERE ({0})
+      AND (UserGUID = @UserGUID OR [Public] > 0)";
+            
             par = par.GetStandardUnits();
 
-            string sql = string.Empty;
-
-            sql += " AND (UserGUID = '" + par.UserGuid.ToString() + "' OR [Public] > 0)";
-
+            string where = string.Empty;
 
             if (par.Z_met != null && par.Z_met.Min != null)
-                sql += " AND (Z_met >= " + par.Z_met.Min.Value.ToString() + ")";
+                where += " AND (Z_met >= " + par.Z_met.Min.Value.ToString() + ")";
             if (par.Z_met != null && par.Z_met.Max != null)
-                sql += " AND (Z_met <= " + par.Z_met.Max.Value.ToString() + ")";
+                where += " AND (Z_met <= " + par.Z_met.Max.Value.ToString() + ")";
 
             if (par.T_eff != null && par.T_eff.Min != null)
-                sql += " AND (T_eff >= " + par.T_eff.Min.Value.ToString() + ")";
+                where += " AND (T_eff >= " + par.T_eff.Min.Value.ToString() + ")";
             if (par.T_eff != null && par.T_eff.Max != null)
-                sql += " AND (T_eff <= " + par.T_eff.Max.Value.ToString() + ")";
+                where += " AND (T_eff <= " + par.T_eff.Max.Value.ToString() + ")";
 
             if (par.Log_g != null && par.Log_g.Min != null)
-                sql += " AND (Log_g >= " + par.Log_g.Min.Value.ToString() + ")";
+                where += " AND (Log_g >= " + par.Log_g.Min.Value.ToString() + ")";
             if (par.Log_g != null && par.Log_g.Max != null)
-                sql += " AND (Log_g <= " + par.Log_g.Max.Value.ToString() + ")";
+                where += " AND (Log_g <= " + par.Log_g.Max.Value.ToString() + ")";
 
             if (par.Tau_V0 != null && par.Tau_V0.Min != null)
-                sql += " AND (Tau_V0 >= " + par.Tau_V0.Min.Value.ToString() + ")";
+                where += " AND (Tau_V0 >= " + par.Tau_V0.Min.Value.ToString() + ")";
             if (par.Tau_V0 != null && par.Tau_V0.Max != null)
-                sql += " AND (Tau_V0 <= " + par.Tau_V0.Max.Value.ToString() + ")";
+                where += " AND (Tau_V0 <= " + par.Tau_V0.Max.Value.ToString() + ")";
 
             if (par.Mu != null && par.Mu.Min != null)
-                sql += " AND (Mu >= " + par.Mu.Min.Value.ToString() + ")";
+                where += " AND (Mu >= " + par.Mu.Min.Value.ToString() + ")";
             if (par.Mu != null && par.Mu.Max != null)
-                sql += " AND (Mu <= " + par.Mu.Max.Value.ToString() + ")";
+                where += " AND (Mu <= " + par.Mu.Max.Value.ToString() + ")";
 
             if (par.T_form != null && par.T_form.Min != null)
-                sql += " AND (T_form >= " + par.T_form.Min.Value.ToString() + ")";
+                where += " AND (T_form >= " + par.T_form.Min.Value.ToString() + ")";
             if (par.T_form != null && par.T_form.Max != null)
-                sql += " AND (T_form <= " + par.T_form.Max.Value.ToString() + ")";
+                where += " AND (T_form <= " + par.T_form.Max.Value.ToString() + ")";
 
             if (par.Gamma != null && par.Gamma.Min != null)
-                sql += " AND (Gamma >= " + par.Gamma.Min.Value.ToString() + ")";
+                where += " AND (Gamma >= " + par.Gamma.Min.Value.ToString() + ")";
             if (par.Gamma != null && par.Gamma.Max != null)
-                sql += " AND (Gamma <= " + par.Gamma.Max.Value.ToString() + ")";
+                where += " AND (Gamma <= " + par.Gamma.Max.Value.ToString() + ")";
 
             if (par.N_bursts != null && par.N_bursts.Min != null)
-                sql += " AND (N_bursts >= " + par.N_bursts.Min.Value.ToString() + ")";
+                where += " AND (N_bursts >= " + par.N_bursts.Min.Value.ToString() + ")";
             if (par.N_bursts != null && par.N_bursts.Max != null)
-                sql += " AND (N_bursts <= " + par.N_bursts.Max.Value.ToString() + ")";
+                where += " AND (N_bursts <= " + par.N_bursts.Max.Value.ToString() + ")";
 
             if (par.Age != null && par.Age.Min != null)
-                sql += " AND (Age >= " + par.Age.Min.Value.ToString() + ")";
+                where += " AND (Age >= " + par.Age.Min.Value.ToString() + ")";
             if (par.Age != null && par.Age.Max != null)
-                sql += " AND (Age <= " + par.Age.Max.Value.ToString() + ")";
+                where += " AND (Age <= " + par.Age.Max.Value.ToString() + ")";
 
             if (par.Age_lastBurst != null && par.Age_lastBurst.Min != null)
-                sql += " AND (Age_lastBurst >= " + par.Age_lastBurst.Min.Value.ToString() + ")";
+                where += " AND (Age_lastBurst >= " + par.Age_lastBurst.Min.Value.ToString() + ")";
             if (par.Age_lastBurst != null && par.Age_lastBurst.Max != null)
-                sql += " AND (Age_lastBurst <= " + par.Age_lastBurst.Max.Value.ToString() + ")";
+                where += " AND (Age_lastBurst <= " + par.Age_lastBurst.Max.Value.ToString() + ")";
 
-            sql = "SELECT Spectra.* FROM Spectra " +
-                "INNER JOIN SpectrumModelParameters ON Spectra.ID = SpectrumModelParameters.SpectrumID " +
-                "WHERE " + sql.Substring(5);
+            sql = String.Format(sql, where);
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
+                AddCommandParameter(cmd, "@UserGUID", DbType.Guid, null, par.UserGuid);
+
                 return LoadSpectraFromCommand(cmd, par.UserGuid, par.LoadPoints, par.PointsMask, par.LoadDetails);
             }
         }
@@ -531,20 +560,21 @@ namespace Jhu.SpecSvc.IO
         /// <returns></returns>
         public override IEnumerable<Spectrum> FindSpectrum(HtmRangeSearchParameters par)
         {
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra
+WHERE ({0})
+      AND (UserGUID = @UserGUID OR [Public] > 0)";
+
             par = par.GetStandardUnits();
 
-            string sql = "SELECT Spectra.* FROM Spectra WHERE ";
             string where = string.Empty;
             foreach (HtmRangeSearchParameters.HtmRange pair in par.Ranges)
             {
                 where += " OR HTMID BETWEEN " + pair.Lo.ToString() + " AND " + pair.Hi.ToString();
             }
-            if (where != string.Empty)
-            {
-                sql += where.Substring(3); // trimming the beginning OR
-                sql += " AND ";
-            }
-            sql += " (UserGUID = @UserGUID OR [Public] > 0)";		// access check
+
+            sql = String.Format(sql, where);
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -561,16 +591,20 @@ namespace Jhu.SpecSvc.IO
         /// <returns></returns>
         public override IEnumerable<Spectrum> FindSpectrum(AllSearchParameters par)
         {
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra {0}
+WHERE (UserGUID = @UserGUID OR [Public] > 0) AND ID > 0";
+
             par = par.GetStandardUnits();
 
-            string sql = "SELECT Spectra.* FROM Spectra ";
+            string tablesample = "";
             if (cn.GetType() == typeof(System.Data.SqlClient.SqlConnection) && par.SampleFraction != 1.0f)
             {
-                sql += "TABLESAMPLE (" + (par.SampleFraction * 100).ToString() + " PERCENT)";
+                tablesample = "TABLESAMPLE (" + (par.SampleFraction * 100).ToString() + " PERCENT)";
             }
-            sql += " WHERE ";
-            sql += " (UserGUID = @UserGUID OR [Public] > 0)";		// access check
-            sql += " AND ID > 0";                                   // blank spectrum for repeating fields
+
+            sql = String.Format(sql, tablesample);
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -582,13 +616,16 @@ namespace Jhu.SpecSvc.IO
 
         public override IEnumerable<Spectrum> FindSpectrum(SqlSearchParameters par)
         {
+            var sql = @"
+SELECT *
+FROM ({0}) s
+WHERE (UserGUID = @UserGUID OR [Public] > 0) AND ID <> 0
+ORDER BY ID
+";
+
             par = par.GetStandardUnits();
 
-            string sql = "SELECT * FROM (" + par.Query + ") s";
-            sql += " WHERE ";
-            sql += " (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
-            sql += " AND ID <> 0";
-            sql += " ORDER BY ID";
+            sql = String.Format(sql, par.Query);
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -602,12 +639,14 @@ namespace Jhu.SpecSvc.IO
 
         public override IEnumerable<Spectrum> FindSpectrum(SimilarSearchParameters par)
         {
-            par = par.GetStandardUnits();
-
-            string sql = @"SELECT Spectra.* FROM Spectra 
+            string sql = @"
+SELECT Spectra.*
+FROM Spectra 
 INNER JOIN dbo.NearestNeighbors('grid1', @coeffs, @count) nn
 ON nn.Id = Spectra.ID
-WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
+WHERE (UserGUID = @UserGUID OR [Public] > 0)";
+
+            par = par.GetStandardUnits();
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -617,6 +656,11 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
 
                 return LoadSpectraFromCommand(cmd, par.UserGuid, par.LoadPoints, par.PointsMask, par.LoadDetails);
             }
+        }
+
+        public override IEnumerable<Spectrum> FindSpectrum(ObjectSearchParameters par)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -633,10 +677,13 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
 
         public override void LoadSpectrum(Spectrum spec, Guid userGuid, long id, bool loadPoints, string[] pointsMask, bool loadDetails)
         {
+            var sql = @"
+SELECT Spectra.*
+FROM Spectra
+WHERE ID = @ID AND (UserGUID = @UserGUID OR [Public] > 0)";
+
             try
             {
-                string sql = "SELECT Spectra.* FROM Spectra WHERE ID = @ID AND (UserGUID = @UserGUID OR [Public] > 0)";
-
                 using (DbCommand cmd = CreateTextCommand(sql))
                 {
                     AddCommandParameter(cmd, "@UserGUID", DbType.Guid, null, userGuid);
@@ -666,21 +713,9 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
             }
             catch (Exception ex)
             {
-                throw new IOException("Error loading spectrum.", ex); // ****
+                throw new IOException("Error loading spectrum.", ex); // *** TODO
             }
         }
-
-        /* delete if compiles
-        private IEnumerable<Spectrum> LoadSpectrumMultiple(Guid userGuid, string[] ids, bool loadPoints, bool loadDetails)
-        {
-            IdSearchParameters isp = new IdSearchParameters(true);
-            isp.Ids = ids;
-            isp.UserGuid = userGuid;
-            isp.LoadDetails = loadDetails;
-            isp.LoadPoints = loadPoints;
-
-            return FindSpectrum(isp);
-        }*/
 
         private void LoadSpectrumFromReader(Spectrum spec, DbDataReader dr)
         {
@@ -741,7 +776,10 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
 
         protected void LoadSpectrumFields(Spectrum spec, Guid userGuid, long id)
         {
-            string sql = "SELECT SpectrumFields.* FROM SpectrumFields WHERE SpectrumID = @ID";
+            var sql = @"
+SELECT SpectrumFields.*
+FROM SpectrumFields
+WHERE SpectrumID = @ID";
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -807,7 +845,10 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
 
         private DbCommand CreateLoadSpectrumDataCommand(string[] pointsMask)
         {
-            string sql = "SELECT SpectrumData.* FROM SpectrumData WHERE SpectrumID = @ID";
+            var sql = @"
+SELECT SpectrumData.*
+FROM SpectrumData
+WHERE SpectrumID = @ID";
 
             if (pointsMask != null)
             {
@@ -879,9 +920,7 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
 
         private IEnumerable<Spectrum> LoadSpectraFromCommand(DbCommand cmd, Guid userGuid, bool loadPoints, string[] pointsMask, bool loadDetails)
         {
-            exceptions.Clear();
-
-            return LoadSpectraFromCommand(cmd).Select(s =>
+            var res = LoadSpectraFromCommand(cmd).AsParallel().WithDegreeOfParallelism(4).Select(s =>
             {
                 try
                 {
@@ -902,10 +941,12 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
                 }
                 catch (Exception ex)
                 {
-                    exceptions.Add(ex);
+                    Exceptions.Add(ex);
                     return null;
                 }
             });
+
+            return res.AsSequential();
         }
 
         private IEnumerable<Spectrum> LoadSpectraFromCommand(DbCommand cmd)
@@ -1525,15 +1566,6 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0)";		// access check*/
 
                 cmd.ExecuteNonQuery();
             }
-        }
-
-        #endregion
-
-        #region IDisposable Members
-
-        public override void Dispose()
-        {
-            Close();
         }
 
         #endregion

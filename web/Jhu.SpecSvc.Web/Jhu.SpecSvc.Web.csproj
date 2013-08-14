@@ -45,12 +45,21 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="App_Masters\Basic.master.cs">
       <DependentUpon>Basic.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="App_Masters\Basic.master.designer.cs">
       <DependentUpon>Basic.master</DependentUpon>
+    </Compile>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controls\CollectionList.ascx.cs">
+      <DependentUpon>CollectionList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CollectionList.ascx.designer.cs">
+      <DependentUpon>CollectionList.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\Footer.ascx.cs">
       <DependentUpon>Footer.ascx</DependentUpon>
@@ -90,13 +99,51 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\Cone.aspx.cs">
+      <DependentUpon>Cone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Cone.aspx.designer.cs">
+      <DependentUpon>Cone.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\ResultsDataSource.cs" />
+    <Compile Include="Search\SearchPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Tabs.ascx.cs">
+      <DependentUpon>Tabs.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Tabs.ascx.designer.cs">
+      <DependentUpon>Tabs.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UI.master.cs">
       <DependentUpon>UI.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UI.master.designer.cs">
       <DependentUpon>UI.master</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -108,19 +155,32 @@
       <Project>{E9D182CF-746E-4E40-B01C-74A32FB70749}</Project>
       <Name>Jhu.Graywulf.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.IO\Jhu.SpecSvc.IO.csproj">
+      <Project>{7B1172A6-8121-472D-9212-9AB0C549B0A2}</Project>
+      <Name>Jhu.SpecSvc.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\dll\Jhu.SpecSvc.Schema\Jhu.SpecSvc.Schema.csproj">
       <Project>{4AFBD644-DD6E-4661-A488-A0975F4AC723}</Project>
       <Name>Jhu.SpecSvc.Schema</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.SpectrumLib\Jhu.SpecSvc.SpectrumLib.csproj">
+      <Project>{73D0F3D5-DB1A-48EC-BFC1-85BD7C0347BB}</Project>
+      <Name>Jhu.SpecSvc.SpectrumLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Masters\Basic.master" />
     <Content Include="App_Themes\Basic\Basic.skin" />
+    <Content Include="Controls\CollectionList.ascx" />
     <Content Include="Controls\Footer.ascx" />
     <Content Include="Controls\Menu.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="Docs\Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Search\Cone.aspx" />
+    <Content Include="Search\Default.aspx" />
+    <Content Include="Search\List.aspx" />
+    <Content Include="Search\Tabs.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Basic\Css\codemirror.css" />
@@ -168,7 +228,6 @@
     <Folder Include="Jobs\" />
     <Folder Include="MySpectrum\" />
     <Folder Include="Programming\" />
-    <Folder Include="Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docs\Docs.master" />
