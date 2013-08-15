@@ -59,6 +59,12 @@ namespace Jhu.SpecSvc.Web
             }
         }
 
+        public DegreeFormat DegreeFormat
+        {
+            get { return (DegreeFormat)(Session[Constants.SessionDegreeFormat] ?? DegreeFormat.Decimal); }
+            set { Session[Constants.SessionDegreeFormat] = value; }
+        }
+
         override protected void OnUnload(EventArgs e)
         {
             if (connector != null)

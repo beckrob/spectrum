@@ -13,6 +13,123 @@ namespace Jhu.SpecSvc.Web.Search {
     public partial class List {
         
         /// <summary>
+        /// ToolbarElement1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement1;
+        
+        /// <summary>
+        /// ToolbarElement3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement3;
+        
+        /// <summary>
+        /// OutputTableLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OutputTableLabel;
+        
+        /// <summary>
+        /// DropDownList1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        
+        /// <summary>
+        /// ToolbarElement4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement4;
+        
+        /// <summary>
+        /// CommentsLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CommentsLabel;
+        
+        /// <summary>
+        /// DegreeFormatList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DegreeFormatList;
+        
+        /// <summary>
+        /// ToolbarElement2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement2;
+        
+        /// <summary>
+        /// TotalResultsCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TotalResultsCount;
+        
+        /// <summary>
+        /// ToolbarElement6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement6;
+        
+        /// <summary>
+        /// DisplayedResultsRange control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DisplayedResultsRange;
+        
+        /// <summary>
+        /// ToolbarElement5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement5;
+        
+        /// <summary>
+        /// SpectrumListPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager SpectrumListPager;
+        
+        /// <summary>
         /// SpectrumDataSource control.
         /// </summary>
         /// <remarks>
@@ -22,12 +139,12 @@ namespace Jhu.SpecSvc.Web.Search {
         protected global::System.Web.UI.WebControls.ObjectDataSource SpectrumDataSource;
         
         /// <summary>
-        /// spectrumList control.
+        /// SpectrumList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.MultiSelectListView spectrumList;
+        protected global::Jhu.Graywulf.Web.Controls.MultiSelectListView SpectrumList;
     }
 }

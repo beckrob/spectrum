@@ -1,13 +1,15 @@
-﻿<%@ Master Language="C#" MasterPageFile="~/UI.master" AutoEventWireup="true" CodeBehind="Docs.master.cs"
-    Inherits="Jhu.SpecSvc.Web.Docs.Docs" %>
+﻿<%@ Master Language="C#" MasterPageFile="~/App_Masters/Spectrum.master" AutoEventWireup="true"
+    CodeBehind="Docs.master.cs" Inherits="Jhu.SpecSvc.Web.Docs.Docs" %>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="middle" runat="server">
-    <div class="dock-left" style="width: 150px; margin-right: 8px">
-        <h3 class="DocsItem">
-            <a id="A1" runat="server" href="~/Docs/Default.aspx">Documentation</a></h3>
-        <jgwc:SiteMap runat="server" RootPath="~/Docs/pages" />
-    </div>
-    <div class="dock-fill" style="overflow: auto;">
-        <asp:ContentPlaceHolder runat="server" ID="Text" />
+    <div class="LayoutContent dock-fill dock-container">
+        <div class="dock-left" style="width: 150px; margin-right: 8px">
+            <h3 class="DocsItem">
+                <a id="A1" runat="server" href="~/Docs/Default.aspx">Documentation</a></h3>
+            <jgwc:SiteMap runat="server" RootPath="~/Docs/pages" />
+        </div>
+        <div class="dock-fill" style="overflow: auto;">
+            <asp:ContentPlaceHolder runat="server" ID="Text" />
+        </div>
     </div>
 </asp:Content>

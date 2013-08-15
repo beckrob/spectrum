@@ -26,9 +26,9 @@ namespace Jhu.SpecSvc.Visualizer
     /// <summary>
     /// Summary description for Visualizer.
     /// </summary>
-    public class Visualizer
+    public class SpectrumVisualizer
     {
-        public Visualizer()
+        public SpectrumVisualizer()
             : base()
         {
         }

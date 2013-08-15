@@ -13,12 +13,20 @@ namespace Jhu.SpecSvc.Web
             get { return ConfigurationManager.ConnectionStrings["Jhu.SpecSvc"].ConnectionString; }
         }
 
-        /*private static string GetValue(string key)
+        private static string GetValue(string key)
         {
-            return (string)((NameValueCollection)ConfigurationManager.GetSection("Jhu.Graywulf/Web.UI"))[key];
+            return (string)((NameValueCollection)ConfigurationManager.GetSection("Jhu.SpecSvc.Web"))[key];
         }
 
-        public static string ExportDir
+        public static NameValueCollection ImageCutOuts
+        {
+            get
+            {
+                return (NameValueCollection)ConfigurationManager.GetSection("Jhu.SpecSvc.Web/ImageCutOuts");
+            }
+        }
+
+        /*public static string ExportDir
         {
             get { return GetValue("ExportDir"); }       // *** TODO: move this to the federation config?
         }*/

@@ -46,12 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
-    <Compile Include="App_Masters\Basic.master.cs">
-      <DependentUpon>Basic.master</DependentUpon>
+    <Compile Include="App_Masters\Spectrum.Master.cs">
+      <DependentUpon>Spectrum.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="App_Masters\Basic.master.designer.cs">
-      <DependentUpon>Basic.master</DependentUpon>
+    <Compile Include="App_Masters\Spectrum.Master.designer.cs">
+      <DependentUpon>Spectrum.Master</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\CollectionList.ascx.cs">
@@ -96,8 +96,16 @@
     <Compile Include="Docs\Docs.master.designer.cs">
       <DependentUpon>Docs.master</DependentUpon>
     </Compile>
+    <Compile Include="Enum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Graph.aspx.cs">
+      <DependentUpon>Graph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Graph.aspx.designer.cs">
+      <DependentUpon>Graph.aspx</DependentUpon>
     </Compile>
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -128,19 +136,22 @@
     <Compile Include="Search\SearchPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Search\SpectrumCard.ascx.cs">
+      <DependentUpon>SpectrumCard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\SpectrumCard.ascx.designer.cs">
+      <DependentUpon>SpectrumCard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\SpectrumDetailsBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Search\Tabs.ascx.cs">
       <DependentUpon>Tabs.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Search\Tabs.ascx.designer.cs">
       <DependentUpon>Tabs.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UI.master.cs">
-      <DependentUpon>UI.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UI.master.designer.cs">
-      <DependentUpon>UI.master</DependentUpon>
     </Compile>
     <Compile Include="UserControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -167,9 +178,12 @@
       <Project>{73D0F3D5-DB1A-48EC-BFC1-85BD7C0347BB}</Project>
       <Name>Jhu.SpecSvc.SpectrumLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.Visualizer\Jhu.SpecSvc.Visualizer.csproj">
+      <Project>{F8E9DC5D-188A-4373-821E-0BE7B0CCE884}</Project>
+      <Name>Jhu.SpecSvc.Visualizer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Masters\Basic.master" />
     <Content Include="App_Themes\Basic\Basic.skin" />
     <Content Include="Controls\CollectionList.ascx" />
     <Content Include="Controls\Footer.ascx" />
@@ -177,9 +191,11 @@
     <Content Include="Default.aspx" />
     <Content Include="Docs\Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Graph.aspx" />
     <Content Include="Search\Cone.aspx" />
     <Content Include="Search\Default.aspx" />
     <Content Include="Search\List.aspx" />
+    <Content Include="Search\SpectrumCard.ascx" />
     <Content Include="Search\Tabs.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +231,6 @@
     <Content Include="App_Themes\Basic\Icons\welcome.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UI.master" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Web.original.config" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +245,9 @@
   <ItemGroup>
     <Content Include="Docs\Docs.master" />
     <Content Include="Docs\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Masters\Spectrum.Master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -255,8 +271,8 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PreBuildEvent>$(SolutionDir)..\graywulf\build\Jhu.Graywulf.ConfigUtil\bin\$(ConfigurationName)\gwconfig.exe configure -root $(SolutionDir) -config Config\Configurations.xml -proj Jhu.SpecSvc.Web
-xcopy $(SolutionDir)..\graywulf\web\Jhu.Graywulf.Web.Shared\App_Masters $(ProjectDir)App_Masters /I /E /Y
 xcopy $(SolutionDir)..\graywulf\web\Jhu.Graywulf.Web.Shared\App_Themes $(ProjectDir)App_Themes /I /E /Y
+xcopy $(SolutionDir)..\graywulf\web\Jhu.Graywulf.Web.Shared\App_Masters $(ProjectDir)App_Masters /I /E /Y
 xcopy $(SolutionDir)..\graywulf\web\Jhu.Graywulf.Web.Shared\Templates $(ProjectDir)Templates /I /E /Y
 xcopy $(SolutionDir)..\graywulf\web\Jhu.Graywulf.Web.Shared\CodeMirror $(ProjectDir)CodeMirror /I /E /Y
 xcopy $(SolutionDir)..\graywulf\web\Jhu.Graywulf.Web.Shared\SyntaxHighlighter $(ProjectDir)SyntaxHighlighter /I /E /Y</PreBuildEvent>
