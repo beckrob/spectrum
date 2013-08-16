@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <td class="FormList" colspan="2">
-                                <jsw:CollectionList runat="server" ID="Collections" />
+                                <jswc:CollectionList runat="server" ID="Collections" />
                             </td>
                         </tr>
                     </table>

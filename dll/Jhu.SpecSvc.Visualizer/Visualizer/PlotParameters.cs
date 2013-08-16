@@ -10,6 +10,7 @@ namespace Jhu.SpecSvc.Visualizer
         private float width;
         private float height;
         private bool legend;
+        private bool labels;
         private double xMin, xMax;
         private double yMin, yMax;
         private bool xLogScale;
@@ -31,6 +32,12 @@ namespace Jhu.SpecSvc.Visualizer
         {
             get { return legend; }
             set { legend = value; }
+        }
+
+        public bool Labels
+        {
+            get { return labels; }
+            set { labels = value; }
         }
 
         public double XMin
@@ -84,6 +91,7 @@ namespace Jhu.SpecSvc.Visualizer
             this.width = 640;
             this.height = 480;
             this.legend = true;
+            this.labels = true;
             this.xMin = -1;
             this.xMax = -1;
             this.yMin = -1;
@@ -97,6 +105,7 @@ namespace Jhu.SpecSvc.Visualizer
             this.width = old.width;
             this.height = old.height;
             this.legend = old.legend;
+            this.labels = old.labels;
             this.xMin = old.xMin;
             this.xMax = old.xMax;
             this.yMin = old.yMin;

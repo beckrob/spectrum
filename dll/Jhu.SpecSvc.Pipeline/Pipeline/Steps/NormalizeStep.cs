@@ -7,7 +7,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class NormalizeStep : ProcessStep
+    public class NormalizeStep : PipelineStep
     {
         public enum NormalizeMethod
         {

@@ -13,24 +13,6 @@ namespace Jhu.SpecSvc.Web.Search {
     public partial class List {
         
         /// <summary>
-        /// ToolbarElement1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement1;
-        
-        /// <summary>
-        /// ToolbarElement3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement3;
-        
-        /// <summary>
         /// OutputTableLabel control.
         /// </summary>
         /// <remarks>
@@ -40,22 +22,13 @@ namespace Jhu.SpecSvc.Web.Search {
         protected global::System.Web.UI.WebControls.Label OutputTableLabel;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// SpectrumListViewList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
-        
-        /// <summary>
-        /// ToolbarElement4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement4;
+        protected global::System.Web.UI.WebControls.DropDownList SpectrumListViewList;
         
         /// <summary>
         /// CommentsLabel control.
@@ -76,15 +49,6 @@ namespace Jhu.SpecSvc.Web.Search {
         protected global::System.Web.UI.WebControls.DropDownList DegreeFormatList;
         
         /// <summary>
-        /// ToolbarElement2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement2;
-        
-        /// <summary>
         /// TotalResultsCount control.
         /// </summary>
         /// <remarks>
@@ -92,15 +56,6 @@ namespace Jhu.SpecSvc.Web.Search {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TotalResultsCount;
-        
-        /// <summary>
-        /// ToolbarElement6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement6;
         
         /// <summary>
         /// DisplayedResultsRange control.
@@ -112,15 +67,6 @@ namespace Jhu.SpecSvc.Web.Search {
         protected global::System.Web.UI.WebControls.Label DisplayedResultsRange;
         
         /// <summary>
-        /// ToolbarElement5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.ToolbarElement ToolbarElement5;
-        
-        /// <summary>
         /// SpectrumListPager control.
         /// </summary>
         /// <remarks>
@@ -130,6 +76,15 @@ namespace Jhu.SpecSvc.Web.Search {
         protected global::System.Web.UI.WebControls.DataPager SpectrumListPager;
         
         /// <summary>
+        /// SpectrumSelectedValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator SpectrumSelectedValidator;
+        
+        /// <summary>
         /// SpectrumDataSource control.
         /// </summary>
         /// <remarks>
@@ -137,6 +92,15 @@ namespace Jhu.SpecSvc.Web.Search {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource SpectrumDataSource;
+        
+        /// <summary>
+        /// SpectrumCards control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Jhu.Graywulf.Web.Controls.MultiSelectListView SpectrumCards;
         
         /// <summary>
         /// SpectrumList control.

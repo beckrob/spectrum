@@ -5,9 +5,9 @@ using System.Linq;
 using Jhu.SpecSvc.Schema;
 using Jhu.SpecSvc.SpectrumLib;
 
-namespace Jhu.SpecSvc.Pipeline
+namespace Jhu.SpecSvc.Pipeline.Steps
 {
-    public class CompositeStep : ProcessStep
+    public class CompositeStep : PipelineStep
     {
         [Flags]
         public enum CompositeMethod

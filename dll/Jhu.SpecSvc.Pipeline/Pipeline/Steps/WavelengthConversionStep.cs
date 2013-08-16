@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class WavelengthConversionStep : ProcessStep
+    public class WavelengthConversionStep : PipelineStep
     {
         public enum WavelengthConversionMethod
         {

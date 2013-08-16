@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    [XmlInclude(typeof(CompositeStep))]
+    [XmlInclude(typeof(Steps.CompositeStep))]
     [XmlInclude(typeof(ContinuumFitStep))]
     [XmlInclude(typeof(ConvolutionStep))]
     [XmlInclude(typeof(DereddenStep))]
@@ -18,9 +18,9 @@ namespace Jhu.SpecSvc.Pipeline
     [XmlInclude(typeof(NormalizeStep))]
     [XmlInclude(typeof(PcaStep))]
     [XmlInclude(typeof(RebinStep))]
-    [XmlInclude(typeof(RedshiftStep))]
+    [XmlInclude(typeof(Steps.RedshiftStep))]
     [XmlInclude(typeof(WavelengthConversionStep))]
-    public abstract class ProcessStep
+    public abstract class PipelineStep
     {
         protected List<ProgressChangedEventHandler> progressChangedEventHandlers = new List<ProgressChangedEventHandler>();
 
@@ -85,12 +85,12 @@ namespace Jhu.SpecSvc.Pipeline
             get;
         }
 
-        public ProcessStep()
+        public PipelineStep()
         {
             InitializeMembers();
         }
 
-        public ProcessStep(ProcessStep old)
+        public PipelineStep(PipelineStep old)
         {
             CopyMembers(old);
         }
@@ -103,7 +103,7 @@ namespace Jhu.SpecSvc.Pipeline
             this.exceptions = new List<Exception>();
         }
 
-        private void CopyMembers(ProcessStep old)
+        private void CopyMembers(PipelineStep old)
         {
             this.active = old.active;
             this.connector = old.connector;

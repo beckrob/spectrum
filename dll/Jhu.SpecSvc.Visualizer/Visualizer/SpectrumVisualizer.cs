@@ -58,20 +58,20 @@ namespace Jhu.SpecSvc.Visualizer
             int q = 0;
             foreach (Jhu.SpecSvc.SpectrumLib.Spectrum spectrum in spectra)
             {
-                if (q == 0)
+                if (par.Labels)
                 {
-                    if (par.Legend)
+                    if (q == 0)
                     {
                         pane.Title.Text = spectrum.Target.Name.Value;
                         pane.XAxis.Title.Text = "Wavelength [" + spectrum.Data.SpectralAxis.Value.Unit + "]";
                         pane.YAxis.Title.Text = "Flux [" + spectrum.Data.FluxAxis.Value.Unit + "]";
                     }
-                }
-                if (q != 0)
-                {
-                    pane.Title.IsVisible = false;   // legend will be added if required
-                    pane.Legend.IsVisible = par.Legend;
-                    pane.Legend.Border.IsVisible = false;
+                    else
+                    {
+                        pane.Title.IsVisible = false;   // legend will be added if required
+                        pane.Legend.IsVisible = par.Legend;
+                        pane.Legend.Border.IsVisible = false;
+                    }
                 }
 
                 for (int i = 0; i < par.DataArrays.Length; i++)
@@ -144,7 +144,14 @@ namespace Jhu.SpecSvc.Visualizer
                 pane.XAxis.Scale.IsUseTenPower = false;
             }
 
-            pane.AxisChange(g);
+            pane.XAxis.Scale.Mag = 0;
+            pane.XAxis.Scale.MagAuto = false;
+            pane.YAxis.Scale.Mag = 0;
+            pane.YAxis.Scale.MagAuto = false;
+
+            // Scale axes to the graph and turn off exponential notation
+            pane.AxisChange(g);            
+
             pane.Draw(g);
 
             return bmp;
@@ -153,9 +160,9 @@ namespace Jhu.SpecSvc.Visualizer
         private void AddLines(SpectrumPlotParameters par, GraphPane pane)
         {
             // add lines
-            if (par.PlotSpectralLines && par.LineTitles != null && par.LineWavelengths != null)
+            if (par.PlotSpectralLines && par.LineLabels != null && par.LineWavelengths != null)
             {
-                for (int i = 0; i < par.LineTitles.Length; i++)
+                for (int i = 0; i < par.LineLabels.Length; i++)
                 {
                     LineObj li = new LineObj(par.LineWavelengths[i], 0, par.LineWavelengths[i], 1);
                     li.Location.CoordinateFrame = CoordType.XScaleYChartFraction;
@@ -166,7 +173,7 @@ namespace Jhu.SpecSvc.Visualizer
 
                     double top = 0.05 + (i % 4) * 0.025;
 
-                    TextObj to = new TextObj(par.LineTitles[i], par.LineWavelengths[i], top);
+                    TextObj to = new TextObj(par.LineLabels[i], par.LineWavelengths[i], top);
                     to.Location.CoordinateFrame = CoordType.XScaleYChartFraction;
                     to.Location.AlignV = AlignV.Bottom;
                     to.Location.AlignH = AlignH.Center;

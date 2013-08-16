@@ -31,9 +31,9 @@ namespace Jhu.SpecSvc.Pipeline
 
         private bool skipExceptions;
 
-        private List<ProcessStep> steps;
+        private List<PipelineStep> steps;
 
-        private Dictionary<ProcessStep, double> stepProgress;
+        private Dictionary<PipelineStep, double> stepProgress;
         private double lastProgress;
         private double progress;
 
@@ -55,7 +55,7 @@ namespace Jhu.SpecSvc.Pipeline
             set { skipExceptions = value; }
         }
 
-        public List<ProcessStep> Steps
+        public List<PipelineStep> Steps
         {
             get { return steps; }
             set { steps = value; }
@@ -80,7 +80,7 @@ namespace Jhu.SpecSvc.Pipeline
 
             this.skipExceptions = true;
 
-            this.steps = new List<ProcessStep>();
+            this.steps = new List<PipelineStep>();
 
             //this.stepProgress = null;
             //this.lastProgress = 0;
@@ -92,11 +92,11 @@ namespace Jhu.SpecSvc.Pipeline
         {          
             int count = this.count;
 
-            stepProgress = new Dictionary<ProcessStep, double>();
+            stepProgress = new Dictionary<PipelineStep, double>();
             progress = 0;
             lastProgress = -1;
 
-            foreach (ProcessStep step in steps)
+            foreach (PipelineStep step in steps)
             {
                 step.Connector = connector;
                 step.InitializeStep(count);
@@ -115,7 +115,7 @@ namespace Jhu.SpecSvc.Pipeline
             // Chain up processing steps using PLINQ
             ParallelQuery<Spectrum> ss = spectra.AsParallel().WithMergeOptions(ParallelMergeOptions.NotBuffered);
 
-            foreach (ProcessStep step in steps)
+            foreach (PipelineStep step in steps)
             {
                 ss = step.Execute(ss);
             }
@@ -135,7 +135,7 @@ namespace Jhu.SpecSvc.Pipeline
 
         void step_ProgressChanged(object sender, ProgressChangedEventArgs args)
         {
-            this.stepProgress[(ProcessStep)sender] = args.Progress;
+            this.stepProgress[(PipelineStep)sender] = args.Progress;
 
             double newprogress = GetProgress();
 
@@ -166,7 +166,7 @@ namespace Jhu.SpecSvc.Pipeline
             {
                 double newprogress = 0;
 
-                foreach (ProcessStep step in steps)
+                foreach (PipelineStep step in steps)
                 {
                     newprogress += this.stepProgress[step];
                 }

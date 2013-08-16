@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class CustomStep : ProcessStep
+    public class CustomStep : PipelineStep
     {
         public delegate Spectrum CustomStepFunction(Spectrum spectrum);
 

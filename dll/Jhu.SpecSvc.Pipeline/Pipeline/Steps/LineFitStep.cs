@@ -8,7 +8,7 @@ using Jhu.SpecSvc.IO;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class LineFitStep : ProcessStep
+    public class LineFitStep : PipelineStep
     {
         private class FitTask
         {

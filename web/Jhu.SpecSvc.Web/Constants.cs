@@ -10,5 +10,6 @@ namespace Jhu.SpecSvc.Web
         public const string SessionSearchParameters = "Jhu.SpecSvc.Web.SearchParameters";
         public const string SessionResultsetId = "Jhu.SpecSvc.Web.ResultsetId";
         public const string SessionDegreeFormat = "Jhu.SpecSvc.Web.DegreeFormat";
+        public const string SessionPipeline = "Jhu.SpecSvc.Web.Pipeline";
     }
 }

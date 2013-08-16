@@ -52,6 +52,7 @@ namespace Jhu.SpecSvc.IO
         }
 
         public IdSearchParameters(IdSearchParameters old)
+            : base(old)
         {
             CopyMembers(old);
         }
@@ -70,9 +71,6 @@ namespace Jhu.SpecSvc.IO
             this.ids = ids;
         }
 
-        #endregion
-        #region Member functions
-
         private void InitializeMembers()
         {
             this.ids = null;
@@ -80,16 +78,19 @@ namespace Jhu.SpecSvc.IO
 
         private void CopyMembers(IdSearchParameters old)
         {
-            base.CopyMembers(old);
-
             if (old.ids != null)
             {
                 this.ids = new string[old.ids.Length];
                 Array.Copy(old.ids, this.ids, old.ids.Length);
             }
             else
+            {
                 this.ids = null;
+            }
         }
+
+        #endregion
+        #region Member functions
 
         public IdSearchParameters GetStandardUnits()
         {

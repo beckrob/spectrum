@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class CalculateStep : ProcessStep
+    public class CalculateStep : PipelineStep
     {
         public enum CalculateMethod
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Data;
@@ -77,7 +78,44 @@ namespace Jhu.SpecSvc.IO
 
         public override IEnumerable<Spectrum> FindSpectrum(IdSearchParameters par)
         {
-            throw new NotImplementedException();
+            var idsbycollection = new Dictionary<string, HashSet<string>>(StringComparer.InvariantCultureIgnoreCase);
+
+            for (int i = 0; i < par.Ids.Length; i++)
+            {
+                var cid = GetCollectionId(par.Ids[i]);
+
+                if (!idsbycollection.ContainsKey(cid))
+                {
+                    idsbycollection.Add(cid, new HashSet<string>(StringComparer.InvariantCultureIgnoreCase));
+                }
+
+                if (!idsbycollection[cid].Contains(par.Ids[i]))
+                {
+                    idsbycollection[cid].Add(par.Ids[i]);
+                }
+            }
+
+            // Run queries in parallel agains each collection
+            Exceptions.Clear();
+
+            // Create queue to buffer results as they arrive from the collections
+            var buffer = new BlockingCollection<Spectrum>();
+
+            // Query all collections in parallel on a separate thread
+            var queries = Task.Factory.StartNew(FindSpectrumByIdWorker, new object[] { idsbycollection, par, buffer });
+
+            // Read from the buffer
+            while (!buffer.IsCompleted)
+            {
+                Spectrum s;
+                if (buffer.TryTake(out s))
+                {
+                    yield return s;
+                }
+            }
+
+            queries.Wait();
+
 
 #if false
             // grouping parameters by collection to send requests in a batch
@@ -153,39 +191,97 @@ namespace Jhu.SpecSvc.IO
 #endif
         }
 
+        private void FindSpectrumByIdWorker(object state)
+        {
+            var idsbycollection = (Dictionary<string, HashSet<string>>)((object[])state)[0];
+            var par = (IdSearchParameters)((object[])state)[1];
+            var buffer = (BlockingCollection<Spectrum>)((object[])state)[2];
+
+            Parallel.ForEach<string>(idsbycollection.Keys, cid =>
+            {
+                // load collection
+                var coll = new Collection();
+                coll.Id = cid;
+                LoadCollection(coll);
+
+                // Make copy of original parameters, but replace collection id and id list
+                var idsp = new IdSearchParameters(par);
+
+                lock (idsbycollection)
+                {
+                    idsp.Collections = new string[] { cid };
+                    idsp.Ids = idsbycollection[cid].ToArray();
+                }
+
+                // Get connector
+                using (var conn = coll.GetConnector())
+                {
+                    // Dispatch search
+                    IEnumerable<Spectrum> temp = null;
+
+                    // Execute search
+                    temp = conn.FindSpectrum(idsp);
+
+                    foreach (var s in temp)
+                    {
+                        // Prefix with collection id
+                        PrefixCollectionId(coll.Id, s);
+
+                        // Enqueue in output queue
+                        bool queued = false;
+                        while (!queued)
+                        {
+                            if (buffer.Count < 100)
+                            {
+                                buffer.Add(s);
+                                queued = true;
+                            }
+                            else
+                            {
+                                Thread.Sleep(100);
+                            }
+                        }
+                    }
+                }
+            });
+
+            // All collections processed, now mark as done
+            buffer.CompleteAdding();
+        }
+
         public override IEnumerable<Spectrum> FindSpectrum(AllSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(ConeSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(RedshiftSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(AdvancedSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(ModelSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(FolderSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(HtmRangeSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         /*
@@ -220,7 +316,7 @@ namespace Jhu.SpecSvc.IO
 
         public override IEnumerable<Spectrum> FindSpectrum(SqlSearchParameters par)
         {
-            return FindSpectrum((SearchParametersBase)par);
+            return FindSpectrumDispatch((SearchParametersBase)par);
         }
 
         public IEnumerable<Spectrum> FindSpectrum(SkyServerSearchParameters par)
@@ -246,7 +342,7 @@ namespace Jhu.SpecSvc.IO
             isp.UserGuid = par.UserGuid;
             isp.Ids = idlist.ToArray();
 
-            return FindSpectrum(isp);
+            return FindSpectrumDispatch(isp);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(ObjectSearchParameters par)
@@ -295,88 +391,15 @@ namespace Jhu.SpecSvc.IO
 
         //
 
-        public IEnumerable<Spectrum> FindSpectrum(SearchParametersBase par)
+        public IEnumerable<Spectrum> FindSpectrumDispatch(SearchParametersBase par)
         {
             Exceptions.Clear();
 
             // Create queue to buffer results as they arrive from the collections
-            var buffer = new System.Collections.Concurrent.BlockingCollection<Spectrum>();
+            var buffer = new BlockingCollection<Spectrum>();
 
             // Query all collections in parallel on a separate thread
-            var queries = Task.Factory.StartNew(() =>
-                {
-                Parallel.For(0, par.Collections.Length, i =>
-                    {
-                        // load collection
-                        var coll = new Collection();
-                        coll.Id = par.Collections[i];
-                        LoadCollection(coll);
-
-                        // Get connector
-                        using (var conn = coll.GetConnector())
-                        {
-                            // Dispatch search
-                            IEnumerable<Spectrum> temp = null;
-
-                            switch (par.Type)
-                            {
-                                case SearchMethods.Cone:
-                                    temp = conn.FindSpectrum((ConeSearchParameters)par);
-                                    break;
-                                case SearchMethods.Redshift:
-                                    temp = conn.FindSpectrum((RedshiftSearchParameters)par);
-                                    break;
-                                case SearchMethods.Advanced:
-                                    temp = conn.FindSpectrum((AdvancedSearchParameters)par);
-                                    break;
-                                case SearchMethods.Model:
-                                    temp = conn.FindSpectrum((ModelSearchParameters)par);
-                                    break;
-                                case SearchMethods.Folder:
-                                    temp = conn.FindSpectrum((FolderSearchParameters)par);
-                                    break;
-                                case SearchMethods.All:
-                                    temp = conn.FindSpectrum((AllSearchParameters)par);
-                                    break;
-                                case SearchMethods.HtmRange:
-                                    temp = conn.FindSpectrum((HtmRangeSearchParameters)par);
-                                    break;
-                                case SearchMethods.Similar:
-                                    temp = conn.FindSpectrum((SimilarSearchParameters)par);
-                                    break;
-                                case SearchMethods.Sql:
-                                    temp = conn.FindSpectrum((SqlSearchParameters)par);
-                                    break;
-                                default:
-                                    throw new NotImplementedException();
-                            }
-
-                            foreach (var s in temp)
-                            {
-                                // Prefix with collection id
-                                PrefixCollectionId(coll.Id, s);
-
-                                // Enqueue in output queue
-                                bool queued = false;
-                                while (!queued)
-                                {
-                                    if (buffer.Count < 100)
-                                    {
-                                        buffer.Add(s);
-                                        queued = true;
-                                    }
-                                    else
-                                    {
-                                        Thread.Sleep(100);
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    // All collections processed, now mark as done
-                    buffer.CompleteAdding();
-                });
+            var queries = Task.Factory.StartNew(FindSpectrumDispatchWorker, new object[] { par, buffer });
 
             // Read from the buffer
             while (!buffer.IsCompleted)
@@ -385,6 +408,84 @@ namespace Jhu.SpecSvc.IO
             }
 
             queries.Wait();
+        }
+
+        private void FindSpectrumDispatchWorker(object state)
+        {
+            var par = (SearchParametersBase)((object[])state)[0];
+            var buffer = (BlockingCollection<Spectrum>)((object[])state)[1];
+
+            Parallel.For(0, par.Collections.Length, i =>
+            {
+                // load collection
+                var coll = new Collection();
+                coll.Id = par.Collections[i];
+                LoadCollection(coll);
+
+                // Get connector
+                using (var conn = coll.GetConnector())
+                {
+                    // Dispatch search
+                    IEnumerable<Spectrum> temp = null;
+
+                    switch (par.Type)
+                    {
+                        case SearchMethods.Cone:
+                            temp = conn.FindSpectrum((ConeSearchParameters)par);
+                            break;
+                        case SearchMethods.Redshift:
+                            temp = conn.FindSpectrum((RedshiftSearchParameters)par);
+                            break;
+                        case SearchMethods.Advanced:
+                            temp = conn.FindSpectrum((AdvancedSearchParameters)par);
+                            break;
+                        case SearchMethods.Model:
+                            temp = conn.FindSpectrum((ModelSearchParameters)par);
+                            break;
+                        case SearchMethods.Folder:
+                            temp = conn.FindSpectrum((FolderSearchParameters)par);
+                            break;
+                        case SearchMethods.All:
+                            temp = conn.FindSpectrum((AllSearchParameters)par);
+                            break;
+                        case SearchMethods.HtmRange:
+                            temp = conn.FindSpectrum((HtmRangeSearchParameters)par);
+                            break;
+                        case SearchMethods.Similar:
+                            temp = conn.FindSpectrum((SimilarSearchParameters)par);
+                            break;
+                        case SearchMethods.Sql:
+                            temp = conn.FindSpectrum((SqlSearchParameters)par);
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+
+                    foreach (var s in temp)
+                    {
+                        // Prefix with collection id
+                        PrefixCollectionId(coll.Id, s);
+
+                        // Enqueue in output queue
+                        bool queued = false;
+                        while (!queued)
+                        {
+                            if (buffer.Count < 100)
+                            {
+                                buffer.Add(s);
+                                queued = true;
+                            }
+                            else
+                            {
+                                Thread.Sleep(100);
+                            }
+                        }
+                    }
+                }
+            });
+
+            // All collections processed, now mark as done
+            buffer.CompleteAdding();
         }
 
         //
@@ -423,7 +524,16 @@ namespace Jhu.SpecSvc.IO
 
         private static string GetCollectionId(string id)
         {
-            return id.Substring(0, id.IndexOf('#'));
+            var idx = id.IndexOf('#');
+
+            if (idx > 0)
+            {
+                return id.Substring(0, idx);
+            }
+            else
+            {
+                return id;
+            }
         }
 
         private static void PrefixCollectionId(string collectionId, Spectrum spectrum)
@@ -652,7 +762,7 @@ namespace Jhu.SpecSvc.IO
             }*/
 
 
-            return FindSpectrum(ids).Select(s =>
+            return FindSpectrumDispatch(ids).Select(s =>
                 {
                     // Update match ID
                     string[] ii = idlist.Find(delegate(string[] match) { return match[0] == s.PublisherId; });

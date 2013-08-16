@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class GroupByStep : ProcessStep
+    public class GroupByStep : PipelineStep
     {
         private DoubleInterval redshiftLimits;
         private DoubleParam redshiftBinSize;

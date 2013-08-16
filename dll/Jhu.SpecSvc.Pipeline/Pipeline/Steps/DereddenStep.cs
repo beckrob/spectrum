@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class DereddenStep : ProcessStep
+    public class DereddenStep : PipelineStep
     {
         public override string Title
         {

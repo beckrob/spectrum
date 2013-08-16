@@ -34,7 +34,7 @@
     </tr>
     <tr>
         <td class="ListCell">
-            (ra, dec):
+            Position:
         </td>
         <td colspan="2">
             <asp:Label ID="Pos" runat="server" Text="Label" />

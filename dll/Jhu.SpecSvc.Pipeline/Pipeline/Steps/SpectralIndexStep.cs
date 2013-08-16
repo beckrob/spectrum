@@ -7,7 +7,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class SpectralIndexStep : ProcessStep
+    public class SpectralIndexStep : PipelineStep
     {
         private long mask;
 

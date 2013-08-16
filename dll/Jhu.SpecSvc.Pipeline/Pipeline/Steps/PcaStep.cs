@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class PcaStep : ProcessStep
+    public class PcaStep : PipelineStep
     {
         private Spectrum cache;
 

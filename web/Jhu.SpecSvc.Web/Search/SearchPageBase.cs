@@ -15,12 +15,6 @@ namespace Jhu.SpecSvc.Web.Search
             set { Session[Constants.SessionSearchParameters] = value; }
         }
 
-        public int ResultsetId
-        {
-            get { return (int)(Session[Constants.SessionResultsetId] ?? -1); }
-            set { Session[Constants.SessionResultsetId] = value; }
-        }
-
         public void Execute()
         {
             DeleteExistingResultset();  // TODO: what if saved as job?
@@ -28,7 +22,7 @@ namespace Jhu.SpecSvc.Web.Search
             // Create new resultset
             var resultsetId = ResultsetId = Connector.CreateResultset();
 
-            var results = Connector.FindSpectrum((SearchParametersBase)SearchParameters);
+            var results = Connector.FindSpectrumDispatch(SearchParameters);
             Connector.SaveResultsetSpectra(resultsetId, results);
 
             Response.Redirect(List.GetUrl());

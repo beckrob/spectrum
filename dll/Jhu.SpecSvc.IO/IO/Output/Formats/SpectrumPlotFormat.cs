@@ -62,7 +62,7 @@ namespace Jhu.SpecSvc.IO
 
         protected override void Execute(Jhu.SpecSvc.SpectrumLib.Spectrum spectrum, Stream output, out string filename)
         {
-            Jhu.SpecSvc.Visualizer.Visualizer vis = new Jhu.SpecSvc.Visualizer.Visualizer();
+            Jhu.SpecSvc.Visualizer.SpectrumVisualizer vis = new Jhu.SpecSvc.Visualizer.SpectrumVisualizer();
 
             vis.PlotSpectraGraph(plotParameters, spectrum).Save(output, System.Drawing.Imaging.ImageFormat.Gif);
 

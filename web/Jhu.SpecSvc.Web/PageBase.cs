@@ -5,6 +5,7 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using Jhu.SpecSvc.IO;
+using Jhu.SpecSvc.Pipeline;
 
 namespace Jhu.SpecSvc.Web
 {
@@ -59,10 +60,22 @@ namespace Jhu.SpecSvc.Web
             }
         }
 
+        public int ResultsetId
+        {
+            get { return (int)(Session[Constants.SessionResultsetId] ?? -1); }
+            set { Session[Constants.SessionResultsetId] = value; }
+        }
+
         public DegreeFormat DegreeFormat
         {
             get { return (DegreeFormat)(Session[Constants.SessionDegreeFormat] ?? DegreeFormat.Decimal); }
             set { Session[Constants.SessionDegreeFormat] = value; }
+        }
+
+        public List<PipelineStep> Pipeline
+        {
+            get { return (List<PipelineStep>)Session[Constants.SessionPipeline]; }
+            set { Session[Constants.SessionPipeline] = value; }
         }
 
         override protected void OnUnload(EventArgs e)

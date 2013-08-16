@@ -99,7 +99,9 @@ namespace Jhu.SpecSvc.IO
                 Array.Copy(old.collections, this.collections, old.collections.Length);
             }
             else
+            {
                 this.collections = null;
+            }
 
             this.loadPoints = old.loadPoints;
             this.loadDetails = old.loadDetails;

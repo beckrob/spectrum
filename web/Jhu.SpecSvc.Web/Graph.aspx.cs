@@ -14,19 +14,19 @@ namespace Jhu.SpecSvc.Web
     {
         public static string GetUrl(string spectrumId, int width, int height)
         {
-            return String.Format("~/Graph.aspx?spectrumID={0}&width={1}&height={2}", spectrumId, width, height);
+            return String.Format("~/Graph.aspx?spectrumID={0}&width={1}&height={2}&labels=no", HttpContext.Current.Server.UrlEncode(spectrumId), width, height);
         }
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-
             // Parsing request parameters
             var par = new SpectrumPlotParameters();
 
             par.Width = (Request.QueryString["width"] != null) ? int.Parse(Request.QueryString["width"]) : 640;
             par.Height = (Request.QueryString["height"] != null) ? int.Parse(Request.QueryString["height"]) : 480;
 
-            par.Legend = (Request.QueryString["title"] != "no");
+            par.Legend = (Request.QueryString["legend"] != "no");
+            par.Labels = (Request.QueryString["labels"] != "no");
 
             par.XMin = (Request.QueryString["xmin"] != null) ? float.Parse(Request.QueryString["xmin"]) : 3000;
             par.XMax = (Request.QueryString["xmax"] != null) ? float.Parse(Request.QueryString["xmax"]) : 10000;
@@ -43,6 +43,7 @@ namespace Jhu.SpecSvc.Web
             idpar.LoadDetails = false;
             idpar.LoadPoints = true;
             idpar.UserGuid = UserGuid;
+            idpar.PointsMask = new string[] { "Spectral_Value", "Flux_Value" };
 
             if (Request.QueryString["SpectrumID"] == "list")
             {
@@ -54,13 +55,11 @@ namespace Jhu.SpecSvc.Web
             }
 
             //***********************
-            var sps = new List<Spectrum>();
-            sps.AddRange(Connector.FindSpectrum(idpar));
-            var spectra = sps.ToArray();
+            var spectra = Connector.FindSpectrum(idpar).ToArray();
 
             // Generating graph with the visualizer and sending to the client
-            Response.Expires = -1;
-            Response.ContentType = "image/gif";
+            Response.Expires = -1; // TODO: check if it's necessary
+            Response.ContentType = "image/png";
 
             var vis = new SpectrumVisualizer();
             vis.PlotSpectraGraph(par, spectra).Save(Response.OutputStream, System.Drawing.Imaging.ImageFormat.Gif);

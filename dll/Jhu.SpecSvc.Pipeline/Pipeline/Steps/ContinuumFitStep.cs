@@ -9,7 +9,7 @@ using Jhu.SpecSvc.IO;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class ContinuumFitStep : ProcessStep
+    public class ContinuumFitStep : PipelineStep
     {
 
         protected const double VDispMaxSigma = 5;

@@ -57,9 +57,9 @@ namespace Jhu.SpecSvc.SpectrumLib
 
         // fields used for spectrum service portal
         [XmlIgnore]
-        public long ResultId;
+        public long ResultId { get; set; }
         [XmlIgnore]
-        public bool ResultSelected;
+        public bool ResultSelected { get; set; }
 
         /// <summary>
         /// Prefix for ivo IDs, used when assigning numerical value to the ID property

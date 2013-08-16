@@ -24,10 +24,10 @@
         </tr>
     </table>
     <div class="LayoutMenu dock-top">
-        <jsw:Menu runat="server" />
+        <jswc:Menu runat="server" />
     </div>
     <div class="LayoutFootline dock-bottom">
-        <jsw:Footer runat="server" />
+        <jswc:Footer runat="server" />
     </div>
     <asp:ContentPlaceHolder ID="middle" runat="server" />
     </form>

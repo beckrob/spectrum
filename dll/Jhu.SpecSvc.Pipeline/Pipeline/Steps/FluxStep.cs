@@ -8,7 +8,7 @@ using Jhu.SpecSvc.FilterLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class FluxStep : ProcessStep
+    public class FluxStep : PipelineStep
     {
         public enum RedshiftMode
         {

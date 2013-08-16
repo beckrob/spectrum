@@ -68,7 +68,7 @@
     </Compile>
     <Compile Include="Visualizer\PlotParameters.cs" />
     <Compile Include="Visualizer\SpectrumPlotParameters.cs" />
-    <Compile Include="Visualizer\Visualizer.cs" />
+    <Compile Include="Visualizer\SpectrumVisualizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jhu.SpecSvc.Schema\Jhu.SpecSvc.Schema.csproj">

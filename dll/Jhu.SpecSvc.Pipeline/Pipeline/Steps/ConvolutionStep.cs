@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class ConvolutionStep : ProcessStep
+    public class ConvolutionStep : PipelineStep
     {
 
 

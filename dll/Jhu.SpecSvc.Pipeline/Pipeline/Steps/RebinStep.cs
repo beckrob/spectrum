@@ -6,7 +6,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class RebinStep : ProcessStep
+    public class RebinStep : PipelineStep
     {
         private DoubleInterval rebinLimits;
         private DoubleParam rebinBinSize;
