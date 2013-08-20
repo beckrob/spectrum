@@ -7,34 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-
-public partial class RebinStep {
+namespace Jhu.SpecSvc.Web.Pipeline.Steps {
     
-    /// <summary>
-    /// RebinLimitMin control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.TextBox RebinLimitMin;
     
-    /// <summary>
-    /// RebinLimitMax control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.TextBox RebinLimitMax;
-    
-    /// <summary>
-    /// RebinBinsize control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.TextBox RebinBinsize;
+    public partial class RebinStepControl {
+        
+        /// <summary>
+        /// RebinLimitMin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox RebinLimitMin;
+        
+        /// <summary>
+        /// RebinLimitMax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox RebinLimitMax;
+        
+        /// <summary>
+        /// RebinBinsize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox RebinBinsize;
+    }
 }

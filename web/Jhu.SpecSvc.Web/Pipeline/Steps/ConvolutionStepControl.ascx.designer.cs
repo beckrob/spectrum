@@ -7,43 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-
-public partial class ConvolutionStep {
+namespace Jhu.SpecSvc.Web.Pipeline.Steps {
     
-    /// <summary>
-    /// TableCell1 control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.TableCell TableCell1;
     
-    /// <summary>
-    /// TableCell2 control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.TableCell TableCell2;
-    
-    /// <summary>
-    /// VelocityDispersion control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.TextBox VelocityDispersion;
-    
-    /// <summary>
-    /// VelocityDispersionRangeValidator control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.RangeValidator VelocityDispersionRangeValidator;
+    public partial class ConvolutionStepControl {
+        
+        /// <summary>
+        /// VelocityDispersion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox VelocityDispersion;
+        
+        /// <summary>
+        /// VelocityDispersionRangeValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator VelocityDispersionRangeValidator;
+    }
 }

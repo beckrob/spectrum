@@ -10,42 +10,42 @@
 namespace Jhu.SpecSvc.Web.Pipeline.Steps {
     
     
-    public partial class RedshiftStepControl {
+    public partial class BinByStepControl {
         
         /// <summary>
-        /// Method control.
+        /// Parameter control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList Method;
+        protected global::System.Web.UI.WebControls.RadioButtonList Parameter;
         
         /// <summary>
-        /// RedshiftRow control.
+        /// BinLimitMin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow RedshiftRow;
+        protected global::System.Web.UI.WebControls.TextBox BinLimitMin;
         
         /// <summary>
-        /// Redshift control.
+        /// BinLimitMax control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Redshift;
+        protected global::System.Web.UI.WebControls.TextBox BinLimitMax;
         
         /// <summary>
-        /// RedshiftRangeValidator control.
+        /// Binsize control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator RedshiftRangeValidator;
+        protected global::System.Web.UI.WebControls.TextBox Binsize;
     }
 }

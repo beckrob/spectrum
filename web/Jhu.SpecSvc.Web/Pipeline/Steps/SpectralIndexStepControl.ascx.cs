@@ -11,7 +11,7 @@ using Jhu.SpecSvc.Web.Pipeline;
 
 namespace Jhu.SpecSvc.Web.Pipeline.Steps
 {
-    public partial class DereddenStepControl : PipelineStepControlBase<DereddenStep>
+    public partial class SpectralIndexStepControl : PipelineStepControlBase<DereddenStep>
     {
         protected override void OnEnabledChanged()
         {

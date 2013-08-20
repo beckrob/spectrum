@@ -13,6 +13,15 @@ namespace Jhu.SpecSvc.Web.Pipeline {
     public partial class Pipeline {
         
         /// <summary>
+        /// StepType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList StepType;
+        
+        /// <summary>
         /// ResetPipeline control.
         /// </summary>
         /// <remarks>
@@ -49,15 +58,6 @@ namespace Jhu.SpecSvc.Web.Pipeline {
         protected global::Jhu.Graywulf.Web.Controls.ToolbarButton ManagePipelines;
         
         /// <summary>
-        /// UpdatePanel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
-        /// <summary>
         /// PipelineStepList control.
         /// </summary>
         /// <remarks>
@@ -65,23 +65,5 @@ namespace Jhu.SpecSvc.Web.Pipeline {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView PipelineStepList;
-        
-        /// <summary>
-        /// StepType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList StepType;
-        
-        /// <summary>
-        /// AddStep control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddStep;
     }
 }

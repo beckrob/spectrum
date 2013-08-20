@@ -6,92 +6,32 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Jhu.SpecSvc.SpectrumLib;
 using Jhu.SpecSvc.Pipeline;
+using Jhu.SpecSvc.Pipeline.Steps;
 using Jhu.SpecSvc.Web.Pipeline;
 
 namespace Jhu.SpecSvc.Web.Pipeline.Steps
 {
-public partial class RebinStep : System.Web.UI.UserControl, IProcessStepControl
-{
-    private bool enabled;
-    private RebinStep step;
-
-    public bool Enabled
+    public partial class RebinStepControl : PipelineStepControlBase<RebinStep>
     {
-        get { return enabled; }
-        set
+        protected override void OnEnabledChanged()
         {
-            enabled = value;
             RebinLimitMin.Enabled =
-                RebinLimitMax.Enabled =
-                RebinBinsize.Enabled = value;
+                            RebinLimitMax.Enabled =
+                            RebinBinsize.Enabled = Enabled;
         }
-    }
 
-    public RebinStep Step
-    {
-        get
+        protected override void OnUpdateForm(RebinStep step)
         {
-            SaveForm();
-            return step;
+            RebinLimitMin.Text = step.RebinLimits.Min.Value.ToString();
+            RebinLimitMax.Text = step.RebinLimits.Max.Value.ToString();
+            RebinBinsize.Text = step.RebinBinSize.Value.ToString();
         }
-        set
+
+        protected override void OnSaveForm(RebinStep step)
         {
-            step = value;
-            UpdateForm();
+            step.RebinLimits.Min.Value = double.Parse(RebinLimitMin.Text);
+            step.RebinLimits.Max.Value = double.Parse(RebinLimitMax.Text);
+            step.RebinBinSize.Value = double.Parse(RebinBinsize.Text);
         }
     }
-
-    public processStepControls_RebinStep()
-    {
-        enabled = true;
-        step = new RebinStep();
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        if (IsPostBack)
-        {
-            SaveForm();
-        }
-        else
-        {
-            UpdateForm();
-        }
-    }
-
-    private void UpdateForm()
-    {
-        RebinLimitMin.Text = step.RebinLimits.Min.Value.ToString();
-        RebinLimitMax.Text = step.RebinLimits.Max.Value.ToString();
-        RebinBinsize.Text = step.RebinBinSize.Value.ToString();
-    }
-
-    private void SaveForm()
-    {
-        step.RebinLimits.Min.Value = double.Parse(RebinLimitMin.Text);
-        step.RebinLimits.Max.Value = double.Parse(RebinLimitMax.Text);
-        step.RebinBinSize.Value = double.Parse(RebinBinsize.Text);
-    }
-
-    #region IProcessStepControl Members
-
-    public ProcessStep GetValue()
-    {
-        SaveForm();
-        return step;
-    }
-
-    public void SetValue(ProcessStep value)
-    {
-        step = (RebinStep)value;
-        UpdateForm();
-    }
-
-    public string GetTitle()
-    {
-        return step.Title;
-    }
-
-    #endregion
-}
 }

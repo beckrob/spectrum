@@ -1,60 +1,69 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true"
-    Inherits="processStepControls_MagnitudeStep" Codebehind="FluxStepControl.ascx.cs" %>
-<table class="Form">
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="Jhu.SpecSvc.Web.Pipeline.Steps.FluxStepControl"
+    CodeBehind="FluxStepControl.ascx.cs" %>
+<table border="0" cellpadding="0" cellspacing="0">
     <tr>
-        <td class="FormLabel">
-            Filters:
+        <td>
+            <table class="PipelineForm">
+                <tr>
+                    <td class="PipelineFormLabel">
+                        Filters:
+                    </td>
+                    <td class="PipelineFormField">
+                        <div style="width: 100%; overflow: auto; max-height: 128px; border: solid 1px #C0C0C0">
+                            <asp:CheckBoxList ID="Filters" runat="server">
+                            </asp:CheckBoxList>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </td>
-        <td class="FormField">
-            <div style="width: 100%; overflow: auto; max-height: 120px; border: solid 1px #C0C0C0">
-                <asp:CheckBoxList ID="Filters" runat="server">
-                </asp:CheckBoxList>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="FormLabel">
-            Redshift:
-        </td>
-        <td class="FormField">
-            <asp:RadioButtonList ID="Redshift" runat="server" RepeatDirection="Horizontal" 
-                AutoPostBack="True" onselectedindexchanged="Redshift_SelectedIndexChanged">
-                <asp:ListItem Value="AsIs">As is</asp:ListItem>
-                <asp:ListItem>Variable</asp:ListItem>
-            </asp:RadioButtonList>
+        <td style="width: 18px"></td>
+        <td runat="server">
+            <table class="PipelineForm">
+                <td class="PipelineFormLabel">
+                    Redshift:
+                </td>
+                <td class="PipelineFormField">
+                    <asp:RadioButtonList ID="Redshift" runat="server" RepeatDirection="Vertical" AutoPostBack="True"
+                        OnSelectedIndexChanged="Redshift_SelectedIndexChanged">
+                        <asp:ListItem Value="AsIs">As is</asp:ListItem>
+                        <asp:ListItem>Variable</asp:ListItem>
+                    </asp:RadioButtonList>
+                </td>
+                <tr runat="server" id="RedshiftRow1">
+                    <td class="PipelineFormLabel" style="text-align: right">
+                        z<span style="font-size: 8pt; vertical-align: sub"><em>min</em></span> =
+                    </td>
+                    <td class="PipelineFormField">
+                        <asp:TextBox ID="RedshiftMin" runat="server">0</asp:TextBox>
+                        <asp:RangeValidator ID="RedshiftMinRangeValidator" runat="server" ControlToValidate="RedshiftMin"
+                            Display="Dynamic" ErrorMessage="Invalid value" MaximumValue="10" MinimumValue="0"
+                            SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                    </td>
+                </tr>
+                <tr runat="server" id="RedshiftRow2">
+                    <td class="PipelineFormLabel" style="text-align: right">
+                        z<span style="font-size: 8pt; vertical-align: sub"><em>max</em></span> =
+                    </td>
+                    <td class="PipelineFormField">
+                        <asp:TextBox ID="RedshiftMax" runat="server">0</asp:TextBox>
+                        <asp:RangeValidator ID="RedshiftMaxRangeValidator" runat="server" ControlToValidate="RedshiftMax"
+                            Display="Dynamic" ErrorMessage="Invalid value" MaximumValue="10" MinimumValue="0"
+                            SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                    </td>
+                </tr>
+                <tr runat="server" id="RedshiftRow3">
+                    <td class="PipelineFormLabel" style="text-align: right">
+                        Δz<span style="font-size: 8pt; vertical-align: sub"><em>bin</em></span> =
+                    </td>
+                    <td class="PipelineFormField">
+                        <asp:TextBox ID="RedshiftBin" runat="server">0</asp:TextBox>
+                        <asp:RangeValidator ID="RedshiftBinRangeValidator" runat="server" ControlToValidate="RedshiftBin"
+                            Display="Dynamic" ErrorMessage="Invalid value" MaximumValue="10" MinimumValue="0.0001"
+                            SetFocusOnError="True" Type="Double"></asp:RangeValidator>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
-<asp:Table runat="server" ID="RedshiftTable" CssClass="Form" Visible="false">
-    <asp:TableRow runat="server" ID="RedshiftRow">
-        <asp:TableCell ID="TableCell3" runat="server" CssClass="FormLabelRight">
-            z<span style="font-size: 8pt; vertical-align: sub"><em>min</em></span> =
-        </asp:TableCell>
-        <asp:TableCell ID="TableCell4" runat="server" CssClass="FormField" Width="20%">
-            <asp:TextBox ID="RedshiftMin" runat="server" Width="96px">0</asp:TextBox>
-            <asp:RangeValidator ID="RedshiftMinRangeValidator" runat="server" ControlToValidate="RedshiftMin"
-                Display="Dynamic" ErrorMessage="Invalid value" MaximumValue="10" MinimumValue="0"
-                SetFocusOnError="True" Type="Double"></asp:RangeValidator>
-        </asp:TableCell>
-        <asp:TableCell ID="TableCell5" runat="server" CssClass="FormLabelRight" Width="20%">
-            z<span style="font-size: 8pt; vertical-align: sub"><em>max</em></span> =
-        </asp:TableCell>
-        <asp:TableCell ID="TableCell6" runat="server" CssClass="FormField" Width="30%">
-            <asp:TextBox ID="RedshiftMax" runat="server" Width="96px">0</asp:TextBox>
-            <asp:RangeValidator ID="RedshiftMaxRangeValidator" runat="server" ControlToValidate="RedshiftMax"
-                Display="Dynamic" ErrorMessage="Invalid value" MaximumValue="10" MinimumValue="0"
-                SetFocusOnError="True" Type="Double"></asp:RangeValidator>
-        </asp:TableCell>
-    </asp:TableRow>
-    <asp:TableRow runat="server" ID="RedshiftBinRow">
-        <asp:TableCell ID="TableCell7" runat="server" CssClass="FormLabelRight">
-            Δz<span style="font-size: 8pt; vertical-align: sub"><em>bin</em></span> =
-        </asp:TableCell>
-        <asp:TableCell ID="TableCell8" runat="server" CssClass="FormField" ColumnSpan="3">
-            <asp:TextBox ID="RedshiftBin" runat="server" Width="96px">0</asp:TextBox>
-            <asp:RangeValidator ID="RedshiftBinRangeValidator" runat="server" ControlToValidate="RedshiftBin"
-                Display="Dynamic" ErrorMessage="Invalid value" MaximumValue="10" MinimumValue="0.0001"
-                SetFocusOnError="True" Type="Double"></asp:RangeValidator>
-        </asp:TableCell>
-    </asp:TableRow>
-</asp:Table>

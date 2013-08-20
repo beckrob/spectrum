@@ -6,79 +6,26 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Jhu.SpecSvc.SpectrumLib;
 using Jhu.SpecSvc.Pipeline;
+using Jhu.SpecSvc.Pipeline.Steps;
 using Jhu.SpecSvc.Web.Pipeline;
 
 namespace Jhu.SpecSvc.Web.Pipeline.Steps
 {
-public partial class ConvolutionStep : System.Web.UI.UserControl, IProcessStepControl
-{
-    private bool enabled;
-    private ConvolutionStep step;
-
-    public bool Enabled
+    public partial class ConvolutionStepControl : PipelineStepControlBase<ConvolutionStep>
     {
-        get { return enabled; }
-        set
+        protected override void OnEnabledChanged()
         {
-            enabled = value;
-            UpdateForm();
+            
+        }
+
+        protected override void OnUpdateForm(ConvolutionStep step)
+        {
+            VelocityDispersion.Text = step.VelocityDispersion.Value.ToString();
+        }
+
+        protected override void OnSaveForm(ConvolutionStep step)
+        {
+            step.VelocityDispersion.Value = double.Parse(VelocityDispersion.Text);
         }
     }
-
-    public ConvolutionStep Step
-    {
-        get
-        {
-            SaveForm();
-            return step;
-        }
-        set
-        {
-            step = value;
-            UpdateForm();
-        }
-    }
-
-    public processStepControls_ConvolutionStep()
-    {
-        enabled = true;
-        step = new ConvolutionStep();
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        UpdateForm();
-    }
-
-    private void UpdateForm()
-    {
-        VelocityDispersion.Text = step.VelocityDispersion.Value.ToString();
-    }
-
-    private void SaveForm()
-    {
-        step.VelocityDispersion.Value = double.Parse(VelocityDispersion.Text);
-    }
-
-    #region IProcessStepControl Members
-
-    public ProcessStep GetValue()
-    {
-        SaveForm();
-        return step;
-    }
-
-    public void SetValue(ProcessStep value)
-    {
-        step = (ConvolutionStep)value;
-        UpdateForm();
-    }
-
-    public string GetTitle()
-    {
-        return step.Title;
-    }
-
-    #endregion
-}
 }

@@ -139,6 +139,9 @@
     <Compile Include="Pipeline\Pipeline.aspx.designer.cs">
       <DependentUpon>Pipeline.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pipeline\PipelineStepControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Pipeline\Steps\CompositeStepControl.ascx.cs">
       <DependentUpon>CompositeStepControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -148,6 +151,7 @@
     </Compile>
     <Compile Include="Pipeline\Steps\ContinuumFitStepControl.ascx.cs">
       <DependentUpon>ContinuumFitStepControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pipeline\Steps\ContinuumFitStepControl.ascx.designer.cs">
       <DependentUpon>ContinuumFitStepControl.ascx</DependentUpon>
@@ -159,6 +163,27 @@
     <Compile Include="Pipeline\Steps\ConvolutionStepControl.ascx.designer.cs">
       <DependentUpon>ConvolutionStepControl.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Pipeline\Steps\BinByStepControl.ascx.cs">
+      <DependentUpon>BinByStepControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Steps\BinByStepControl.ascx.designer.cs">
+      <DependentUpon>BinByStepControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Steps\SelectBestFitStepControl.ascx.cs">
+      <DependentUpon>SelectBestFitStepControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Steps\SelectBestFitStepControl.ascx.designer.cs">
+      <DependentUpon>SelectBestFitStepControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Steps\SpectralIndexStepControl.ascx.cs">
+      <DependentUpon>SpectralIndexStepControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Steps\SpectralIndexStepControl.ascx.designer.cs">
+      <DependentUpon>SpectralIndexStepControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Pipeline\Steps\DereddenStepControl.ascx.cs">
       <DependentUpon>DereddenStepControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -168,6 +193,7 @@
     </Compile>
     <Compile Include="Pipeline\Steps\FluxStepControl.ascx.cs">
       <DependentUpon>FluxStepControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pipeline\Steps\FluxStepControl.ascx.designer.cs">
       <DependentUpon>FluxStepControl.ascx</DependentUpon>
@@ -277,6 +303,10 @@
       <Project>{E9D182CF-746E-4E40-B01C-74A32FB70749}</Project>
       <Name>Jhu.Graywulf.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.FilterLib\Jhu.SpecSvc.FilterLib.csproj">
+      <Project>{AB174205-D7D0-4BE6-AF11-D7BC619C054A}</Project>
+      <Name>Jhu.SpecSvc.FilterLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\dll\Jhu.SpecSvc.IO\Jhu.SpecSvc.IO.csproj">
       <Project>{7B1172A6-8121-472D-9212-9AB0C549B0A2}</Project>
       <Name>Jhu.SpecSvc.IO</Name>
@@ -314,6 +344,9 @@
     <Content Include="Pipeline\Steps\CompositeStepControl.ascx" />
     <Content Include="Pipeline\Steps\ContinuumFitStepControl.ascx" />
     <Content Include="Pipeline\Steps\ConvolutionStepControl.ascx" />
+    <Content Include="Pipeline\Steps\BinByStepControl.ascx" />
+    <Content Include="Pipeline\Steps\SelectBestFitStepControl.ascx" />
+    <Content Include="Pipeline\Steps\SpectralIndexStepControl.ascx" />
     <Content Include="Pipeline\Steps\DereddenStepControl.ascx" />
     <Content Include="Pipeline\Steps\FluxStepControl.ascx" />
     <Content Include="Pipeline\Steps\LineFitStepControl.ascx" />

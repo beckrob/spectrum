@@ -7,7 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-
-public partial class DereddenStep {
+namespace Jhu.SpecSvc.Web.Pipeline.Steps {
+    
+    
+    public partial class DereddenStepControl {
+    }
 }

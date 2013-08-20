@@ -18,9 +18,10 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         protected override void OnInit(EventArgs e)
         {
-            base.OnInit(e);
-            
             PipelineStepList.DataSource = Pipeline;
+            PipelineStepList.DataBind();
+
+            base.OnInit(e);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -37,11 +38,23 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         private void InitializeStepTypeList()
         {
-            Type[] steptypes = { typeof(RebinStep), typeof(RedshiftStep), typeof(DereddenStep),
-                           typeof(WavelengthConversionStep), typeof(NormalizeStep),
-                           typeof(ConvolutionStep), typeof(CompositeStep),
-                           typeof(PcaStep), typeof(ContinuumFitStep), typeof(LineFitStep),
-                           typeof(FluxStep)};
+            StepType.Items.Add(new ListItem("(select from list)", ""));
+
+            Type[] steptypes = {
+                    typeof(BinByStep),
+                    typeof(RebinStep),
+                    typeof(RedshiftStep),
+                    typeof(DereddenStep),
+                    typeof(WavelengthConversionStep),
+                    typeof(NormalizeStep),
+                    typeof(ConvolutionStep),
+                    typeof(CompositeStep),
+                    typeof(PcaStep),
+                    typeof(ContinuumFitStep),
+                    typeof(SelectBestFitStep),
+                    typeof(LineFitStep),
+                    typeof(FluxStep),
+                    typeof(SpectralIndexStep)};
 
             foreach (var steptype in steptypes)
             {
@@ -50,7 +63,20 @@ namespace Jhu.SpecSvc.Web.Pipeline
             }
         }
 
-        /*
+        protected void StepType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (StepType.SelectedValue != "")
+            {
+                var pst = typeof(PipelineStep);
+                var t = pst.Assembly.GetType(String.Format("{0}.Steps.{1}", pst.Namespace, StepType.SelectedValue));
+                var step = (PipelineStep)t.GetConstructor(Type.EmptyTypes).Invoke(null);
+
+                Pipeline.Add(step);
+            }
+
+            StepType.SelectedValue = "";
+        }
+
         protected void PipelineStepList_Load(object sender, EventArgs e)
         {
             var lw = (ListView)sender;
@@ -59,14 +85,12 @@ namespace Jhu.SpecSvc.Web.Pipeline
             {
                 foreach (ListViewDataItem li in lw.Items)
                 {
-                    PlaceHolder ph = (PlaceHolder)li.FindControl("controlPlaceholder");
-                    IProcessStepControl control = (IProcessStepControl)li.FindControl("stepControl");
-                    steps[li.DataItemIndex] = control.GetValue();
+                    var ph = (PlaceHolder)li.FindControl("controlPlaceholder");
+                    var control = (IPipelineStepControl)li.FindControl("stepControl");
+                    Pipeline[li.DataItemIndex] = control.Step;
                 }
             }
-
-            Session["ProcessSteps"] = steps;
-        }*/
+        }
 
         protected void PipelineStepList_ItemCreated(object sender, ListViewItemEventArgs e)
         {
@@ -89,10 +113,10 @@ namespace Jhu.SpecSvc.Web.Pipeline
                     string stepcontrol = step.GetType().Name;
                     control = (IPipelineStepControl)LoadControl(String.Format("Steps/{0}Control.ascx", stepcontrol));
                     ((UserControl)control).ID = "stepControl";
-                    control.SetValue(step);
+                    control.Step = step;
                     control.Enabled = step.Active;
 
-                    title.Text = control.GetTitle();
+                    title.Text = control.Title;
                     placeholder.Controls.Add((UserControl)control);
                 }
             }
@@ -100,26 +124,26 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         protected void PipelineStepList_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
-            /*ListViewDataItem di = (ListViewDataItem)e.Item;
-            ProcessStep step = steps[di.DataItemIndex];
+            var di = (ListViewDataItem)e.Item;
+            var step = Pipeline[di.DataItemIndex];
 
             switch (e.CommandName)
             {
                 case "RemoveStep":
-                    steps.RemoveAt(di.DataItemIndex);
+                    Pipeline.RemoveAt(di.DataItemIndex);
                     break;
                 case "MoveUpStep":
                     if (di.DataItemIndex > 0)
                     {
-                        steps.RemoveAt(di.DataItemIndex);
-                        steps.Insert(di.DataItemIndex - 1, step);
+                        Pipeline.RemoveAt(di.DataItemIndex);
+                        Pipeline.Insert(di.DataItemIndex - 1, step);
                     }
                     break;
                 case "MoveDownStep":
-                    if (di.DataItemIndex < steps.Count - 1)
+                    if (di.DataItemIndex < Pipeline.Count - 1)
                     {
-                        steps.RemoveAt(di.DataItemIndex);
-                        steps.Insert(di.DataItemIndex + 1, step);
+                        Pipeline.RemoveAt(di.DataItemIndex);
+                        Pipeline.Insert(di.DataItemIndex + 1, step);
                     }
                     break;
                 case "ActivateStep":
@@ -128,16 +152,7 @@ namespace Jhu.SpecSvc.Web.Pipeline
             }
 
 
-            ProcessStepList.DataBind();*/
-        }
-
-        protected void AddStep_OnClick(object sender, EventArgs e)
-        {
-            var pst = typeof(PipelineStep);
-            var t = pst.Assembly.GetType(String.Format("{0}.Steps.{1}", pst.Namespace, StepType.SelectedValue));
-            var step = (PipelineStep)t.GetConstructor(Type.EmptyTypes).Invoke(null);
-
-            Pipeline.Add(step);
+            PipelineStepList.DataBind();
         }
 
         protected void Button_Command(object sender, CommandEventArgs e)

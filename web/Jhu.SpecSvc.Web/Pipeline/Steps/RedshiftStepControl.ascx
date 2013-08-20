@@ -1,23 +1,22 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="Jhu.SpecSvc.Web.Pipeline.Steps.RedshiftStepControl"
     CodeBehind="RedshiftStepControl.ascx.cs" %>
-<asp:Table runat="server" CssClass="Form">
+<asp:Table runat="server" CssClass="PipelineForm">
     <asp:TableRow runat="server">
-        <asp:TableCell runat="server" CssClass="FormLabel">
-            Conversion method:</asp:TableCell>
-        <asp:TableCell runat="server" CssClass="FormField">
+        <asp:TableCell runat="server" CssClass="PipelineFormLabel">Method:</asp:TableCell>
+        <asp:TableCell runat="server" CssClass="PipelineFormField">
             <asp:RadioButtonList ID="Method" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Method_SelectedIndexChanged"
-                RepeatDirection="Horizontal">
-                <asp:ListItem Selected="True" Value="RestFrame">Rest-frame</asp:ListItem>
-                <asp:ListItem Value="ObservationFrame">Observation-frame</asp:ListItem>
+                RepeatDirection="Vertical">
+                <asp:ListItem Selected="True" Value="RestFrame">Restframe</asp:ListItem>
+                <asp:ListItem Value="ObservationFrame">Observed frame</asp:ListItem>
                 <asp:ListItem Value="Custom">Custom redshift</asp:ListItem>
             </asp:RadioButtonList>
         </asp:TableCell>
     </asp:TableRow>
     <asp:TableRow runat="server" ID="RedshiftRow" Visible="false">
-        <asp:TableCell ID="TableCell1" runat="server" CssClass="FormLabelRight">
+        <asp:TableCell runat="server" CssClass="PipelineFormLabel" HorizontalAlign="Right">
             z =&nbsp;
         </asp:TableCell>
-        <asp:TableCell ID="TableCell2" runat="server" CssClass="FormField">
+        <asp:TableCell runat="server" CssClass="PipelineFormField">
             <asp:TextBox ID="Redshift" runat="server" Width="96px" Enabled="False">0</asp:TextBox>
             <asp:RangeValidator ID="RedshiftRangeValidator" runat="server" ControlToValidate="Redshift"
                 Display="Dynamic" ErrorMessage="Invalid value" MaximumValue="10" MinimumValue="-10"

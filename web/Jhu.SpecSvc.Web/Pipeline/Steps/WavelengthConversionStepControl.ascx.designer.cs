@@ -7,16 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-
-public partial class WavelengthConversionStep {
+namespace Jhu.SpecSvc.Web.Pipeline.Steps {
     
-    /// <summary>
-    /// Method control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.RadioButtonList Method;
+    
+    public partial class WavelengthConversionStepControl {
+        
+        /// <summary>
+        /// Method control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList Method;
+    }
 }
