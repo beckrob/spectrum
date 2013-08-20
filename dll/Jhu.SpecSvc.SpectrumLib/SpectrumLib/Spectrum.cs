@@ -36,7 +36,7 @@ namespace Jhu.SpecSvc.SpectrumLib
 
         //****** make property
         [XmlIgnore]
-        public ContinuumFit ContinuumFitParameters;
+        public List<ContinuumFit> ContinuumFits;
 
         [XmlIgnore]
         public int ContinuumFitBest;
@@ -51,7 +51,13 @@ namespace Jhu.SpecSvc.SpectrumLib
         public List<Magnitudes> Magnitudes;
 
         [XmlIgnore]
-        public long GroupByHash;
+        public long BinHash;
+
+        [XmlIgnore]
+        public DoubleParam BinValue;
+
+        [XmlIgnore]
+        public DoubleInterval BinLimits;
 
         //private DoubleParam originalRedshift;
 
@@ -161,7 +167,9 @@ namespace Jhu.SpecSvc.SpectrumLib
             this.htmId = 0;
             this.url = string.Empty;
 
-            this.GroupByHash = 0;
+            this.BinHash = -1;
+            this.BinValue = new DoubleParam(true);
+            this.BinLimits = new DoubleInterval(ParamRequired.Optional);
         }
 
         public void CopyMembers(Spectrum old)
@@ -173,6 +181,10 @@ namespace Jhu.SpecSvc.SpectrumLib
             this.@public = old.@public;
             this.htmId = old.htmId;
             this.url = old.url;
+
+            this.BinHash = -1;
+            this.BinValue = new DoubleParam(old.BinValue);
+            this.BinLimits = new DoubleInterval(old.BinLimits);
         }
 
         public void BasicInitialize()

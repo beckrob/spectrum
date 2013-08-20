@@ -158,7 +158,24 @@ namespace Jhu.SpecSvc.SpectrumLib
         BadFluxFactor = 0x4000000,  /*  Low flux-calibration or flux-correction factor       */
         BadSkyChi = 0x8000000,  /*  Chi^2 > 4 in sky residuals at this. wavelength        */
         RedMonster = 0x10000000, /*  Contiguous region of bad chi^2 in sky residuals      */
-        EmLine = 0x40000000  /*  Emmission line detected here                         */
+        EmLine = 0x40000000, /*  Emmission line detected here                         */
+
+        SDSSBadValue = (PointMask.NoPlug |
+                PointMask.BadTrace |
+                PointMask.BadFlat |
+                PointMask.BadArc |
+                PointMask.Manybadcol |
+                PointMask.ManyReject |
+                PointMask.LowFlat |
+                PointMask.FullReject |
+                PointMask.ScatLight |
+                PointMask.CrossTalk |
+                PointMask.NoSky |
+                PointMask.NoData |
+                PointMask.CombineRej |
+                PointMask.BadFluxFactor |
+                PointMask.BadSkyChi |
+                PointMask.RedMonster)
     }
 }
 #region Revision History
