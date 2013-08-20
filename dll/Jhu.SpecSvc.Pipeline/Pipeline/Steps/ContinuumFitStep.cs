@@ -7,7 +7,7 @@ using Jhu.SpecSvc.Schema;
 using Jhu.SpecSvc.SpectrumLib;
 using Jhu.SpecSvc.IO;
 
-namespace Jhu.SpecSvc.Pipeline
+namespace Jhu.SpecSvc.Pipeline.Steps
 {
     public class ContinuumFitStep : PipelineStep
     {
@@ -59,9 +59,9 @@ namespace Jhu.SpecSvc.Pipeline
                 CreateMaskAndWeight(wl, rfwl, spfl, sperr, spmask);
             }
 
-            public ContinuumFit Execute(int templateSetIndex, double vdisp, double tau, double mu)
+            public ContinuumFit Execute(double vdisp, double tau, double mu)
             {
-                RebinTemplates(templateSetIndex);
+                RebinTemplates();
 
                 // Use vdisp value from catalog, if possible
                 /*if (spectrum.Derived.VelocityDispersion != null && !step.fitVDisp)
@@ -77,7 +77,7 @@ namespace Jhu.SpecSvc.Pipeline
                 }
 
                 // Recalculate fit with original binning
-                res = RecalculateFit(templateSetIndex, res);
+                res = RecalculateFit(res);
 
                 return res;
             }
@@ -198,20 +198,20 @@ namespace Jhu.SpecSvc.Pipeline
                 }
             }
 
-            private void RebinTemplates(int templateSetIndex)
+            private void RebinTemplates()
             {
-                RebinTemplates(templateSetIndex, wllo, wlhi);
+                RebinTemplates(wllo, wlhi);
             }
 
-            private void RebinTemplates(int templateSetIndex, double[] wllo, double[] wlhi)
+            private void RebinTemplates(double[] wllo, double[] wlhi)
             {
                 long[] nmask;
 
                 // Rebin average
-                if (step.subtractAverage && step.averages != null)
+                if (step.subtractAverage && step.average != null)
                 {
                     // Shift to the frame of the spectrum
-                    Spectrum t = new Spectrum(step.averages[templateSetIndex]);
+                    Spectrum t = new Spectrum(step.average);
                     t.Redshift(redshift);
 
                     Util.Grid.Rebin(t.Spectral_Accuracy_BinLow, t.Spectral_Accuracy_BinHigh, t.Flux_Value, null,
@@ -223,20 +223,20 @@ namespace Jhu.SpecSvc.Pipeline
                 }
 
                 // Rebin templates
-                int tempnum = step.templates[templateSetIndex].Length;
+                int tempnum = step.templates.Length;
 
                 tempage = new double[tempnum];
                 tempfl = new double[tempnum][];
                 for (int i = 0; i < tempnum; i++)
                 {
                     // Age of template required for extinction model
-                    if (step.templates[templateSetIndex][i].ModelParameters != null)
+                    if (step.templates[i].ModelParameters != null)
                     {
-                        tempage[i] = step.templates[templateSetIndex][i].ModelParameters.T_form.Value;
+                        tempage[i] = step.templates[i].ModelParameters.T_form.Value;
                     }
 
                     // Shift to the frame of the spectrum
-                    Spectrum t = new Spectrum(step.templates[templateSetIndex][i]);
+                    Spectrum t = new Spectrum(step.templates[i]);
                     t.Redshift(redshift);
 
                     Util.Grid.Rebin(t.Spectral_Accuracy_BinLow, t.Spectral_Accuracy_BinHigh, t.Flux_Value, null,
@@ -399,7 +399,7 @@ namespace Jhu.SpecSvc.Pipeline
                 return res;
             }
 
-            private ContinuumFit RecalculateFit(int templateSetIndex, ContinuumFit res)
+            private ContinuumFit RecalculateFit(ContinuumFit res)
             {
                 // Restframe wavelength grid
                 Util.Vector.Multiply(1 / (1 + redshift), spectrum.Spectral_Value, out rfwl);
@@ -408,7 +408,7 @@ namespace Jhu.SpecSvc.Pipeline
                 CreateMaskAndWeight(spectrum.Spectral_Value, rfwl, spectrum.Flux_Value, spectrum.Flux_Accuracy_StatError, spectrum.Flux_Accuracy_Quality);
 
                 // Rebin average and templates to match spectrum
-                RebinTemplates(templateSetIndex, spectrum.Spectral_Accuracy_BinLow, spectrum.Spectral_Accuracy_BinHigh);
+                RebinTemplates(spectrum.Spectral_Accuracy_BinLow, spectrum.Spectral_Accuracy_BinHigh);
 
                 // Modified templates for current iteration
                 double[][] ntempfl;
@@ -463,7 +463,7 @@ namespace Jhu.SpecSvc.Pipeline
                 res.TemplateNames = new string[step.templates.Length];
                 for (int i = 0; i < step.templates.Length; i++)
                 {
-                    res.TemplateNames[i] = step.templates[templateSetIndex][i].Target.Name.Value;
+                    res.TemplateNames[i] = step.templates[i].Target.Name.Value;
                 }
 
                 return res;
@@ -490,11 +490,11 @@ namespace Jhu.SpecSvc.Pipeline
         protected bool fitVDisp;
         protected DoubleParam vDisp;
         protected bool subtractAverage;
-        protected string[] templateSets;
-        protected string[][] templateLists;
+        protected string templateSet;
+        protected string[] templateList;
 
-        protected Spectrum[] averages;
-        protected Spectrum[][] templates;
+        protected Spectrum average;
+        protected Spectrum[] templates;
 
         public FitMethod Method
         {
@@ -616,25 +616,25 @@ namespace Jhu.SpecSvc.Pipeline
             set { subtractAverage = value; }
         }
 
-        public string[] TemplateSets
+        public string TemplateSet
         {
-            get { return templateSets; }
-            set { templateSets = value; }
+            get { return templateSet; }
+            set { templateSet = value; }
         }
 
-        public string[][] TemplateLists
+        public string[] TemplateList
         {
-            get { return templateLists; }
-            set { templateLists = value; }
+            get { return templateList; }
+            set { templateList = value; }
         }
 
-        public Spectrum[] Averages
+        public Spectrum Average
         {
-            get { return averages; }
-            set { averages = value; }
+            get { return average; }
+            set { average = value; }
         }
 
-        public Spectrum[][] Templates
+        public Spectrum[] Templates
         {
             get { return templates; }
             set { templates = value; }
@@ -684,10 +684,10 @@ namespace Jhu.SpecSvc.Pipeline
             this.tau_v = new DoubleParam(0, "");
             this.mu = new DoubleParam(0.3, "");
             this.subtractAverage = false;
-            this.templateSets = null;
-            this.templateLists = null;
+            this.templateSet = null;
+            this.templateList = null;
 
-            this.averages = null;
+            this.average = null;
             this.templates = null;
 
             AddSdssLines();
@@ -715,10 +715,10 @@ namespace Jhu.SpecSvc.Pipeline
             this.tau_v = new DoubleParam(old.tau_v);
             this.mu = new DoubleParam(old.mu);
             this.subtractAverage = old.subtractAverage;
-            this.templateSets = old.templateSets;
-            this.templateLists = old.templateLists;       // ****** TODO do array copy
+            this.templateSet = old.templateSet;
+            this.templateList = old.templateList;       // ****** TODO do array copy
 
-            this.averages = old.averages; // ********** TODO do array copy here
+            this.average = old.average; // ********** TODO do array copy here
             this.templates = old.templates; // ********** TODO do array copy here
         }
 
@@ -767,6 +767,7 @@ namespace Jhu.SpecSvc.Pipeline
         {
             Console.Write("c");
 
+#if false
             // Run fitting for each template set
             ContinuumFit[] res = new ContinuumFit[templates.Length];
 
@@ -809,6 +810,12 @@ namespace Jhu.SpecSvc.Pipeline
                     spectrum.Model_Continuum = res[minidx].Continuum;
                     spectrum.Flux_Lines = res[minidx].Residual;
                 }
+            }
+#endif
+
+            lock (spectrum)
+            {
+                spectrum.ContinuumFits.Add(new FitTask(this, spectrum).Execute(vDisp.Value, tau_v.Value, mu.Value));
             }
 
             return spectrum;

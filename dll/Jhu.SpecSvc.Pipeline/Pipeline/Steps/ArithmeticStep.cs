@@ -4,11 +4,11 @@ using System.Text;
 using Jhu.SpecSvc.Schema;
 using Jhu.SpecSvc.SpectrumLib;
 
-namespace Jhu.SpecSvc.Pipeline
+namespace Jhu.SpecSvc.Pipeline.Steps
 {
-    public class CalculateStep : PipelineStep
+    public class ArithmeticStep : PipelineStep
     {
-        public enum CalculateMethod
+        public enum AritmeticOperator
         {
             Add,
             Subtract,
@@ -16,13 +16,13 @@ namespace Jhu.SpecSvc.Pipeline
             Divide,
         }
 
-        private CalculateMethod method;
+        private AritmeticOperator @operator;
         private Spectrum other;
 
-        public CalculateMethod Method
+        public AritmeticOperator Operator
         {
-            get { return method; }
-            set { method = value; }
+            get { return @operator; }
+            set { @operator = value; }
         }
 
         public Spectrum Other
@@ -33,20 +33,20 @@ namespace Jhu.SpecSvc.Pipeline
 
         public override string Title
         {
-            get { return StepDescriptions.CalculateTitle; }
+            get { return StepDescriptions.ArithmeticTitle; }
         }
 
         public override string Description
         {
-            get { return StepDescriptions.CalculateDescription; }
+            get { return StepDescriptions.ArithmeticDescription; }
         }
 
-        public CalculateStep()
+        public ArithmeticStep()
         {
             InitializeMembers();
         }
 
-        public CalculateStep(CalculateStep old)
+        public ArithmeticStep(ArithmeticStep old)
             : base(old)
         {
             CopyMembers(old);
@@ -54,13 +54,13 @@ namespace Jhu.SpecSvc.Pipeline
 
         private void InitializeMembers()
         {
-            this.method = CalculateMethod.Add;
+            this.@operator = AritmeticOperator.Add;
             this.other = null;
         }
 
-        private void CopyMembers(CalculateStep old)
+        private void CopyMembers(ArithmeticStep old)
         {
-            this.method = old.method;
+            this.@operator = old.@operator;
             this.other = old.other;
         }
 
@@ -75,12 +75,12 @@ namespace Jhu.SpecSvc.Pipeline
                 spectrum.Spectral_Accuracy_BinLow, spectrum.Spectral_Accuracy_BinHigh, out temp, out nmask);
             
 
-            switch (method)
+            switch (@operator)
             {
-                case CalculateMethod.Subtract:
+                case AritmeticOperator.Subtract:
                     Util.Vector.Subtract(spectrum.Flux_Value, temp, out spectrum.Flux_Value);
                     break;
-                case CalculateMethod.Add:
+                case AritmeticOperator.Add:
                     Util.Vector.Add(spectrum.Flux_Value, temp, out spectrum.Flux_Value);
                     break;
                 default:

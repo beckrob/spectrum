@@ -4,9 +4,9 @@ using System.Text;
 using Jhu.SpecSvc.Schema;
 using Jhu.SpecSvc.SpectrumLib;
 
-namespace Jhu.SpecSvc.Pipeline
+namespace Jhu.SpecSvc.Pipeline.Steps
 {
-    public class SelectBestFitStep : ProcessStep
+    public class SelectBestFitStep : PipelineStep
     {
         public override string Title
         {

@@ -53,6 +53,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Jhu.Pca">
       <HintPath>..\..\lib\Jhu.Pca.dll</HintPath>
     </Reference>
@@ -63,6 +67,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -73,8 +78,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pipeline\Buffer.cs" />
-    <Compile Include="Pipeline\CustomStep.cs" />
+    <Compile Include="Pipeline\FileOutputFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\ContinuumFitFormat.cs" />
+    <Compile Include="Pipeline\Formats\LineFitFormat.cs" />
+    <Compile Include="Pipeline\Formats\MagnitudeFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumAsciiFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumPlotFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumVoTableFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumXmlFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\TabularFileOutputFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pipeline\OutputTarget.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Pipeline\PipelineStep.cs" />
     <Compile Include="Pipeline\ProgressChangedEventArgs.cs" />
     <Compile Include="Pipeline\SpectrumProcessHelper.cs" />
@@ -83,21 +112,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StepDescriptions.resx</DependentUpon>
     </Compile>
-    <Compile Include="Pipeline\Steps\CalculateStep.cs" />
+    <Compile Include="Pipeline\Steps\ArithmeticStep.cs" />
+    <Compile Include="Pipeline\Steps\BinByStep.cs" />
     <Compile Include="Pipeline\Steps\CompositeStep.cs" />
     <Compile Include="Pipeline\Steps\ContinuumFitStep.cs" />
     <Compile Include="Pipeline\Steps\ConvolutionStep.cs" />
+    <Compile Include="Pipeline\Steps\CustomStep.cs" />
     <Compile Include="Pipeline\Steps\DereddenStep.cs" />
     <Compile Include="Pipeline\Steps\FluxStep.cs" />
-    <Compile Include="Pipeline\Steps\GroupByStep.cs" />
     <Compile Include="Pipeline\Steps\LineFitStep.cs" />
     <Compile Include="Pipeline\Steps\NormalizeStep.cs" />
     <Compile Include="Pipeline\Steps\PcaStep.cs" />
     <Compile Include="Pipeline\Steps\RebinStep.cs" />
     <Compile Include="Pipeline\Steps\RedshiftStep.cs" />
-    <Compile Include="Pipeline\Steps\RefitVDispStep.cs" />
+    <Compile Include="Pipeline\Steps\SelectBestFitStep.cs" />
     <Compile Include="Pipeline\Steps\SpectralIndexStep.cs" />
     <Compile Include="Pipeline\Steps\WavelengthConversionStep.cs" />
+    <Compile Include="Pipeline\Targets\FileTarget.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -117,9 +150,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pipeline\Steps\LineFitters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Pipeline\StepDescriptions.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -142,6 +173,10 @@
     <ProjectReference Include="..\Jhu.SpecSvc.SpectrumLib\Jhu.SpecSvc.SpectrumLib.csproj">
       <Project>{73D0F3D5-DB1A-48EC-BFC1-85BD7C0347BB}</Project>
       <Name>Jhu.SpecSvc.SpectrumLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jhu.SpecSvc.Visualizer\Jhu.SpecSvc.Visualizer.csproj">
+      <Project>{F8E9DC5D-188A-4373-821E-0BE7B0CCE884}</Project>
+      <Name>Jhu.SpecSvc.Visualizer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

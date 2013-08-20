@@ -4,7 +4,7 @@ using System.Text;
 using Jhu.SpecSvc.Schema;
 using Jhu.SpecSvc.SpectrumLib;
 
-namespace Jhu.SpecSvc.Pipeline
+namespace Jhu.SpecSvc.Pipeline.Steps
 {
     public class DereddenStep : PipelineStep
     {

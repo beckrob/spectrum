@@ -63,18 +63,36 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string CalculateDescription {
+        public static string ArithmeticDescription {
             get {
-                return ResourceManager.GetString("CalculateDescription", resourceCulture);
+                return ResourceManager.GetString("ArithmeticDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Calculate.
+        ///   Looks up a localized string similar to Arithmetic.
         /// </summary>
-        public static string CalculateTitle {
+        public static string ArithmeticTitle {
             get {
-                return ResourceManager.GetString("CalculateTitle", resourceCulture);
+                return ResourceManager.GetString("ArithmeticTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string BinByDescription {
+            get {
+                return ResourceManager.GetString("BinByDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bin by parameter.
+        /// </summary>
+        public static string BinByTitle {
+            get {
+                return ResourceManager.GetString("BinByTitle", resourceCulture);
             }
         }
         
@@ -88,7 +106,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate composite.
+        ///   Looks up a localized string similar to Composite.
         /// </summary>
         public static string CompositeTitle {
             get {
@@ -106,7 +124,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fit continuum.
+        ///   Looks up a localized string similar to Continuum fit.
         /// </summary>
         public static string ContinuumFitTitle {
             get {
@@ -124,7 +142,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Convolve with Gaussian.
+        ///   Looks up a localized string similar to Gaussian convolution.
         /// </summary>
         public static string ConvolutionTitle {
             get {
@@ -160,7 +178,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compute synthetic flux.
+        ///   Looks up a localized string similar to Synthetic flux.
         /// </summary>
         public static string FluxTitle {
             get {
@@ -178,7 +196,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spectral indices.
+        ///   Looks up a localized string similar to Lick index.
         /// </summary>
         public static string IndexTitle {
             get {
@@ -187,7 +205,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Fit emission lines.
         /// </summary>
         public static string LineFitDescription {
             get {
@@ -196,7 +214,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fit spectral lines.
+        ///   Looks up a localized string similar to Line fit.
         /// </summary>
         public static string LineFitTitle {
             get {
@@ -214,7 +232,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Normalize spectrum.
+        ///   Looks up a localized string similar to Normalize.
         /// </summary>
         public static string NormalizeTitle {
             get {
@@ -232,7 +250,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Determine principal components.
+        ///   Looks up a localized string similar to Principal Components.
         /// </summary>
         public static string PcaTitle {
             get {
@@ -250,7 +268,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rebin spectrum.
+        ///   Looks up a localized string similar to Rebin.
         /// </summary>
         public static string RebinTitle {
             get {
@@ -268,7 +286,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change redshift frame.
+        ///   Looks up a localized string similar to Frame conversion.
         /// </summary>
         public static string RedshiftTitle {
             get {
@@ -304,7 +322,7 @@ namespace Jhu.SpecSvc.Pipeline {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Convert wavelength.
+        ///   Looks up a localized string similar to Wavelength conversion.
         /// </summary>
         public static string WavelengthConversionTitle {
             get {

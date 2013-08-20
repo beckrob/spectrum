@@ -112,34 +112,40 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CalculateDescription" xml:space="preserve">
+  <data name="ArithmeticDescription" xml:space="preserve">
     <value />
   </data>
-  <data name="CalculateTitle" xml:space="preserve">
-    <value>Calculate</value>
+  <data name="ArithmeticTitle" xml:space="preserve">
+    <value>Arithmetic</value>
+  </data>
+  <data name="BinByDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BinByTitle" xml:space="preserve">
+    <value>Bin by parameter</value>
   </data>
   <data name="CompositeDescription" xml:space="preserve">
     <value />
   </data>
   <data name="CompositeTitle" xml:space="preserve">
-    <value>Generate composite</value>
+    <value>Composite</value>
   </data>
   <data name="ContinuumFitDescription" xml:space="preserve">
     <value />
   </data>
   <data name="ContinuumFitTitle" xml:space="preserve">
-    <value>Fit continuum</value>
+    <value>Continuum fit</value>
   </data>
   <data name="ConvolutionDescription" xml:space="preserve">
     <value />
   </data>
   <data name="ConvolutionTitle" xml:space="preserve">
-    <value>Convolve with Gaussian</value>
+    <value>Gaussian convolution</value>
   </data>
   <data name="DereddenDescription" xml:space="preserve">
     <value />
@@ -151,43 +157,43 @@
     <value />
   </data>
   <data name="FluxTitle" xml:space="preserve">
-    <value>Compute synthetic flux</value>
+    <value>Synthetic flux</value>
   </data>
   <data name="IndexDescription" xml:space="preserve">
     <value>Calculates spectral indices (Lick/IDS, DTT, BH, D4000)</value>
   </data>
   <data name="IndexTitle" xml:space="preserve">
-    <value>Spectral indices</value>
+    <value>Lick index</value>
   </data>
   <data name="LineFitDescription" xml:space="preserve">
-    <value />
+    <value>Fit emission lines</value>
   </data>
   <data name="LineFitTitle" xml:space="preserve">
-    <value>Fit spectral lines</value>
+    <value>Line fit</value>
   </data>
   <data name="NormalizeDescription" xml:space="preserve">
     <value />
   </data>
   <data name="NormalizeTitle" xml:space="preserve">
-    <value>Normalize spectrum</value>
+    <value>Normalize</value>
   </data>
   <data name="PcaDescription" xml:space="preserve">
     <value />
   </data>
   <data name="PcaTitle" xml:space="preserve">
-    <value>Determine principal components</value>
+    <value>Principal Components</value>
   </data>
   <data name="RebinDescription" xml:space="preserve">
     <value />
   </data>
   <data name="RebinTitle" xml:space="preserve">
-    <value>Rebin spectrum</value>
+    <value>Rebin</value>
   </data>
   <data name="RedshiftDescription" xml:space="preserve">
     <value />
   </data>
   <data name="RedshiftTitle" xml:space="preserve">
-    <value>Change redshift frame</value>
+    <value>Frame conversion</value>
   </data>
   <data name="SelectBestFitDescription" xml:space="preserve">
     <value>If this processing step is preceeded by multiple continuum fit steps it selects the one with the smallest Chi2 value.</value>
@@ -199,6 +205,6 @@
     <value />
   </data>
   <data name="WavelengthConversionTitle" xml:space="preserve">
-    <value>Convert wavelength</value>
+    <value>Wavelength conversion</value>
   </data>
 </root>

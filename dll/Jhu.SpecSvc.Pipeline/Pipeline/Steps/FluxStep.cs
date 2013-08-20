@@ -6,7 +6,7 @@ using Jhu.SpecSvc.Schema;
 using Jhu.SpecSvc.SpectrumLib;
 using Jhu.SpecSvc.FilterLib;
 
-namespace Jhu.SpecSvc.Pipeline
+namespace Jhu.SpecSvc.Pipeline.Steps
 {
     public class FluxStep : PipelineStep
     {

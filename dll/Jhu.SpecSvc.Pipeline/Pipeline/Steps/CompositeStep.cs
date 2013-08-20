@@ -314,14 +314,14 @@ namespace Jhu.SpecSvc.Pipeline.Steps
                 CompositeResult res = null;
 
                 // If hash == -1 -> outside binning
-                if (s.GroupByHash == -1)
+                if (s.BinHash == -1)
                 {
                     continue;
                 }
 
-                if (results.ContainsKey(s.GroupByHash))
+                if (results.ContainsKey(s.BinHash))
                 {
-                    res = results[s.GroupByHash];
+                    res = results[s.BinHash];
                 }
 
                 if (res == null)
@@ -330,7 +330,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
                     res = new CompositeResult();
                     res.Initialize(s, method, mask);
 
-                    results.Add(s.GroupByHash, res);
+                    results.Add(s.BinHash, res);
                 }
 
                 try

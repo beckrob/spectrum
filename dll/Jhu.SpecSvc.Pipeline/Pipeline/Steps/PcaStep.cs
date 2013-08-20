@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using Jhu.SpecSvc.SpectrumLib;
 
-namespace Jhu.SpecSvc.Pipeline
+namespace Jhu.SpecSvc.Pipeline.Steps
 {
     public class PcaStep : PipelineStep
     {

@@ -9,17 +9,21 @@ using System.Xml.Serialization;
 
 namespace Jhu.SpecSvc.Pipeline
 {
+    [XmlInclude(typeof(Steps.ArithmeticStep))]
+    [XmlInclude(typeof(Steps.BinByStep))]
     [XmlInclude(typeof(Steps.CompositeStep))]
-    [XmlInclude(typeof(ContinuumFitStep))]
-    [XmlInclude(typeof(ConvolutionStep))]
-    [XmlInclude(typeof(DereddenStep))]
-    [XmlInclude(typeof(LineFitStep))]
-    [XmlInclude(typeof(FluxStep))]
-    [XmlInclude(typeof(NormalizeStep))]
-    [XmlInclude(typeof(PcaStep))]
-    [XmlInclude(typeof(RebinStep))]
+    [XmlInclude(typeof(Steps.ContinuumFitStep))]
+    [XmlInclude(typeof(Steps.ConvolutionStep))]
+    [XmlInclude(typeof(Steps.CustomStep))]
+    [XmlInclude(typeof(Steps.DereddenStep))]
+    [XmlInclude(typeof(Steps.FluxStep))]
+    [XmlInclude(typeof(Steps.LineFitStep))]
+    [XmlInclude(typeof(Steps.NormalizeStep))]
+    [XmlInclude(typeof(Steps.PcaStep))]
+    [XmlInclude(typeof(Steps.RebinStep))]
     [XmlInclude(typeof(Steps.RedshiftStep))]
-    [XmlInclude(typeof(WavelengthConversionStep))]
+    [XmlInclude(typeof(Steps.SpectralIndexStep))]
+    [XmlInclude(typeof(Steps.WavelengthConversionStep))]
     public abstract class PipelineStep
     {
         protected List<ProgressChangedEventHandler> progressChangedEventHandlers = new List<ProgressChangedEventHandler>();
