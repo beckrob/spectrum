@@ -111,18 +111,6 @@
     <Compile Include="IO\Mappers\VoTable2Ssa.cs" />
     <Compile Include="IO\Mappers\VoTableMapper.cs" />
     <Compile Include="IO\Input\InputParameters.cs" />
-    <Compile Include="IO\Output\OutputTarget.cs" />
-    <Compile Include="IO\Output\ProgressChangedEventArgs.cs" />
-    <Compile Include="IO\Output\TabularFile.cs" />
-    <Compile Include="IO\Output\TabularFileOutputFormat.cs" />
-    <Compile Include="IO\Output\Targets\MySpectrumTarget.cs" />
-    <Compile Include="IO\Output\Targets\FileTarget.cs" />
-    <Compile Include="IO\Output\Formats\SpectrumPlotFormat.cs" />
-    <Compile Include="IO\Output\Formats\MagnitudeFormat.cs" />
-    <Compile Include="IO\Output\Formats\SpectrumAsciiFormat.cs" />
-    <Compile Include="IO\Output\Formats\SpectrumVoTableFormat.cs" />
-    <Compile Include="IO\Output\Formats\SpectrumXmlFormat.cs" />
-    <Compile Include="IO\Output\FileOutputFormat.cs" />
     <Compile Include="IO\Remote\NED.cs" />
     <Compile Include="IO\Remote\CasJobs.cs" />
     <Compile Include="IO\Remote\WS.cs" />
@@ -139,6 +127,9 @@
     <Compile Include="IO\Search\RedshiftSearchParameters.cs" />
     <Compile Include="IO\Search\SimilarSearchParameters.cs" />
     <Compile Include="IO\Search\SqlSearchParameters.cs" />
+    <Compile Include="IO\TabularFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IO\TemplateSet.cs" />
     <Compile Include="IO\User.cs" />
     <Compile Include="IO\UserFolder.cs" />
