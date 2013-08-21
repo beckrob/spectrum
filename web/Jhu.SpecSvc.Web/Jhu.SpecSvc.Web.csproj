@@ -120,6 +120,20 @@
     <Compile Include="Pipeline\FileOutputFormatControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Pipeline\Formats\ContinuumFitFormatControl.ascx.cs">
+      <DependentUpon>ContinuumFitFormatControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\ContinuumFitFormatControl.ascx.designer.cs">
+      <DependentUpon>ContinuumFitFormatControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Formats\LineFitFormatControl.ascx.cs">
+      <DependentUpon>LineFitFormatControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\LineFitFormatControl.ascx.designer.cs">
+      <DependentUpon>LineFitFormatControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Pipeline\Formats\MagnitudeFormatControl.ascx.cs">
       <DependentUpon>MagnitudeFormatControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -401,6 +415,8 @@
     <Content Include="Graph.aspx" />
     <Content Include="Pipeline\Format.aspx" />
     <Content Include="Pipeline\Default.aspx" />
+    <Content Include="Pipeline\Formats\ContinuumFitFormatControl.ascx" />
+    <Content Include="Pipeline\Formats\LineFitFormatControl.ascx" />
     <Content Include="Pipeline\Formats\MagnitudeFormatControl.ascx" />
     <Content Include="Pipeline\Formats\SpectrumAsciiFormatControl.ascx" />
     <Content Include="Pipeline\Formats\SpectrumPlotFormatControl.ascx" />
