@@ -10,24 +10,33 @@
 namespace Jhu.SpecSvc.Web.Pipeline {
     
     
-    public partial class Output {
+    public partial class Format {
         
         /// <summary>
-        /// Form1 control.
+        /// FormatType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Form Form1;
+        protected global::System.Web.UI.WebControls.DropDownList FormatType;
         
         /// <summary>
-        /// Template control.
+        /// ResetFormats control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList Template;
+        protected global::Jhu.Graywulf.Web.Controls.ToolbarButton ResetFormats;
+        
+        /// <summary>
+        /// FormatList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView FormatList;
     }
 }

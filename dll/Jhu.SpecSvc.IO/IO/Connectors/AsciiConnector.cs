@@ -28,6 +28,12 @@ namespace Jhu.SpecSvc.IO
     /// </summary>
     public class AsciiConnector : ConnectorBase, IDisposable
     {
+        public enum AsciiFileType
+        {
+            Tabular,
+            CommaSeparated
+        }
+
         public static readonly string[] ColumnNames =
             {
          "Spectral_Value",
@@ -56,7 +62,7 @@ namespace Jhu.SpecSvc.IO
 
         #region Member variables
 
-        private AsciiFormat format;
+        private AsciiFileType format;
         private bool writeFields;
         private string[] columns;
         private string fileName;
@@ -81,7 +87,7 @@ namespace Jhu.SpecSvc.IO
         #endregion
         #region Properties
 
-        public AsciiFormat Format
+        public AsciiFileType Format
         {
             get { return format; }
             set { format = value; }
@@ -121,7 +127,7 @@ namespace Jhu.SpecSvc.IO
 
         private void InitializeMembers()
         {
-            format = AsciiFormat.Tabular;
+            format = AsciiFileType.Tabular;
             writeFields = true;
             columns = null;
             fileName = string.Empty;
@@ -310,13 +316,13 @@ namespace Jhu.SpecSvc.IO
 
         private void CreateSpectrum(Jhu.SpecSvc.SpectrumLib.Spectrum spec, Guid userGuid)
         {
-            if (format == AsciiFormat.Tabular)
+            if (format == AsciiFileType.Tabular)
                 outputStream.WriteLine("# Exported from Spectrum Service: http://voservices.net/spectrum");
         }
 
         private void SaveSpectrumFields(Jhu.SpecSvc.SpectrumLib.Spectrum spec, Guid userGuid)
         {
-            if (format == AsciiFormat.Tabular && writeFields)
+            if (format == AsciiFileType.Tabular && writeFields)
                 SaveSpectrumFields_Group(spec, "Spectrum");
         }
 
@@ -418,10 +424,10 @@ namespace Jhu.SpecSvc.IO
                 string separator = string.Empty;
                 switch (format)
                 {
-                    case AsciiFormat.Tabular:
+                    case AsciiFileType.Tabular:
                         separator = "\t";
                         break;
-                    case AsciiFormat.CommaSeparated:
+                    case AsciiFileType.CommaSeparated:
                         separator = ",";
                         break;
                 }
@@ -487,12 +493,6 @@ namespace Jhu.SpecSvc.IO
                     }
                 }
             }
-        }
-
-        public enum AsciiFormat
-        {
-            Tabular,
-            CommaSeparated
         }
 
         #endregion

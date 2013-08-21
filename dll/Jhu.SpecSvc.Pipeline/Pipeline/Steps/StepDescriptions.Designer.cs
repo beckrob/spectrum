@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Jhu.SpecSvc.Pipeline {
+namespace Jhu.SpecSvc.Pipeline.Steps {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Jhu.SpecSvc.Pipeline {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class StepDescriptions {
+    internal class StepDescriptions {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace Jhu.SpecSvc.Pipeline {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Jhu.SpecSvc.Pipeline.StepDescriptions", typeof(StepDescriptions).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Jhu.SpecSvc.Pipeline.Steps.StepDescriptions", typeof(StepDescriptions).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Jhu.SpecSvc.Pipeline {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string ArithmeticDescription {
+        internal static string ArithmeticDescription {
             get {
                 return ResourceManager.GetString("ArithmeticDescription", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Arithmetic.
         /// </summary>
-        public static string ArithmeticTitle {
+        internal static string ArithmeticTitle {
             get {
                 return ResourceManager.GetString("ArithmeticTitle", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string BinByDescription {
+        internal static string BinByDescription {
             get {
                 return ResourceManager.GetString("BinByDescription", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Bin by parameter.
         /// </summary>
-        public static string BinByTitle {
+        internal static string BinByTitle {
             get {
                 return ResourceManager.GetString("BinByTitle", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string CompositeDescription {
+        internal static string CompositeDescription {
             get {
                 return ResourceManager.GetString("CompositeDescription", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Composite.
         /// </summary>
-        public static string CompositeTitle {
+        internal static string CompositeTitle {
             get {
                 return ResourceManager.GetString("CompositeTitle", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string ContinuumFitDescription {
+        internal static string ContinuumFitDescription {
             get {
                 return ResourceManager.GetString("ContinuumFitDescription", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Continuum fit.
         /// </summary>
-        public static string ContinuumFitTitle {
+        internal static string ContinuumFitTitle {
             get {
                 return ResourceManager.GetString("ContinuumFitTitle", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string ConvolutionDescription {
+        internal static string ConvolutionDescription {
             get {
                 return ResourceManager.GetString("ConvolutionDescription", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Gaussian convolution.
         /// </summary>
-        public static string ConvolutionTitle {
+        internal static string ConvolutionTitle {
             get {
                 return ResourceManager.GetString("ConvolutionTitle", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string DereddenDescription {
+        internal static string DereddenDescription {
             get {
                 return ResourceManager.GetString("DereddenDescription", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Deredden.
         /// </summary>
-        public static string DereddenTitle {
+        internal static string DereddenTitle {
             get {
                 return ResourceManager.GetString("DereddenTitle", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string FluxDescription {
+        internal static string FluxDescription {
             get {
                 return ResourceManager.GetString("FluxDescription", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Synthetic flux.
         /// </summary>
-        public static string FluxTitle {
+        internal static string FluxTitle {
             get {
                 return ResourceManager.GetString("FluxTitle", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Calculates spectral indices (Lick/IDS, DTT, BH, D4000).
         /// </summary>
-        public static string IndexDescription {
+        internal static string IndexDescription {
             get {
                 return ResourceManager.GetString("IndexDescription", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Lick index.
         /// </summary>
-        public static string IndexTitle {
+        internal static string IndexTitle {
             get {
                 return ResourceManager.GetString("IndexTitle", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Fit emission lines.
         /// </summary>
-        public static string LineFitDescription {
+        internal static string LineFitDescription {
             get {
                 return ResourceManager.GetString("LineFitDescription", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Line fit.
         /// </summary>
-        public static string LineFitTitle {
+        internal static string LineFitTitle {
             get {
                 return ResourceManager.GetString("LineFitTitle", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string NormalizeDescription {
+        internal static string NormalizeDescription {
             get {
                 return ResourceManager.GetString("NormalizeDescription", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Normalize.
         /// </summary>
-        public static string NormalizeTitle {
+        internal static string NormalizeTitle {
             get {
                 return ResourceManager.GetString("NormalizeTitle", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string PcaDescription {
+        internal static string PcaDescription {
             get {
                 return ResourceManager.GetString("PcaDescription", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Principal Components.
         /// </summary>
-        public static string PcaTitle {
+        internal static string PcaTitle {
             get {
                 return ResourceManager.GetString("PcaTitle", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string RebinDescription {
+        internal static string RebinDescription {
             get {
                 return ResourceManager.GetString("RebinDescription", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Rebin.
         /// </summary>
-        public static string RebinTitle {
+        internal static string RebinTitle {
             get {
                 return ResourceManager.GetString("RebinTitle", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string RedshiftDescription {
+        internal static string RedshiftDescription {
             get {
                 return ResourceManager.GetString("RedshiftDescription", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Frame conversion.
         /// </summary>
-        public static string RedshiftTitle {
+        internal static string RedshiftTitle {
             get {
                 return ResourceManager.GetString("RedshiftTitle", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to If this processing step is preceeded by multiple continuum fit steps it selects the one with the smallest Chi2 value..
         /// </summary>
-        public static string SelectBestFitDescription {
+        internal static string SelectBestFitDescription {
             get {
                 return ResourceManager.GetString("SelectBestFitDescription", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Select best fit.
         /// </summary>
-        public static string SelectBestFitTitle {
+        internal static string SelectBestFitTitle {
             get {
                 return ResourceManager.GetString("SelectBestFitTitle", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string WavelengthConversionDescription {
+        internal static string WavelengthConversionDescription {
             get {
                 return ResourceManager.GetString("WavelengthConversionDescription", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace Jhu.SpecSvc.Pipeline {
         /// <summary>
         ///   Looks up a localized string similar to Wavelength conversion.
         /// </summary>
-        public static string WavelengthConversionTitle {
+        internal static string WavelengthConversionTitle {
             get {
                 return ResourceManager.GetString("WavelengthConversionTitle", resourceCulture);
             }

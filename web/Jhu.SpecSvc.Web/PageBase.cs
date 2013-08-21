@@ -78,6 +78,12 @@ namespace Jhu.SpecSvc.Web
             set { Session[Constants.SessionPipeline] = value; }
         }
 
+        public OutputTarget OutputTarget
+        {
+            get { return (OutputTarget)Session[Constants.SessionOutputTarget]; }
+            set { Session[Constants.SessionOutputTarget] = value; }
+        }
+
         override protected void OnUnload(EventArgs e)
         {
             if (connector != null)

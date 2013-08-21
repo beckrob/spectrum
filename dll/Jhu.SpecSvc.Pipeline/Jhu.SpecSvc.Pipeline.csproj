@@ -81,7 +81,13 @@
     <Compile Include="Pipeline\FileOutputFormat.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Pipeline\FileOutputFormatFactory.cs" />
     <Compile Include="Pipeline\Formats\ContinuumFitFormat.cs" />
+    <Compile Include="Pipeline\Formats\FormatDescriptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormatDescriptions.resx</DependentUpon>
+    </Compile>
     <Compile Include="Pipeline\Formats\LineFitFormat.cs" />
     <Compile Include="Pipeline\Formats\MagnitudeFormat.cs">
       <SubType>Code</SubType>
@@ -98,20 +104,13 @@
     <Compile Include="Pipeline\Formats\SpectrumXmlFormat.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Pipeline\Formats\TabularFileOutputFormat.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Pipeline\OutputTarget.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Pipeline\PipelineStep.cs" />
+    <Compile Include="Pipeline\PipelineStepFactory.cs" />
     <Compile Include="Pipeline\ProgressChangedEventArgs.cs" />
     <Compile Include="Pipeline\SpectrumProcessHelper.cs" />
-    <Compile Include="Pipeline\StepDescriptions.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StepDescriptions.resx</DependentUpon>
-    </Compile>
     <Compile Include="Pipeline\Steps\ArithmeticStep.cs" />
     <Compile Include="Pipeline\Steps\BinByStep.cs" />
     <Compile Include="Pipeline\Steps\CompositeStep.cs" />
@@ -127,7 +126,13 @@
     <Compile Include="Pipeline\Steps\RedshiftStep.cs" />
     <Compile Include="Pipeline\Steps\SelectBestFitStep.cs" />
     <Compile Include="Pipeline\Steps\SpectralIndexStep.cs" />
+    <Compile Include="Pipeline\Steps\StepDescriptions.Designer.cs">
+      <DependentUpon>StepDescriptions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Pipeline\Steps\WavelengthConversionStep.cs" />
+    <Compile Include="Pipeline\TabularFileOutputFormat.cs" />
     <Compile Include="Pipeline\Targets\FileTarget.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -152,8 +157,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Pipeline\StepDescriptions.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="Pipeline\Formats\FormatDescriptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FormatDescriptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipeline\Steps\StepDescriptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StepDescriptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

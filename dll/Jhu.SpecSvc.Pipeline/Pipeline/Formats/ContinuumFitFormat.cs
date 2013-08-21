@@ -8,7 +8,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
     {
         public override string Title
         {
-            get { throw new NotImplementedException(); }
+            get { return FormatDescriptions.ContinuumFitTitle; }
+        }
+
+        public override string Description
+        {
+            get { return FormatDescriptions.ContinuumFitDescription; }
         }
     }
 }

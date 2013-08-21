@@ -10,7 +10,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
     {
         public override string Title
         {
-            get { return "Spectrum in XML"; }
+            get { return FormatDescriptions.SpectrumXmlTitle; }
+        }
+
+        public override string Description
+        {
+            get { return FormatDescriptions.SpectrumXmlDescription; }
         }
 
         public SpectrumXmlFormat()

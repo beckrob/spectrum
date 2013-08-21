@@ -5,21 +5,32 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Jhu.SpecSvc.Pipeline;
-using Jhu.SpecSvc.Pipeline.Steps;
+using Jhu.SpecSvc.Pipeline.Targets;
+using Jhu.SpecSvc.Pipeline.Formats;
 
 namespace Jhu.SpecSvc.Web.Pipeline
 {
-    public partial class Pipeline : PageBase
+    public partial class Format : PageBase
     {
         public static string GetUrl()
         {
-            return "~/Pipeline/Pipeline.aspx";
+            return "~/Pipeline/Format.aspx";
+        }
+
+        public FileTarget FileTarget
+        {
+            get { return (FileTarget)OutputTarget; }
         }
 
         protected override void OnInit(EventArgs e)
         {
-            PipelineStepList.DataSource = Pipeline;
-            PipelineStepList.DataBind();
+            if (!(OutputTarget is FileTarget))
+            {
+                throw new InvalidOperationException("File target must be selected.");
+            }
+
+            FormatList.DataSource = ((FileTarget)OutputTarget).Formats;
+            FormatList.DataBind();
 
             base.OnInit(e);
         }
@@ -30,38 +41,38 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
             if (!IsPostBack)
             {
-                SavePipeline.Enabled = LoadPipeline.Enabled = ManagePipelines.Enabled = (UserGuid != Guid.Empty);
+                //SavePipeline.Enabled = LoadPipeline.Enabled = ManagePipelines.Enabled = (UserGuid != Guid.Empty);
 
-                InitializeStepTypeList();
+                InitializeFormatTypeList();
             }
         }
 
-        private void InitializeStepTypeList()
+        private void InitializeFormatTypeList()
         {
-            StepType.Items.Add(new ListItem("(select from list)", ""));
+            FormatType.Items.Add(new ListItem("(select from list)", ""));
 
-            foreach (var steptype in PipelineStepFactory.GetStepTypes())
+            foreach (var steptype in FileOutputFormatFactory.GetFormatTypes())
             {
-                var ps = (PipelineStep)steptype.GetConstructor(Type.EmptyTypes).Invoke(null);
-                StepType.Items.Add(new ListItem(ps.Title, steptype.Name));
+                var ps = (FileOutputFormat)steptype.GetConstructor(Type.EmptyTypes).Invoke(null);
+                FormatType.Items.Add(new ListItem(ps.Title, steptype.Name));
             }
         }
 
-        protected void StepType_SelectedIndexChanged(object sender, EventArgs e)
+        protected void FormatType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (StepType.SelectedValue != "")
+            if (FormatType.SelectedValue != "")
             {
-                var pst = typeof(PipelineStep);
-                var t = pst.Assembly.GetType(String.Format("{0}.Steps.{1}", pst.Namespace, StepType.SelectedValue));
-                var step = (PipelineStep)t.GetConstructor(Type.EmptyTypes).Invoke(null);
+                var pst = typeof(FileOutputFormat);
+                var t = pst.Assembly.GetType(String.Format("{0}.Formats.{1}", pst.Namespace, FormatType.SelectedValue));
+                var format = (FileOutputFormat)t.GetConstructor(Type.EmptyTypes).Invoke(null);
 
-                Pipeline.Add(step);
+                FileTarget.Formats.Add(format);
             }
 
-            StepType.SelectedValue = "";
+            FormatType.SelectedValue = "";
         }
 
-        protected void PipelineStepList_Load(object sender, EventArgs e)
+        protected void FormatList_Load(object sender, EventArgs e)
         {
             var lw = (ListView)sender;
 
@@ -70,13 +81,13 @@ namespace Jhu.SpecSvc.Web.Pipeline
                 foreach (ListViewDataItem li in lw.Items)
                 {
                     var ph = (PlaceHolder)li.FindControl("controlPlaceholder");
-                    var control = (IPipelineStepControl)li.FindControl("stepControl");
-                    Pipeline[li.DataItemIndex] = control.Step;
+                    var control = (IFileOutputFormatControl)li.FindControl("formatControl");
+                    FileTarget.Formats[li.DataItemIndex] = control.Format;
                 }
             }
         }
 
-        protected void PipelineStepList_ItemCreated(object sender, ListViewItemEventArgs e)
+        protected void FormatList_ItemCreated(object sender, ListViewItemEventArgs e)
         {
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
@@ -84,21 +95,19 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
                 if (di.DataItem != null)
                 {
-                    var step = (PipelineStep)di.DataItem;
+                    var format = (FileOutputFormat)di.DataItem;
 
                     var title = (Label)di.FindControl("Title");
                     var activate = (LinkButton)di.FindControl("Active");
-                    activate.Text = step.Active ? "disable" : "enable";
+                    activate.Text = format.Active ? "disable" : "enable";
 
                     var placeholder = (PlaceHolder)di.FindControl("controlPlaceholder");
 
-                    IPipelineStepControl control = null;
-
-                    string stepcontrol = step.GetType().Name;
-                    control = (IPipelineStepControl)LoadControl(String.Format("Steps/{0}Control.ascx", stepcontrol));
-                    ((UserControl)control).ID = "stepControl";
-                    control.Step = step;
-                    control.Enabled = step.Active;
+                    var name = format.GetType().Name;
+                    var control = (IFileOutputFormatControl)LoadControl(String.Format("Formats/{0}Control.ascx", name));
+                    ((UserControl)control).ID = "formatControl";
+                    control.Format = format;
+                    control.Enabled = format.Active;
 
                     title.Text = control.Title;
                     placeholder.Controls.Add((UserControl)control);
@@ -106,37 +115,22 @@ namespace Jhu.SpecSvc.Web.Pipeline
             }
         }
 
-        protected void PipelineStepList_ItemCommand(object sender, ListViewCommandEventArgs e)
+        protected void FormatList_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             var di = (ListViewDataItem)e.Item;
-            var step = Pipeline[di.DataItemIndex];
+            var format = FileTarget.Formats[di.DataItemIndex];
 
             switch (e.CommandName)
             {
-                case "RemoveStep":
-                    Pipeline.RemoveAt(di.DataItemIndex);
+                case "RemoveFormat":
+                    FileTarget.Formats.RemoveAt(di.DataItemIndex);
                     break;
-                case "MoveUpStep":
-                    if (di.DataItemIndex > 0)
-                    {
-                        Pipeline.RemoveAt(di.DataItemIndex);
-                        Pipeline.Insert(di.DataItemIndex - 1, step);
-                    }
-                    break;
-                case "MoveDownStep":
-                    if (di.DataItemIndex < Pipeline.Count - 1)
-                    {
-                        Pipeline.RemoveAt(di.DataItemIndex);
-                        Pipeline.Insert(di.DataItemIndex + 1, step);
-                    }
-                    break;
-                case "ActivateStep":
-                    step.Active = !step.Active;
+                case "ActivateFormat":
+                    format.Active = !format.Active;
                     break;
             }
 
-
-            PipelineStepList.DataBind();
+            FormatList.DataBind();
         }
 
         protected void Button_Command(object sender, CommandEventArgs e)

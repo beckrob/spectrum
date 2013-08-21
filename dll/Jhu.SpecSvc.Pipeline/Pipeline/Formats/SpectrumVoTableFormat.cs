@@ -10,7 +10,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
     {
         public override string Title
         {
-            get { return "Spectrum in VOTable"; }
+            get { return FormatDescriptions.SpectrumVoTableTitle; }
+        }
+
+        public override string Description
+        {
+            get { return FormatDescriptions.SpectrumVoTableDescription; }
         }
 
         public SpectrumVoTableFormat()

@@ -35,7 +35,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
 
         public override string Title
         {
-            get { return "Spectrum Plot"; }
+            get { return FormatDescriptions.SpectrumPlotTitle; }
+        }
+
+        public override string Description
+        {
+            get { return FormatDescriptions.SpectrumPlotDescription; }
         }
 
         public SpectrumPlotFormat()

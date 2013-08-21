@@ -117,6 +117,66 @@
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Pipeline\FileOutputFormatControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\MagnitudeFormatControl.ascx.cs">
+      <DependentUpon>MagnitudeFormatControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\MagnitudeFormatControl.ascx.designer.cs">
+      <DependentUpon>MagnitudeFormatControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumAsciiFormatControl.ascx.cs">
+      <DependentUpon>SpectrumAsciiFormatControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumAsciiFormatControl.ascx.designer.cs">
+      <DependentUpon>SpectrumAsciiFormatControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumPlotFormatControl.ascx.cs">
+      <DependentUpon>SpectrumPlotFormatControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumPlotFormatControl.ascx.designer.cs">
+      <DependentUpon>SpectrumPlotFormatControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumVoTableFormatControl.ascx.cs">
+      <DependentUpon>SpectrumVoTableFormatControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumVoTableFormatControl.ascx.designer.cs">
+      <DependentUpon>SpectrumVoTableFormatControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumXmlFormatControl.ascx.cs">
+      <DependentUpon>SpectrumXmlFormatControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\SpectrumXmlFormatControl.ascx.designer.cs">
+      <DependentUpon>SpectrumXmlFormatControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Formats\TabularFileLineEnding.ascx.cs">
+      <DependentUpon>TabularFileLineEnding.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\TabularFileLineEnding.ascx.designer.cs">
+      <DependentUpon>TabularFileLineEnding.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\Formats\TabularFileType.ascx.cs">
+      <DependentUpon>TabularFileType.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Formats\TabularFileType.ascx.designer.cs">
+      <DependentUpon>TabularFileType.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pipeline\IFileOutputFormatControl.cs" />
+    <Compile Include="Pipeline\Format.aspx.cs">
+      <DependentUpon>Format.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\Format.aspx.designer.cs">
+      <DependentUpon>Format.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pipeline\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -330,6 +390,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Basic\Basic.skin" />
+    <Content Include="App_Themes\Basic\Css\spectrum.css" />
     <Content Include="Controls\CollectionList.ascx" />
     <Content Include="Controls\Footer.ascx" />
     <Content Include="Controls\Menu.ascx" />
@@ -338,7 +399,15 @@
     <Content Include="Docs\Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Graph.aspx" />
+    <Content Include="Pipeline\Format.aspx" />
     <Content Include="Pipeline\Default.aspx" />
+    <Content Include="Pipeline\Formats\MagnitudeFormatControl.ascx" />
+    <Content Include="Pipeline\Formats\SpectrumAsciiFormatControl.ascx" />
+    <Content Include="Pipeline\Formats\SpectrumPlotFormatControl.ascx" />
+    <Content Include="Pipeline\Formats\SpectrumVoTableFormatControl.ascx" />
+    <Content Include="Pipeline\Formats\SpectrumXmlFormatControl.ascx" />
+    <Content Include="Pipeline\Formats\TabularFileLineEnding.ascx" />
+    <Content Include="Pipeline\Formats\TabularFileType.ascx" />
     <Content Include="Pipeline\Output.aspx" />
     <Content Include="Pipeline\Pipeline.aspx" />
     <Content Include="Pipeline\Steps\CompositeStepControl.ascx" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Jhu.SpecSvc.IO;
 
-namespace Jhu.SpecSvc.Pipeline.Formats
+namespace Jhu.SpecSvc.Pipeline
 {
     public abstract class TabularFileOutputFormat : FileOutputFormat
     {

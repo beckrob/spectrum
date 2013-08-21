@@ -9,14 +9,14 @@ namespace Jhu.SpecSvc.Pipeline.Formats
     [Serializable]
     public class SpectrumAsciiFormat : FileOutputFormat
     {
-        private AsciiConnector.AsciiFormat format;
+        private AsciiConnector.AsciiFileType fileType;
         private List<string> columns;
         private bool writeFields;
 
-        public AsciiConnector.AsciiFormat Format
+        public AsciiConnector.AsciiFileType FileType
         {
-            get { return format; }
-            set { format = value; }
+            get { return fileType; }
+            set { fileType = value; }
         }
 
         public List<string> Columns
@@ -33,7 +33,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
 
         public override string Title
         {
-            get { return "Spectrum in ASCII File"; }
+            get { return FormatDescriptions.SpectrumAsciiTitle; }
+        }
+
+        public override string Description
+        {
+            get { return FormatDescriptions.SpectrumAsciiDescription; }
         }
 
         public SpectrumAsciiFormat()
@@ -48,7 +53,7 @@ namespace Jhu.SpecSvc.Pipeline.Formats
 
         private void InitializeMembers()
         {
-            this.format = AsciiConnector.AsciiFormat.Tabular;
+            this.fileType = AsciiConnector.AsciiFileType.Tabular;
             this.columns = new List<string>(){ "Spectral_Value", "Flux_Value" };
         }
 
@@ -62,7 +67,7 @@ namespace Jhu.SpecSvc.Pipeline.Formats
 
             asc.OutputStream = new StreamWriter(output);
             asc.Columns = this.columns.ToArray();
-            asc.Format = this.format;
+            asc.Format = this.fileType;
             asc.WriteFields = this.writeFields;
 
             asc.SaveSpectrum(spectrum, Guid.Empty);
@@ -70,12 +75,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
 
             string extension = null;
 
-            switch (format)
+            switch (fileType)
             {
-                case AsciiConnector.AsciiFormat.Tabular:
+                case AsciiConnector.AsciiFileType.Tabular:
                     extension = ".dat";
                     break;
-                case AsciiConnector.AsciiFormat.CommaSeparated:
+                case AsciiConnector.AsciiFileType.CommaSeparated:
                     extension = ".csv";
                     break;
             }

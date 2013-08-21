@@ -9,11 +9,13 @@ using System.Xml.Serialization;
 namespace Jhu.SpecSvc.Pipeline
 {
     [Serializable]
-    /*[XmlInclude(typeof(MagnitudeFormat))]
-    [XmlInclude(typeof(SpectrumAsciiFormat))]
-    [XmlInclude(typeof(SpectrumPlotFormat))]
-    [XmlInclude(typeof(SpectrumVoTableFormat))]
-    [XmlInclude(typeof(SpectrumXmlFormat))]*/
+    [XmlInclude(typeof(Formats.ContinuumFitFormat))]
+    [XmlInclude(typeof(Formats.LineFitFormat))]
+    [XmlInclude(typeof(Formats.MagnitudeFormat))]
+    [XmlInclude(typeof(Formats.SpectrumAsciiFormat))]
+    [XmlInclude(typeof(Formats.SpectrumPlotFormat))]
+    [XmlInclude(typeof(Formats.SpectrumVoTableFormat))]
+    [XmlInclude(typeof(Formats.SpectrumXmlFormat))]
     public abstract class FileOutputFormat
     {
         protected bool active;
@@ -39,6 +41,11 @@ namespace Jhu.SpecSvc.Pipeline
         }
 
         public abstract string Title
+        {
+            get;
+        }
+
+        public abstract string Description
         {
             get;
         }

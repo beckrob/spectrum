@@ -7,27 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Jhu.SpecSvc.Web.Pipeline {
+namespace Jhu.SpecSvc.Web.Pipeline.Formats {
     
     
-    public partial class Output {
+    public partial class TabularFileType {
         
         /// <summary>
-        /// Form1 control.
+        /// fileType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Form Form1;
-        
-        /// <summary>
-        /// Template control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList Template;
+        protected global::System.Web.UI.WebControls.RadioButtonList fileType;
     }
 }

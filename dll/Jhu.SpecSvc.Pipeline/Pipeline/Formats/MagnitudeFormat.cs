@@ -20,7 +20,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
 
         public override string Title
         {
-            get { return "Synthetic magnitudes"; }
+            get { return FormatDescriptions.MagnitudeTitle; }
+        }
+
+        public override string Description
+        {
+            get { return FormatDescriptions.MagnitudeDescription; }
         }
 
         public MagnitudeSystem System

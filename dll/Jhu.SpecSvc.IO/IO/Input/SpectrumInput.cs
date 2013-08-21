@@ -95,9 +95,9 @@ namespace Jhu.SpecSvc.IO
                     switch (par.Format)
                     {
                         case InputFormat.Ascii:
-                            asc.Format = AsciiConnector.AsciiFormat.Tabular; break;
+                            asc.Format = AsciiConnector.AsciiFileType.Tabular; break;
                         case InputFormat.Csv:
-                            asc.Format = AsciiConnector.AsciiFormat.CommaSeparated; break;
+                            asc.Format = AsciiConnector.AsciiFileType.CommaSeparated; break;
                     }
                     asc.Columns = par.Columns;
                     asc.InputStream = new System.IO.StreamReader(os);
