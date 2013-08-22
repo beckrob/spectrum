@@ -19,17 +19,17 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         public FileTarget FileTarget
         {
-            get { return (FileTarget)OutputTarget; }
+            get { return (FileTarget)Pipeline.Target; }
         }
 
         protected override void OnInit(EventArgs e)
         {
-            if (!(OutputTarget is FileTarget))
+            if (!(Pipeline.Target is FileTarget))
             {
                 throw new InvalidOperationException("File target must be selected.");
             }
 
-            FormatList.DataSource = ((FileTarget)OutputTarget).Formats;
+            FormatList.DataSource = FileTarget.Formats;
             FormatList.DataBind();
 
             base.OnInit(e);
@@ -141,10 +141,12 @@ namespace Jhu.SpecSvc.Web.Pipeline
                     Validate();
                     if (IsValid)
                     {
-                        Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Output.GetUrl());
+                        Response.Redirect(Jhu.SpecSvc.Web.Output.Download.GetUrl());
                     }
                     break;
                 case "back":
+                    Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Target.GetUrl());
+                    break;
                 case "results":
                     Response.Redirect(Jhu.SpecSvc.Web.Search.List.GetUrl());
                     break;
@@ -156,22 +158,26 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         protected void ResetWorkflow_Click(object sender, EventArgs e)
         {
-            Pipeline.Clear();
+            throw new NotImplementedException();
+            //Pipeline.Steps.Clear();
         }
 
         protected void SaveWorkflow_Click(object sender, EventArgs e)
         {
-            Response.Redirect("workflow_form_save.aspx");   // *** TODO
+            throw new NotImplementedException();
+            //Response.Redirect("workflow_form_save.aspx");   // *** TODO
         }
 
         protected void LoadWorkflow_Click(object sender, EventArgs e)
         {
-            Response.Redirect("workflow_form_manage.aspx"); // *** TODO
+            throw new NotImplementedException();
+            //Response.Redirect("workflow_form_manage.aspx"); // *** TODO
         }
 
         protected void ManageWorkflows_Click(object sender, EventArgs e)
         {
-            Response.Redirect("workflow_form_manage.aspx"); // *** TODO
+            throw new NotImplementedException();
+            //Response.Redirect("workflow_form_manage.aspx"); // *** TODO
         }
     }
 }

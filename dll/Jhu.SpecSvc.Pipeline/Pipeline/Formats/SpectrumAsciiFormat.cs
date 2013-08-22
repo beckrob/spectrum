@@ -61,17 +61,16 @@ namespace Jhu.SpecSvc.Pipeline.Formats
         {
         }
 
-        protected override void Execute(Jhu.SpecSvc.SpectrumLib.Spectrum spectrum, Stream output, out string filename)
+        protected override void OnExecute(SpectrumLib.Spectrum spectrum, Stream outputStream, out string filename)
         {
             AsciiConnector asc = new AsciiConnector();
 
-            asc.OutputStream = new StreamWriter(output);
+            asc.OutputStream = new StreamWriter(outputStream);
             asc.Columns = this.columns.ToArray();
             asc.Format = this.fileType;
             asc.WriteFields = this.writeFields;
 
             asc.SaveSpectrum(spectrum, Guid.Empty);
-
 
             string extension = null;
 

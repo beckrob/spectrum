@@ -10,7 +10,7 @@
 namespace Jhu.SpecSvc.Web.Pipeline {
     
     
-    public partial class Output {
+    public partial class Target {
         
         /// <summary>
         /// Form1 control.

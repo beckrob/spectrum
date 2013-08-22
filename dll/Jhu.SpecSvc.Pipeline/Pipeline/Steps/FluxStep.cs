@@ -98,9 +98,9 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.redshiftBinSize = new DoubleParam(old.redshiftBinSize);
         }
 
-        public override void InitializeStep(int count)
+        public override void InitializeStep()
         {
-            base.InitializeStep(count);
+            base.InitializeStep();
 
             // load filters
             if (this.filters == null)
@@ -109,7 +109,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
 
                 for (int i = 0; i < this.filterIds.Length; i++)
                 {
-                    Filter filter = new Filter(connector.DatabaseConnection, connector.DatabaseTransaction);
+                    Filter filter = new Filter(Connector.DatabaseConnection, Connector.DatabaseTransaction);
                     filter.Load(this.filterIds[i]);
                     filter.LoadResponses();
 
@@ -142,7 +142,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             }
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             if (spectrum.Magnitudes == null)
             {

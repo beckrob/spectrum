@@ -18,7 +18,7 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         protected override void OnInit(EventArgs e)
         {
-            PipelineStepList.DataSource = Pipeline;
+            PipelineStepList.DataSource = Pipeline.Steps;
             PipelineStepList.DataBind();
 
             base.OnInit(e);
@@ -55,7 +55,7 @@ namespace Jhu.SpecSvc.Web.Pipeline
                 var t = pst.Assembly.GetType(String.Format("{0}.Steps.{1}", pst.Namespace, StepType.SelectedValue));
                 var step = (PipelineStep)t.GetConstructor(Type.EmptyTypes).Invoke(null);
 
-                Pipeline.Add(step);
+                Pipeline.Steps.Add(step);
             }
 
             StepType.SelectedValue = "";
@@ -71,7 +71,7 @@ namespace Jhu.SpecSvc.Web.Pipeline
                 {
                     var ph = (PlaceHolder)li.FindControl("controlPlaceholder");
                     var control = (IPipelineStepControl)li.FindControl("stepControl");
-                    Pipeline[li.DataItemIndex] = control.Step;
+                    Pipeline.Steps[li.DataItemIndex] = control.Step;
                 }
             }
         }
@@ -109,25 +109,25 @@ namespace Jhu.SpecSvc.Web.Pipeline
         protected void PipelineStepList_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             var di = (ListViewDataItem)e.Item;
-            var step = Pipeline[di.DataItemIndex];
+            var step = Pipeline.Steps[di.DataItemIndex];
 
             switch (e.CommandName)
             {
                 case "RemoveStep":
-                    Pipeline.RemoveAt(di.DataItemIndex);
+                    Pipeline.Steps.RemoveAt(di.DataItemIndex);
                     break;
                 case "MoveUpStep":
                     if (di.DataItemIndex > 0)
                     {
-                        Pipeline.RemoveAt(di.DataItemIndex);
-                        Pipeline.Insert(di.DataItemIndex - 1, step);
+                        Pipeline.Steps.RemoveAt(di.DataItemIndex);
+                        Pipeline.Steps.Insert(di.DataItemIndex - 1, step);
                     }
                     break;
                 case "MoveDownStep":
-                    if (di.DataItemIndex < Pipeline.Count - 1)
+                    if (di.DataItemIndex < Pipeline.Steps.Count - 1)
                     {
-                        Pipeline.RemoveAt(di.DataItemIndex);
-                        Pipeline.Insert(di.DataItemIndex + 1, step);
+                        Pipeline.Steps.RemoveAt(di.DataItemIndex);
+                        Pipeline.Steps.Insert(di.DataItemIndex + 1, step);
                     }
                     break;
                 case "ActivateStep":
@@ -147,7 +147,7 @@ namespace Jhu.SpecSvc.Web.Pipeline
                     Validate();
                     if (IsValid)
                     {
-                        Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Output.GetUrl());
+                        Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Target.GetUrl());
                     }
                     break;
                 case "back":
@@ -162,22 +162,26 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         protected void ResetWorkflow_Click(object sender, EventArgs e)
         {
-            Pipeline.Clear();
+            throw new NotImplementedException();
+            //Pipeline.Steps.Clear();
         }
 
         protected void SaveWorkflow_Click(object sender, EventArgs e)
         {
-            Response.Redirect("workflow_form_save.aspx");   // *** TODO
+            throw new NotImplementedException();
+            //Response.Redirect("workflow_form_save.aspx");   // *** TODO
         }
 
         protected void LoadWorkflow_Click(object sender, EventArgs e)
         {
-            Response.Redirect("workflow_form_manage.aspx"); // *** TODO
+            throw new NotImplementedException();
+            //Response.Redirect("workflow_form_manage.aspx"); // *** TODO
         }
 
         protected void ManageWorkflows_Click(object sender, EventArgs e)
         {
-            Response.Redirect("workflow_form_manage.aspx"); // *** TODO
+            throw new NotImplementedException();
+            //Response.Redirect("workflow_form_manage.aspx"); // *** TODO
         }
     }
 }

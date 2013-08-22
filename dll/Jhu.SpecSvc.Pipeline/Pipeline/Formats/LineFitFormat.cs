@@ -15,5 +15,10 @@ namespace Jhu.SpecSvc.Pipeline.Formats
         {
             get { return FormatDescriptions.LineFitDescription; }
         }
+
+        protected override void OnExecute(SpectrumLib.Spectrum spectrum, System.IO.Stream outputStream, out string filename)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

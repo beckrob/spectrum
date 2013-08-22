@@ -37,13 +37,13 @@ namespace Jhu.SpecSvc.Pipeline.Steps
         {
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             if (spectrum.Target.GalacticExtinction != null &&
                 spectrum.Target.GalacticExtinction.Value != 0.0)
                 spectrum.Deredden();
             else
-                spectrum.Deredden(connector.GetExtinction(
+                spectrum.Deredden(Connector.GetExtinction(
                     spectrum.Data.SpatialAxis.Coverage.Location.Value.Value.Ra,
                     spectrum.Data.SpatialAxis.Coverage.Location.Value.Value.Dec));
 

@@ -36,12 +36,12 @@ namespace Jhu.SpecSvc.Pipeline.Formats
         {
         }
 
-        protected override void Execute(Jhu.SpecSvc.SpectrumLib.Spectrum spectrum, Stream output, out string filename)
+        protected override void OnExecute(SpectrumLib.Spectrum spectrum, Stream outputStream, out string filename)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(VOTABLE.VOTABLE));
+            var ser = new XmlSerializer(typeof(VOTABLE.VOTABLE));
 
-            VOTABLE.VOTABLE vt = Jhu.SpecSvc.IO.Mappers.Spectrum2VoTable.MapSpectrum2VoTable(spectrum);
-            ser.Serialize(output, vt);
+            var vt = Jhu.SpecSvc.IO.Mappers.Spectrum2VoTable.MapSpectrum2VoTable(spectrum);
+            ser.Serialize(outputStream, vt);
 
             filename = GetFilenameFromId(spectrum, true, ".votable.xml");
         }

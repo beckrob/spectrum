@@ -65,11 +65,11 @@ namespace Jhu.SpecSvc.Pipeline.Formats
             this.plotParameters = new SpectrumPlotParameters(old.plotParameters);
         }
 
-        protected override void Execute(Jhu.SpecSvc.SpectrumLib.Spectrum spectrum, Stream output, out string filename)
+        protected override void OnExecute(SpectrumLib.Spectrum spectrum, Stream outputStream, out string filename)
         {
             Jhu.SpecSvc.Visualizer.SpectrumVisualizer vis = new Jhu.SpecSvc.Visualizer.SpectrumVisualizer();
 
-            vis.PlotSpectraGraph(plotParameters, spectrum).Save(output, System.Drawing.Imaging.ImageFormat.Gif);
+            vis.PlotSpectraGraph(plotParameters, spectrum).Save(outputStream, System.Drawing.Imaging.ImageFormat.Gif);
 
             filename = GetFilenameFromId(spectrum, true, ".gif");
         }

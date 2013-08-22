@@ -55,6 +55,29 @@ namespace Jhu.SpecSvc.Web.Search
                     Validate();
                     if (IsValid)
                     {
+                        HashSet<string> selected;
+
+                        switch (SpectrumListView)
+                        {
+                            case Web.SpectrumListView.List:
+                                selected = SpectrumList.SelectedDataKeys;
+                                break;
+                            case Web.SpectrumListView.Graph:
+                            case Web.SpectrumListView.Image:
+                                selected = SpectrumCards.SelectedDataKeys;
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
+
+                        // *** TODO: this can be further optimized
+                        Connector.DeselectAllInResultset(ResultsetId);
+
+                        foreach (var id in selected)
+                        {
+                            Connector.ChangeSelectionInResultset(ResultsetId, long.Parse(id), true);
+                        }
+
                         Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Default.GetUrl());
                     }
                     break;

@@ -86,14 +86,14 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.rebinBinHigh = new DoubleArrayParam(old.rebinBinHigh);
         }
 
-        public override void InitializeStep(int count)
+        public override void InitializeStep()
         {
-            base.InitializeStep(count);
+            base.InitializeStep();
 
             CalculateRebinGrid();
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             spectrum.Rebin(rebinValue.Value, rebinBinLow.Value, rebinBinHigh.Value);
 

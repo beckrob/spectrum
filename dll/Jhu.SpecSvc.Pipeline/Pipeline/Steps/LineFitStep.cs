@@ -1159,7 +1159,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             // delete this.vDisp = new DoubleParam(old.vDisp);
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             Console.Write("l");
 

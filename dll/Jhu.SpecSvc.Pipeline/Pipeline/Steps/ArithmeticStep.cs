@@ -64,7 +64,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.other = old.other;
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             // --- Rebin templates to match spectrum
             double[] temp;

@@ -1,56 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
+using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Pipeline
 {
     [Serializable]
     [XmlInclude(typeof(Targets.FileTarget))]
     //[XmlInclude(typeof(MySpectrumTarget))]
-    public abstract class OutputTarget
+    public abstract class OutputTarget : PipelineObjectBase<Spectrum>
     {
-        protected List<ProgressChangedEventHandler> progressChangedEventHandlers = new List<ProgressChangedEventHandler>();
-
-        public event ProgressChangedEventHandler ProgressChanged
-        {
-            add
-            {
-                progressChangedEventHandlers.Add(value);
-            }
-            remove
-            {
-                progressChangedEventHandlers.Remove(value);
-            }
-        }
-
-        protected TextWriter log;
-        protected bool skipExceptions;
-        protected int iteration;
-
-        protected int count;
-
-        [XmlIgnore]
-        public TextWriter Log
-        {
-            get { return log; }
-            set { log = value; }
-        }
-
-        [XmlIgnore]
-        public bool SkipExceptions
-        {
-            get { return this.skipExceptions; }
-            set { this.skipExceptions = value; }
-        }
-
-        [XmlIgnore]
-        public int Iteration
-        {
-            get { return iteration; }
-        }
-
         public OutputTarget()
         {
             InitializeMembers();
@@ -63,32 +25,16 @@ namespace Jhu.SpecSvc.Pipeline
 
         private void InitializeMembers()
         {
-            this.skipExceptions = true;
-
-            this.iteration = 0;
-            this.count = 0;
         }
 
         private void CopyMembers(OutputTarget old)
         {
-            this.skipExceptions = old.skipExceptions;
         }
 
-        public virtual void Init(int count)
+        public virtual void InitializeTarget()
         {
-            this.count = count;
         }
 
-        public virtual double GetProgress()
-        {
-            double progress = 0;
-
-            lock (this)
-            {
-                progress = (double)iteration / (double)count;
-            }
-
-            return progress;
-        }
+        public abstract IEnumerable<Spectrum> Execute(IEnumerable<Spectrum> spectra);
     }
 }

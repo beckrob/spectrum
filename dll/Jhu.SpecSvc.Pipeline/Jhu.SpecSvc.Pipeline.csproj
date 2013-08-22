@@ -107,10 +107,11 @@
     <Compile Include="Pipeline\OutputTarget.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Pipeline\PipelineObjectBase.cs" />
     <Compile Include="Pipeline\PipelineStep.cs" />
     <Compile Include="Pipeline\PipelineStepFactory.cs" />
     <Compile Include="Pipeline\ProgressChangedEventArgs.cs" />
-    <Compile Include="Pipeline\SpectrumProcessHelper.cs" />
+    <Compile Include="Pipeline\SpectrumPipeline.cs" />
     <Compile Include="Pipeline\Steps\ArithmeticStep.cs" />
     <Compile Include="Pipeline\Steps\BinByStep.cs" />
     <Compile Include="Pipeline\Steps\CompositeStep.cs" />

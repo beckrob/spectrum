@@ -46,7 +46,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
         {
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             double redshift = spectrum.Derived.Redshift.Value.Value;
 

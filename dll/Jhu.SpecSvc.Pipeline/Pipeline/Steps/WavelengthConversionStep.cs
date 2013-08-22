@@ -54,7 +54,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.method = old.method;
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             switch (method)
             {

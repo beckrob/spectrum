@@ -47,7 +47,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
         {
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             return function(spectrum);
         }

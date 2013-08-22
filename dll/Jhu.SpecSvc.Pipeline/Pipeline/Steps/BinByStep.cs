@@ -70,12 +70,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.binSize = new DoubleParam(old.binSize);
         }
 
-        public override void InitializeStep(int count)
-        {
-            base.InitializeStep(count);
-        }
-
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             // Calculate bin hash
 

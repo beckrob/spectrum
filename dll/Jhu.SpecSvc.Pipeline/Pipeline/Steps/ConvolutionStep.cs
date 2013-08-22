@@ -47,7 +47,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.velocityDispersion = new DoubleParam(old.velocityDispersion);
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             double vdisp = velocityDispersion.Value;
             double vdpc = vdisp / Constants.LightSpeed;

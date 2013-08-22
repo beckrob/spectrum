@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -20,6 +21,7 @@ namespace Jhu.SpecSvc.Pipeline.Targets
 
         private FileDestination destination;
         private string uri;
+        private Stream outputStream;
         private List<FileOutputFormat> formats;
 
         public FileDestination Destination
@@ -32,6 +34,12 @@ namespace Jhu.SpecSvc.Pipeline.Targets
         {
             get { return uri; }
             set { uri = value; }
+        }
+
+        public Stream OutputStream
+        {
+            get { return outputStream; }
+            set { outputStream = value; }
         }
 
         public List<FileOutputFormat> Formats
@@ -64,28 +72,52 @@ namespace Jhu.SpecSvc.Pipeline.Targets
             this.formats = old.formats; //**** list copy?
         }
 
-        public void Execute(IEnumerable<Jhu.SpecSvc.SpectrumLib.Spectrum> spectra, Stream outputStream)
+        private void OpenOutputStream()
         {
-            iteration = 0;
-            
+            switch (destination)
+            {
+                case FileDestination.Download:
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private void CloseOutputStream()
+        {
+            switch (destination)
+            {
+                case FileDestination.Download:
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public override IEnumerable<Spectrum> Execute(IEnumerable<Spectrum> spectra)
+        {
+            OpenOutputStream();
+
             using (Stream zipstream = new ICSharpCode.SharpZipLib.GZip.GZipOutputStream(outputStream))
             {
-                using (
-                ICSharpCode.SharpZipLib.Tar.TarOutputStream tar = new ICSharpCode.SharpZipLib.Tar.TarOutputStream(zipstream))
+                using (var tar = new ICSharpCode.SharpZipLib.Tar.TarOutputStream(zipstream))
                 {
                     foreach (var format in formats)
                     {
-                        spectra = format.Execute(tar, spectra, skipExceptions);
+                        spectra = format.Execute(tar, spectra, SkipExceptions);
                     }
 
-                    foreach (Spectrum spectrum in spectra)
+                    foreach (var spectrum in spectra)
                     {
-                        iteration++;
+                        Iteration++;
+                        yield return spectrum;
                     }
 
                     tar.Close();
                 }
             }
+
+            CloseOutputStream();
         }
     }
 }

@@ -9,11 +9,11 @@ using Jhu.SpecSvc.Pipeline.Targets;
 
 namespace Jhu.SpecSvc.Web.Pipeline
 {
-    public partial class Output : PageBase
+    public partial class Target : PageBase
     {
         public static string GetUrl()
         {
-            return "~/Pipeline/Output.aspx";
+            return "~/Pipeline/Target.aspx";
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -59,7 +59,10 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         private void InitializeDownload()
         {
-            OutputTarget = new FileTarget();
+            var target = new FileTarget();
+            target.Destination = FileTarget.FileDestination.Download;
+
+            Pipeline.Target = target;
         }
     }
 }

@@ -85,11 +85,9 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.initCount = old.initCount;
         }
 
-        public override void InitializeStep(int count)
+        protected override Spectrum OnExecute(Spectrum item)
         {
-            base.InitializeStep(count);
-
-            this.count = count;
+            throw new NotImplementedException();
         }
 
         public override ParallelQuery<Spectrum> Execute(ParallelQuery<Spectrum> spectra)
@@ -98,7 +96,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             pca.subtractAverage = this.subtractAverage;
 
             // Initialize streaming parameters
-            pca.alpha = 1.0 - 1.0 / (double)count;
+            pca.alpha = 1.0 - 1.0 / (double)Count;
             pca.delta = 0.5;
             double c = 0.787;
             pca.W = (t => 1 / (c * c + Math.Pow((Math.PI / 2 * t / c), 2)));
@@ -254,11 +252,6 @@ namespace Jhu.SpecSvc.Pipeline.Steps
         public override int GetOutputCount()
         {
             return components;
-        }
-
-        protected override double GetProgress()
-        {
-            return (double)iteration / (double)count;
         }
     }
 }

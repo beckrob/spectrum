@@ -37,7 +37,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
         {
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             int min = -1;
             for (int i = 0; i < spectrum.ContinuumFits.Count; i++)

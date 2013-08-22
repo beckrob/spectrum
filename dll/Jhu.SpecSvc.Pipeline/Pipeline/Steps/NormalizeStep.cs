@@ -170,7 +170,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.power = old.power;
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             switch (method)
             {

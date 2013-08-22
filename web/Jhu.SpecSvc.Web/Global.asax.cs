@@ -30,8 +30,7 @@ namespace Jhu.SpecSvc.Web
         {
             base.Session_Start(sender, e);
 
-            Session[Constants.SessionPipeline] = new List<PipelineStep>();
-            Session[Constants.SessionOutputTarget] = null;
+            Session[Constants.SessionPipeline] = new SpectrumPipeline();
         }
     }
 }

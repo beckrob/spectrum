@@ -289,11 +289,6 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.method = old.method;
         }
 
-        public override void InitializeStep(int count)
-        {
-            base.InitializeStep(count);
-        }
-
         public override int GetOutputCount()
         {
             return 1;
@@ -301,15 +296,12 @@ namespace Jhu.SpecSvc.Pipeline.Steps
 
         public override ParallelQuery<Spectrum> Execute(ParallelQuery<Spectrum> spectra /*, bool skipExceptions*/)
         {
-            // delete: if (skipExceptions) this.exceptions = new List<Exception>();
-            exceptions.Clear();
-
             // Initialize storage for aggregation
             results = new Dictionary<long, CompositeResult>();
 
             foreach (Spectrum s in spectra)
             {
-                iteration++;
+                Iteration++;
 
                 CompositeResult res = null;
 
@@ -339,7 +331,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
                 }
                 catch (System.Exception ex)
                 {
-                    exceptions.Add(ex);
+                    Exceptions.Add(ex);
                 }
             }
 
@@ -364,9 +356,9 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             return cres.AsParallel();
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

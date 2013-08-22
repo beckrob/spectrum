@@ -164,5 +164,10 @@ namespace Jhu.SpecSvc.Pipeline.Formats
             ms = null;
             tf = null;
         }
+
+        protected override void OnExecute(Spectrum spectrum, Stream outputStream, out string filename)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

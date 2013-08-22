@@ -722,9 +722,9 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             this.templates = old.templates; // ********** TODO do array copy here
         }
 
-        public override void InitializeStep(int count)
+        public override void InitializeStep()
         {
-            base.InitializeStep(count);
+            base.InitializeStep();
 
             if (templates == null || templates.Length == 0)
             {
@@ -763,7 +763,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
             }
         }
 
-        protected override Spectrum Execute(Spectrum spectrum)
+        protected override Spectrum OnExecute(Spectrum spectrum)
         {
             Console.Write("c");
 

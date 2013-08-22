@@ -72,16 +72,10 @@ namespace Jhu.SpecSvc.Web
             set { Session[Constants.SessionDegreeFormat] = value; }
         }
 
-        public List<PipelineStep> Pipeline
+        public SpectrumPipeline Pipeline
         {
-            get { return (List<PipelineStep>)Session[Constants.SessionPipeline]; }
+            get { return (SpectrumPipeline)Session[Constants.SessionPipeline]; }
             set { Session[Constants.SessionPipeline] = value; }
-        }
-
-        public OutputTarget OutputTarget
-        {
-            get { return (OutputTarget)Session[Constants.SessionOutputTarget]; }
-            set { Session[Constants.SessionOutputTarget] = value; }
         }
 
         override protected void OnUnload(EventArgs e)

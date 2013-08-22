@@ -36,10 +36,10 @@ namespace Jhu.SpecSvc.Pipeline.Formats
         {
         }
 
-        protected override void Execute(Jhu.SpecSvc.SpectrumLib.Spectrum spectrum, Stream output, out string filename)
+        protected override void OnExecute(SpectrumLib.Spectrum spectrum, Stream outputStream, out string filename)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(Jhu.SpecSvc.SpectrumLib.Spectrum));
-            ser.Serialize(output, spectrum);
+            var ser = new XmlSerializer(typeof(Jhu.SpecSvc.SpectrumLib.Spectrum));
+            ser.Serialize(outputStream, spectrum);
 
             filename = GetFilenameFromId(spectrum, true, ".xml");
         }

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
 using Jhu.SpecSvc.SpectrumLib;
 using ICSharpCode.SharpZipLib.Tar;
-using System.Xml.Serialization;
 
 namespace Jhu.SpecSvc.Pipeline
 {
@@ -16,22 +17,15 @@ namespace Jhu.SpecSvc.Pipeline
     [XmlInclude(typeof(Formats.SpectrumPlotFormat))]
     [XmlInclude(typeof(Formats.SpectrumVoTableFormat))]
     [XmlInclude(typeof(Formats.SpectrumXmlFormat))]
-    public abstract class FileOutputFormat
+    public abstract class FileOutputFormat : PipelineObjectBase<Spectrum>
     {
         protected bool active;
-        protected List<Exception> exceptions;
         protected string prefix;
 
         public bool Active
         {
             get { return active; }
             set { active = value; }
-        }
-
-        [XmlIgnore]
-        public List<Exception> Exceptions
-        {
-            get { return exceptions; }
         }
 
         public string Prefix
@@ -63,13 +57,11 @@ namespace Jhu.SpecSvc.Pipeline
         private void InitializeMembers()
         {
             this.active = true;
-            this.exceptions = null;
         }
 
         private void CopyMembers(FileOutputFormat old)
         {
             this.active = old.active;
-            this.exceptions = old.exceptions;
         }
 
         public virtual void Init(int count, int dim)
@@ -78,18 +70,16 @@ namespace Jhu.SpecSvc.Pipeline
 
         public virtual IEnumerable<Spectrum> Execute(ICSharpCode.SharpZipLib.Tar.TarOutputStream tar, IEnumerable<Spectrum> spectra, bool skipExceptions)
         {
-            if (skipExceptions) this.exceptions = new List<Exception>();
-
             foreach (Spectrum spectrum in spectra)
             {
                 try
                 {
-                    MemoryStream buffer = new MemoryStream();
+                    var buffer = new MemoryStream();
                     string filename;
                     
-                    Execute(spectrum, buffer, out filename);
+                    OnExecute(spectrum, buffer, out filename);
 
-                    TarEntry entry = TarEntry.CreateTarEntry(filename);
+                    var entry = TarEntry.CreateTarEntry(filename);
 
                     entry.ModTime = DateTime.Now;
                     entry.Size = buffer.Length;
@@ -105,7 +95,7 @@ namespace Jhu.SpecSvc.Pipeline
                 {
                     if (skipExceptions)
                     {
-                        exceptions.Add(ex);
+                        LogException(ex);
                     }
                     else
                     {
@@ -117,10 +107,7 @@ namespace Jhu.SpecSvc.Pipeline
             }
         }
 
-        protected virtual void Execute(Spectrum spectrum, Stream outputStream, out string filename)
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract void OnExecute(Spectrum spectrum, Stream outputStream, out string filename);
 
         protected string GetFilenameFromId(Jhu.SpecSvc.SpectrumLib.Spectrum s, bool includePath, string extension)
         {

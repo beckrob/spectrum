@@ -398,8 +398,21 @@ namespace Jhu.SpecSvc.IO
             // Create queue to buffer results as they arrive from the collections
             var buffer = new BlockingCollection<Spectrum>();
 
+            if (par == null)
+            {
+                throw new ArgumentNullException("par");
+            }
+
+            if (par.Collections == null)
+            {
+                throw new ArgumentException("par.Collection");
+            }
+
             // Query all collections in parallel on a separate thread
-            var queries = Task.Factory.StartNew(FindSpectrumDispatchWorker, new object[] { par, buffer });
+            var queries = Task.Factory.StartNew(() =>
+                {
+                    FindSpectrumDispatchWorker(par, buffer);
+                });
 
             // Read from the buffer
             while (!buffer.IsCompleted)
@@ -410,16 +423,23 @@ namespace Jhu.SpecSvc.IO
             queries.Wait();
         }
 
-        private void FindSpectrumDispatchWorker(object state)
+        private void FindSpectrumDispatchWorker(SearchParametersBase par, BlockingCollection<Spectrum> buffer)
         {
-            var par = (SearchParametersBase)((object[])state)[0];
-            var buffer = (BlockingCollection<Spectrum>)((object[])state)[1];
+            Parallel.ForEach(par.Collections, cid =>
+                {
+                    FindSpectrumInCollectionWorker(cid, par, buffer);
+                });
 
-            Parallel.For(0, par.Collections.Length, i =>
+            // All collections processed, now mark as done
+            buffer.CompleteAdding();
+        }
+
+        void FindSpectrumInCollectionWorker(string cid, SearchParametersBase par, BlockingCollection<Spectrum> buffer)
+        {
             {
                 // load collection
                 var coll = new Collection();
-                coll.Id = par.Collections[i];
+                coll.Id = cid;
                 LoadCollection(coll);
 
                 // Get connector
@@ -482,10 +502,7 @@ namespace Jhu.SpecSvc.IO
                         }
                     }
                 }
-            });
-
-            // All collections processed, now mark as done
-            buffer.CompleteAdding();
+            }
         }
 
         //
@@ -753,23 +770,26 @@ namespace Jhu.SpecSvc.IO
             ids.LoadPoints = loadPoints;
             ids.UserGuid = userGuid;
 
-            /*foreach (Spectrum spectrum in FindSpectrum(ids))
+            var spectra = FindSpectrum(ids);
+
+            foreach (var spectrum in spectra)
             {
+                // Update match ID
                 string[] ii = idlist.Find(delegate(string[] match) { return match[0] == spectrum.PublisherId; });
                 spectrum.DataId.MatchDID = (ii == null || ii[1] == null) ? null : new Jhu.SpecSvc.Schema.TextParam(ii[1]);
 
                 yield return spectrum;
-            }*/
+            }
 
 
-            return FindSpectrumDispatch(ids).Select(s =>
+            /*return FindSpectrumDispatch(ids).Select(s =>
                 {
                     // Update match ID
                     string[] ii = idlist.Find(delegate(string[] match) { return match[0] == s.PublisherId; });
                     s.DataId.MatchDID = (ii == null || ii[1] == null) ? null : new Jhu.SpecSvc.Schema.TextParam(ii[1]);
 
                     return s;
-                });
+                });*/
         }
 
         public int GetResultsCount(int resultsetId, bool selectedOnly)
@@ -888,7 +908,7 @@ namespace Jhu.SpecSvc.IO
             }
         }
 
-        public void ChangeSelectionInResultset(int resultsetId, int resultId, bool selected)
+        public void ChangeSelectionInResultset(int resultsetId, long resultId, bool selected)
         {
             string sql = "spChangeSelectionInResultset";
 
