@@ -139,6 +139,13 @@ namespace Jhu.SpecSvc.Pipeline
             }
         }
 
+        public void ExecuteAll(IEnumerable<Spectrum> spectra)
+        {
+            foreach (var s in Execute(spectra))
+            {
+            }
+        }
+
         /// <summary>
         /// Executes spectrum processing over a stream of spectra
         /// </summary>

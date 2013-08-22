@@ -27,8 +27,8 @@
             <jswc:WizardButtons runat="server" OkEnabled="true" OnCommand="Button_Command" />
         </p>
     </div>
-    <div class="LayoutContent dock-fill dock-container dock-scroll">
-        <asp:UpdatePanel runat="server" RenderMode="Inline">
+    <div class="LayoutContent dock-fill dock-container">
+        <asp:UpdatePanel runat="server" RenderMode="Block" class="dock-fill dock-scroll">
             <ContentTemplate>
                 <asp:ListView runat="server" ID="FormatList" OnItemCreated="FormatList_ItemCreated"
                     OnItemCommand="FormatList_ItemCommand">
@@ -36,7 +36,7 @@
                         <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
                     </LayoutTemplate>
                     <ItemTemplate>
-                        <table class="PipelineStep" cellpadding="0" cellspacing="0">
+                        <table class="PipelineStep" style="margin-left:auto; margin-right:auto; width:640px" cellpadding="0" cellspacing="0">
                             <tr>
                                 <th>
                                     <asp:Label runat="server" ID="Title"></asp:Label>

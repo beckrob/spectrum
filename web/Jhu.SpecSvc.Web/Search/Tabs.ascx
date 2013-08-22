@@ -7,10 +7,11 @@
     <jgwc:Tab runat="server" Text="Redshift search" ID="RedshiftSearch" />
     <jgwc:Tab runat="server" Text="Advanced search" ID="AdvancedSearch" />
     <jgwc:Tab runat="server" Text="Model search" ID="ModelSearch" />
-    <jgwc:Tab runat="server" Text="ID search" ID="IDSearch" />
+    <jgwc:Tab runat="server" Text="ID list search" ID="IDSearch" />
+    <jgwc:Tab runat="server" Text="Object list search" ID="ObjectSearch" />
     <jgwc:Tab runat="server" Text="SQL search" ID="SqlSearch" />
     <jgwc:Tab runat="server" Text="SkyServer search" ID="SkyServerSearch" />
-    <jgwc:Tab runat="server" Text="Similar search" ID="SimilarSearch" />
+    <%--<jgwc:Tab runat="server" Text="Similar search" ID="SimilarSearch" />--%>
     <jgwc:Tab runat="server" Text="Get whole collection" ID="AllSearch" />
     </tabs>
 </jgwc:TabHeader>

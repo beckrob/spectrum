@@ -468,7 +468,7 @@ WHERE ({0})
                 where += ") ";
             }
 
-            sql = String.Format(sql, where);
+            sql = String.Format(sql, where.Substring(5));
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {
@@ -574,7 +574,7 @@ WHERE ({0})
                 where += " OR HTMID BETWEEN " + pair.Lo.ToString() + " AND " + pair.Hi.ToString();
             }
 
-            sql = String.Format(sql, where);
+            sql = String.Format(sql, where.Substring(4));
 
             using (DbCommand cmd = CreateTextCommand(sql))
             {

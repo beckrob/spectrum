@@ -28,11 +28,7 @@ namespace Jhu.SpecSvc.Web.Output
             target.OutputStream = Response.OutputStream;
 
             Pipeline.InitializePipeline();
-            
-            foreach (var s in Pipeline.Execute(spectra))
-            {
-            }
-
+            Pipeline.ExecuteAll(spectra);
             Pipeline.DeinitializePipeline();
 
             Response.Flush();

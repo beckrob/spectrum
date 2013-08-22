@@ -102,7 +102,10 @@ namespace Jhu.SpecSvc.IO
             var buffer = new BlockingCollection<Spectrum>();
 
             // Query all collections in parallel on a separate thread
-            var queries = Task.Factory.StartNew(FindSpectrumByIdWorker, new object[] { idsbycollection, par, buffer });
+            var queries = Task.Factory.StartNew(() =>
+                {
+                    FindSpectrumByIdWorker(idsbycollection, par, buffer);
+                });
 
             // Read from the buffer
             while (!buffer.IsCompleted)
@@ -118,6 +121,8 @@ namespace Jhu.SpecSvc.IO
 
 
 #if false
+            TODO: delete
+
             // grouping parameters by collection to send requests in a batch
             string[] ids = new string[par.Ids.Length];
             string[] old = par.Ids;                     // original set of ids
@@ -191,62 +196,66 @@ namespace Jhu.SpecSvc.IO
 #endif
         }
 
-        private void FindSpectrumByIdWorker(object state)
+        private void FindSpectrumByIdWorker(Dictionary<string, HashSet<string>> idsbycollection, IdSearchParameters par, BlockingCollection<Spectrum> buffer)
         {
-            var idsbycollection = (Dictionary<string, HashSet<string>>)((object[])state)[0];
-            var par = (IdSearchParameters)((object[])state)[1];
-            var buffer = (BlockingCollection<Spectrum>)((object[])state)[2];
-
-            Parallel.ForEach<string>(idsbycollection.Keys, cid =>
+            try
             {
-                // load collection
-                var coll = new Collection();
-                coll.Id = cid;
-                LoadCollection(coll);
-
-                // Make copy of original parameters, but replace collection id and id list
-                var idsp = new IdSearchParameters(par);
-
-                lock (idsbycollection)
-                {
-                    idsp.Collections = new string[] { cid };
-                    idsp.Ids = idsbycollection[cid].ToArray();
-                }
-
-                // Get connector
-                using (var conn = coll.GetConnector())
-                {
-                    // Dispatch search
-                    IEnumerable<Spectrum> temp = null;
-
-                    // Execute search
-                    temp = conn.FindSpectrum(idsp);
-
-                    foreach (var s in temp)
+                Parallel.ForEach<string>(idsbycollection.Keys, cid =>
                     {
-                        // Prefix with collection id
-                        PrefixCollectionId(coll.Id, s);
-
-                        // Enqueue in output queue
-                        bool queued = false;
-                        while (!queued)
-                        {
-                            if (buffer.Count < 100)
-                            {
-                                buffer.Add(s);
-                                queued = true;
-                            }
-                            else
-                            {
-                                Thread.Sleep(100);
-                            }
-                        }
-                    }
-                }
-            });
+                        FindSpectrumByIdWorker(cid, idsbycollection[cid].ToArray(), par, buffer);
+                    });
+            }
+            catch (AggregateException ex)
+            {
+                Exceptions.Add(ex);
+            }
 
             // All collections processed, now mark as done
             buffer.CompleteAdding();
+        }
+
+        private void FindSpectrumByIdWorker(string cid, string[] ids, IdSearchParameters par, BlockingCollection<Spectrum> buffer)
+        {
+            // Load collection
+            var coll = new Collection();
+            coll.Id = cid;
+            LoadCollection(coll);
+
+            // Make copy of original parameters, but replace collection id and id list
+            var idsp = new IdSearchParameters(par);
+            idsp.Collections = new string[] { cid };
+            idsp.Ids = ids;
+
+            // Get connector
+            using (var conn = coll.GetConnector())
+            {
+                // Dispatch search
+                IEnumerable<Spectrum> temp = null;
+
+                // Execute search
+                temp = conn.FindSpectrum(idsp);
+
+                foreach (var s in temp)
+                {
+                    // Prefix with collection id
+                    PrefixCollectionId(coll.Id, s);
+
+                    // Enqueue in output queue
+                    bool queued = false;
+                    while (!queued)
+                    {
+                        if (buffer.Count < 100)
+                        {
+                            buffer.Add(s);
+                            queued = true;
+                        }
+                        else
+                        {
+                            Thread.Sleep(100);
+                        }
+                    }
+                }
+            }
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(AllSearchParameters par)
@@ -403,24 +412,41 @@ namespace Jhu.SpecSvc.IO
                 throw new ArgumentNullException("par");
             }
 
-            if (par.Collections == null)
+            if (par is IdSearchParameters)
             {
-                throw new ArgumentException("par.Collection");
-            }
-
-            // Query all collections in parallel on a separate thread
-            var queries = Task.Factory.StartNew(() =>
+                foreach (var s in FindSpectrum((IdSearchParameters)par))
                 {
-                    FindSpectrumDispatchWorker(par, buffer);
-                });
-
-            // Read from the buffer
-            while (!buffer.IsCompleted)
-            {
-                yield return buffer.Take();
+                    yield return s;
+                }
             }
+            else if (par is SkyServerSearchParameters)
+            {
+                foreach (var s in FindSpectrum((SkyServerSearchParameters)par))
+                {
+                    yield return s;
+                }
+            }
+            else
+            {
+                if (par.Collections == null)
+                {
+                    throw new ArgumentException("par.Collection");
+                }
 
-            queries.Wait();
+                // Query all collections in parallel on a separate thread
+                var queries = Task.Factory.StartNew(() =>
+                    {
+                        FindSpectrumDispatchWorker(par, buffer);
+                    });
+
+                // Read from the buffer
+                while (!buffer.IsCompleted)
+                {
+                    yield return buffer.Take();
+                }
+
+                queries.Wait();
+            }
         }
 
         private void FindSpectrumDispatchWorker(SearchParametersBase par, BlockingCollection<Spectrum> buffer)
@@ -476,6 +502,9 @@ namespace Jhu.SpecSvc.IO
                             break;
                         case SearchMethods.Sql:
                             temp = conn.FindSpectrum((SqlSearchParameters)par);
+                            break;
+                        case SearchMethods.Object:
+                            temp = conn.FindSpectrum((ObjectSearchParameters)par);
                             break;
                         default:
                             throw new NotImplementedException();

@@ -1,51 +1,43 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/App_Masters/Spectrum.master" AutoEventWireup="true"
-    CodeBehind="Default.aspx.cs" Inherits="Jhu.SpecSvc.Web.Search.Default" %>
+    CodeBehind="Sql.aspx.cs" Inherits="Jhu.SpecSvc.Web.Search.Sql" %>
 
 <%@ Register Src="Tabs.ascx" TagName="Tabs" TagPrefix="jswu" %>
 <asp:Content ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="../CodeMirror/lib/codemirror.css">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="middle" runat="server">
     <div class="LayoutContent dock-fill dock-container">
         <div class="dock-left">
-            <jswu:Tabs ID="SearchTabs" runat="server" SelectedTab="FreeSearch" />
+            <jswu:Tabs ID="SearchTabs" runat="server" SelectedTab="SqlSearch" />
         </div>
         <div class="TabFrameVertical dock-fill">
-            <jgwc:Form runat="server" ID="DefaultSearchForm" SkinID="Search" Text="Free search">
+            <jgwc:Form runat="server" ID="SqlSearchForm" SkinID="Search" Text="SQL search">
                 <FormTemplate>
                     <p>
-                        Find spectra within a circular region around an object.
+                        Find spectra using a SQL query.
                     </p>
                     <ul>
-                        <li>enter object name or J2000 equatorial coordinates</li>
-                        <li>use decimal or sexagesimal format</li>
-                        <li>NED and Simbad will be used to resolve object names</li>
-                        <li>search radius is 10 arcsec</li>
+                        <li>the query must return all columns from the 'Spectra' table</li>
+                        <li>refer to the documentation for details on the database schema</li>
                     </ul>
                     <table class="FormTable">
                         <tr>
                             <td class="FormLabel">
-                                <asp:Label runat="server" ID="QueryLabel">Query:</asp:Label>
+                                <asp:Label runat="server">Query:</asp:Label>
                             </td>
-                            <td class="FormField">
-                                <asp:TextBox runat="server" ID="Query" CssClass="FormField" Text="M101" />
+                        </tr>
+                        <tr>
+                            <td class="FormList">
+                                <jgwc:CodeMirror runat="server" ID="Query" Mode="text/x-sql" Theme="default" Text="SELECT TOP 100 * FROM Spectra" />
                             </td>
                         </tr>
                         <tr>
                             <td class="FormLabel">
-                                <asp:Label runat="server" ID="RadiusLabel">Search radius:</asp:Label>
-                            </td>
-                            <td class="FormField">
-                                <asp:TextBox runat="server" ID="Radius" CssClass="FormField" Text="10" />
-                                arcmin
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="FormLabel" colspan="2">
                                 <asp:Label runat="server" ID="CollectionLabel">Collections:</asp:Label>
                             </td>
                         </tr>
                         <tr>
-                            <td class="FormList" colspan="2">
+                            <td class="FormList">
                                 <jswc:CollectionList runat="server" ID="Collections" />
                             </td>
                         </tr>

@@ -15,7 +15,7 @@ namespace Jhu.SpecSvc.Web
 
         private static string GetValue(string key)
         {
-            return (string)((NameValueCollection)ConfigurationManager.GetSection("Jhu.SpecSvc.Web"))[key];
+            return (string)((NameValueCollection)ConfigurationManager.GetSection("Jhu.SpecSvc.Web/Settings"))[key];
         }
 
         public static NameValueCollection ImageCutOuts
@@ -24,6 +24,21 @@ namespace Jhu.SpecSvc.Web
             {
                 return (NameValueCollection)ConfigurationManager.GetSection("Jhu.SpecSvc.Web/ImageCutOuts");
             }
+        }
+
+        public static string SkyServerWsUrl
+        {
+            get { return GetValue("SkyServerWsUrl"); }
+        }
+
+        public static long SkyServerWsId
+        {
+            get { return long.Parse(GetValue("SkyServerWsId")); }
+        }
+
+        public static string RegionSearchUrl
+        {
+            get { return GetValue("RegionSearchUrl"); }
         }
 
         /*public static string ExportDir

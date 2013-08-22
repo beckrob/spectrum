@@ -38,6 +38,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -336,6 +337,62 @@
     <Compile Include="Search\Cone.aspx.designer.cs">
       <DependentUpon>Cone.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Search\Advanced.aspx.cs">
+      <DependentUpon>Advanced.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Advanced.aspx.designer.cs">
+      <DependentUpon>Advanced.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\SkyServer.aspx.cs">
+      <DependentUpon>SkyServer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\SkyServer.aspx.designer.cs">
+      <DependentUpon>SkyServer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\Sql.aspx.cs">
+      <DependentUpon>Sql.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Sql.aspx.designer.cs">
+      <DependentUpon>Sql.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\Model.aspx.cs">
+      <DependentUpon>Model.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Model.aspx.designer.cs">
+      <DependentUpon>Model.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\Redshift.aspx.cs">
+      <DependentUpon>Redshift.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Redshift.aspx.designer.cs">
+      <DependentUpon>Redshift.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\Object.aspx.cs">
+      <DependentUpon>Object.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Object.aspx.designer.cs">
+      <DependentUpon>Object.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\ID.aspx.cs">
+      <DependentUpon>ID.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\ID.aspx.designer.cs">
+      <DependentUpon>ID.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\Region.aspx.cs">
+      <DependentUpon>Region.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\Region.aspx.designer.cs">
+      <DependentUpon>Region.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Search\SpectrumRow.ascx.cs">
       <DependentUpon>SpectrumRow.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -456,6 +513,14 @@
     <Content Include="Pipeline\Steps\WavelengthConversionStepControl.ascx" />
     <Content Include="Pipeline\Target.aspx" />
     <Content Include="Search\Cone.aspx" />
+    <Content Include="Search\Advanced.aspx" />
+    <Content Include="Search\SkyServer.aspx" />
+    <Content Include="Search\Sql.aspx" />
+    <Content Include="Search\Model.aspx" />
+    <Content Include="Search\Redshift.aspx" />
+    <Content Include="Search\Object.aspx" />
+    <Content Include="Search\ID.aspx" />
+    <Content Include="Search\Region.aspx" />
     <Content Include="Search\SpectrumRow.ascx" />
     <Content Include="Search\Default.aspx" />
     <Content Include="Search\List.aspx" />

@@ -1,0 +1,84 @@
+﻿table.PipelineStep
+{
+    min-width: 300px;
+    --height: 200px;
+    border: 1px solid #C0C0C0;
+    border-collapse: collapse;
+    --display: inline-table;
+    margin-right: 4px;
+    margin-bottom: 8px;
+}
+table.PipelineStep tr th
+{
+    vertical-align: middle;
+    text-align: left;
+    background-color: #c0c0c0;
+    height: 20px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+td.PipelineStepForm
+{
+    height: auto;
+    text-align: center;
+    vertical-align: top;
+    padding: 4px;
+}
+td.PipelineStepFooter
+{
+    vertical-align: middle;
+    text-align: right;
+    height: 20px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+table.PipelineForm
+{
+    width: 290px;
+}
+td.PipelineFormLabel
+{
+    width: 40%;
+    vertical-align: top;
+    text-align: left;
+}
+td.PipelineFormField
+{
+    text-align: left;
+    width: 60%;
+    vertical-align: top;
+}
+td.PipelineFormField input[type=text]
+{
+    width: 64px;
+}
+td.PipelineFormField input[type=radio]
+{
+    vertical-align: text-top;
+}
+
+table.FormatForm
+{
+    width: 290px;
+}
+td.FormatFormLabel
+{
+    width: 40%;
+    vertical-align: top;
+    text-align: left;
+}
+td.FormatFormField
+{
+    text-align: left;
+    width: 60%;
+    vertical-align: top;
+}
+td.FormatFormField input[type=text]
+{
+    width: 64px;
+}
+td.FormatFormField input[type=radio]
+{
+    vertical-align: text-top;
+}

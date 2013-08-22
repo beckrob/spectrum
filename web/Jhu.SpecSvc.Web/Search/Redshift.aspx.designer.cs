@@ -10,114 +10,114 @@
 namespace Jhu.SpecSvc.Web.Search {
     
     
-    public partial class Tabs {
+    public partial class Redshift {
         
         /// <summary>
-        /// TabHeader control.
+        /// SearchTabs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.TabHeader TabHeader;
+        protected global::Jhu.SpecSvc.Web.Search.Tabs SearchTabs;
         
         /// <summary>
-        /// FreeSearch control.
+        /// ConeSearchForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab FreeSearch;
+        protected global::Jhu.Graywulf.Web.Controls.Form ConeSearchForm;
         
         /// <summary>
-        /// ConeSearch control.
+        /// RedshiftTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab ConeSearch;
+        protected global::System.Web.UI.WebControls.Label RedshiftTitle;
         
         /// <summary>
-        /// RegionSearch control.
+        /// RedshiftFrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab RegionSearch;
+        protected global::System.Web.UI.WebControls.TextBox RedshiftFrom;
         
         /// <summary>
-        /// RedshiftSearch control.
+        /// RedshiftTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab RedshiftSearch;
+        protected global::System.Web.UI.WebControls.TextBox RedshiftTo;
         
         /// <summary>
-        /// AdvancedSearch control.
+        /// RedshiftFromFormatValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab AdvancedSearch;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RedshiftFromFormatValidator;
         
         /// <summary>
-        /// ModelSearch control.
+        /// RedshiftToFormatValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab ModelSearch;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RedshiftToFormatValidator;
         
         /// <summary>
-        /// IDSearch control.
+        /// RedshiftFromRequiredValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab IDSearch;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RedshiftFromRequiredValidator;
         
         /// <summary>
-        /// ObjectSearch control.
+        /// RedshiftToRequiredValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab ObjectSearch;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RedshiftToRequiredValidator;
         
         /// <summary>
-        /// SqlSearch control.
+        /// CollectionLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab SqlSearch;
+        protected global::System.Web.UI.WebControls.Label CollectionLabel;
         
         /// <summary>
-        /// SkyServerSearch control.
+        /// Collections control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab SkyServerSearch;
+        protected global::Jhu.SpecSvc.Web.Controls.CollectionList Collections;
         
         /// <summary>
-        /// AllSearch control.
+        /// OK control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Tab AllSearch;
+        protected global::System.Web.UI.WebControls.Button OK;
     }
 }

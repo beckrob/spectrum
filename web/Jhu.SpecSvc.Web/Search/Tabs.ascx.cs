@@ -16,6 +16,14 @@ namespace Jhu.SpecSvc.Web.Search
         {
             FreeSearch.NavigateUrl = Default.GetUrl();
             ConeSearch.NavigateUrl = Cone.GetUrl();
+            RedshiftSearch.NavigateUrl = Redshift.GetUrl();
+            RegionSearch.NavigateUrl = Region.GetUrl();
+            AdvancedSearch.NavigateUrl = Advanced.GetUrl();
+            ModelSearch.NavigateUrl = Model.GetUrl();
+            IDSearch.NavigateUrl = Search.ID.GetUrl();
+            ObjectSearch.NavigateUrl = Search.Object.GetUrl();
+            SqlSearch.NavigateUrl = Sql.GetUrl();
+            SkyServerSearch.NavigateUrl = SkyServer.GetUrl();
 
             TabHeader.SelectedTab = (Tab)TabHeader.FindControl(SelectedTab);
         }
