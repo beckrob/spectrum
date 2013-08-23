@@ -7,7 +7,7 @@
 <asp:Content ContentPlaceHolderID="middle" runat="server">
     <div class="LayoutContent dock-fill dock-container">
         <div class="dock-left">
-            <jswu:Tabs ID="SearchTabs" runat="server" SelectedTab="ConeSearch" />
+            <jswu:Tabs ID="SearchTabs" runat="server" SelectedTab="IdSearch" />
         </div>
         <div class="TabFrameVertical dock-fill">
             <jgwc:Form runat="server" ID="ConeSearchForm" SkinID="Search" Text="ID search">

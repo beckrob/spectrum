@@ -38,7 +38,7 @@
                         </tr>
                         <tr>
                             <td class="FormList">
-                                <jswc:CollectionList runat="server" ID="Collections" />
+                                <jswc:CollectionList runat="server" ID="Collections" SearchMethod="Sql" />
                             </td>
                         </tr>
                     </table>

@@ -344,6 +344,13 @@
     <Compile Include="Search\Advanced.aspx.designer.cs">
       <DependentUpon>Advanced.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Search\All.aspx.cs">
+      <DependentUpon>All.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search\All.aspx.designer.cs">
+      <DependentUpon>All.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Search\SkyServer.aspx.cs">
       <DependentUpon>SkyServer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -514,6 +521,7 @@
     <Content Include="Pipeline\Target.aspx" />
     <Content Include="Search\Cone.aspx" />
     <Content Include="Search\Advanced.aspx" />
+    <Content Include="Search\All.aspx" />
     <Content Include="Search\SkyServer.aspx" />
     <Content Include="Search\Sql.aspx" />
     <Content Include="Search\Model.aspx" />

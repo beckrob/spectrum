@@ -201,7 +201,7 @@
                         </tr>
                         <tr>
                             <td class="FormList" colspan="2">
-                                <jswc:CollectionList runat="server" ID="Collections" />
+                                <jswc:CollectionList runat="server" ID="Collections" SearchMethod="Model" />
                             </td>
                         </tr>
                     </table>
