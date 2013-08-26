@@ -19,7 +19,7 @@
                 <asp:Label ID="Caption" runat="server" Text="WebUI"></asp:Label>
             </td>
             <td class="HeadlineUser">
-                <asp:ContentPlaceHolder runat="server" ID="userStatus" />
+                <jgwc:UserStatus runat="server" />
             </td>
         </tr>
     </table>

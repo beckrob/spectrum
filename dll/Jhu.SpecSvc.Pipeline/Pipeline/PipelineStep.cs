@@ -14,7 +14,6 @@ namespace Jhu.SpecSvc.Pipeline
     [XmlInclude(typeof(Steps.CompositeStep))]
     [XmlInclude(typeof(Steps.ContinuumFitStep))]
     [XmlInclude(typeof(Steps.ConvolutionStep))]
-    [XmlInclude(typeof(Steps.CustomStep))]
     [XmlInclude(typeof(Steps.DereddenStep))]
     [XmlInclude(typeof(Steps.FluxStep))]
     [XmlInclude(typeof(Steps.LineFitStep))]

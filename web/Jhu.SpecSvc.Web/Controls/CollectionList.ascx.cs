@@ -25,7 +25,7 @@ namespace Jhu.SpecSvc.Web.Controls
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            collectionList.DataSource = new List<Collection>(Page.Connector.QueryCollections(Page.UserGuid, SearchMethod));
+            collectionList.DataSource = new List<Collection>(Page.PortalConnector.QueryCollections(Page.UserGuid, SearchMethod));
         }
     }
 }

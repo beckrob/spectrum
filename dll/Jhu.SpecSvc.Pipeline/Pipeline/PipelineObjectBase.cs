@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using System.IO;
 using Jhu.SpecSvc.IO;
@@ -27,6 +28,7 @@ namespace Jhu.SpecSvc.Pipeline
             remove { progressChangedEventHandlers.Remove(value); }
         }
 
+        [IgnoreDataMember]
         [XmlIgnore]
         public PortalConnector Connector
         {
@@ -40,6 +42,7 @@ namespace Jhu.SpecSvc.Pipeline
             set { skipExceptions = value; }
         }
 
+        [IgnoreDataMember]
         [XmlIgnore]
         public TextWriter Log
         {
@@ -47,18 +50,22 @@ namespace Jhu.SpecSvc.Pipeline
             set { log = value; }
         }
 
+        [IgnoreDataMember]
         [XmlIgnore]
         public List<Exception> Exceptions
         {
             get { return exceptions; }
         }
 
+        [IgnoreDataMember]
+        [XmlIgnore]
         public int Count
         {
             get { return count; }
             set { count = value; }
         }
 
+        [IgnoreDataMember]
         [XmlIgnore]
         public int Iteration
         {

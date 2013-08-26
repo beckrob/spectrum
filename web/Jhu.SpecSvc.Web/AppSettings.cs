@@ -8,11 +8,6 @@ namespace Jhu.SpecSvc.Web
 {
     public class AppSettings
     {
-        public static string ConnectionString
-        {
-            get { return ConfigurationManager.ConnectionStrings["Jhu.SpecSvc"].ConnectionString; }
-        }
-
         private static string GetValue(string key)
         {
             return (string)((NameValueCollection)ConfigurationManager.GetSection("Jhu.SpecSvc.Web/Settings"))[key];

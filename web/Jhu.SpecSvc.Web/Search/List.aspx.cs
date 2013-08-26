@@ -71,11 +71,11 @@ namespace Jhu.SpecSvc.Web.Search
                         }
 
                         // *** TODO: this can be further optimized
-                        Connector.DeselectAllInResultset(ResultsetId);
+                        PortalConnector.DeselectAllInResultset(ResultsetId);
 
                         foreach (var id in selected)
                         {
-                            Connector.ChangeSelectionInResultset(ResultsetId, long.Parse(id), true);
+                            PortalConnector.ChangeSelectionInResultset(ResultsetId, long.Parse(id), true);
                         }
 
                         Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Default.GetUrl());
@@ -90,7 +90,7 @@ namespace Jhu.SpecSvc.Web.Search
         {
             var sds = (ResultsDataSource)e.ObjectInstance;
 
-            sds.Connector = Connector;
+            sds.Connector = PortalConnector;
             sds.ResultsetId = ResultsetId;
         }
 

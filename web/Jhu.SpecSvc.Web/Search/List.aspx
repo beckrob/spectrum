@@ -2,35 +2,6 @@
     CodeBehind="List.aspx.cs" Inherits="Jhu.SpecSvc.Web.Search.List" %>
 
 <asp:Content ContentPlaceHolderID="head" runat="server">
-    <style>
-        table.SpectrumCard
-        {
-            border: 1px solid #C0C0C0;
-            border-collapse: collapse;
-            display: inline-table;
-            margin-right: 4px;
-            margin-bottom: 8px;
-        }
-        table.SpectrumCard tr th
-        {
-            background-color: #C0C0C0;
-            text-align: left;
-            vertical-align: middle;
-        }
-        table.SpectrumCard tr td img
-        {
-            width: <%= GraphWidth %>px;
-            height: <%= GraphHeight %>px;
-        }
-        table.SpectrumCard tr td
-        {
-            padding: 2px;
-        }
-        table.SpectrumCard tr td.SpectrumGraph
-        {
-            padding: 0px;
-        }
-    </style>
 </asp:Content>
 <asp:Content ContentPlaceHolderID="middle" runat="server">
     <div class="dock-top">

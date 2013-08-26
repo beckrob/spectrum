@@ -11,9 +11,11 @@ namespace Jhu.SpecSvc.Web
 {
     public class PageBase : Jhu.Graywulf.Web.PageBase
     {
-        private PortalConnector connector;
         private SqlConnection databaseConnection;
         private SqlTransaction databaseTransaction;
+
+        private PortalConnector portalConnector;
+        private PipelineConnector pipelineConnector;
 
         public SqlConnection DatabaseConnection
         {
@@ -21,7 +23,7 @@ namespace Jhu.SpecSvc.Web
             {
                 if (databaseConnection == null)
                 {
-                    databaseConnection = new SqlConnection(AppSettings.ConnectionString);
+                    databaseConnection = new SqlConnection(Jhu.SpecSvc.IO.AppSettings.PortalConnectionString);
                     databaseConnection.Open();
                 }
 
@@ -42,21 +44,39 @@ namespace Jhu.SpecSvc.Web
             }
         }
 
-        public PortalConnector Connector
+        public PortalConnector PortalConnector
         {
             get
             {
-                if (connector == null)
+                if (portalConnector == null)
                 {
-                    connector = new PortalConnector(DatabaseConnection, DatabaseTransaction);
+                    portalConnector = new PortalConnector(DatabaseConnection, DatabaseTransaction);
                 }
                 else
                 {
-                    connector.DatabaseConnection = DatabaseConnection;
-                    connector.DatabaseTransaction = DatabaseTransaction;
+                    portalConnector.DatabaseConnection = DatabaseConnection;
+                    portalConnector.DatabaseTransaction = DatabaseTransaction;
                 }
 
-                return connector;
+                return portalConnector;
+            }
+        }
+
+        public PipelineConnector PipelineConnector
+        {
+            get
+            {
+                if (pipelineConnector == null)
+                {
+                    pipelineConnector = new PipelineConnector(DatabaseConnection, DatabaseTransaction);
+                }
+                else
+                {
+                    pipelineConnector.DatabaseConnection = DatabaseConnection;
+                    pipelineConnector.DatabaseTransaction = DatabaseTransaction;
+                }
+
+                return pipelineConnector;
             }
         }
 
@@ -80,8 +100,15 @@ namespace Jhu.SpecSvc.Web
 
         override protected void OnUnload(EventArgs e)
         {
-            if (connector != null)
-                connector.Dispose();
+            if (portalConnector != null)
+            {
+                portalConnector.Dispose();
+            }
+
+            if (pipelineConnector != null)
+            {
+                pipelineConnector.Dispose();
+            }
 
             if (databaseTransaction != null)
             {
@@ -95,9 +122,9 @@ namespace Jhu.SpecSvc.Web
                 databaseConnection.Dispose();
             }
 
-            if (connector != null)
+            if (portalConnector != null)
             {
-                connector.Dispose();
+                portalConnector.Dispose();
             }
 
             base.OnUnload(e);

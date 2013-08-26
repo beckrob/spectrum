@@ -17,7 +17,7 @@ namespace Jhu.SpecSvc.Web.Output
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            var spectra = Connector.LoadSelectedResults(ResultsetId, UserGuid, true, true);
+            var spectra = PortalConnector.LoadSelectedResults(ResultsetId, UserGuid, true, true);
 
             var target = (FileTarget)Pipeline.Target;
             var filename = String.IsNullOrEmpty(target.Uri) ? "spectra.tar.gz" : target.Uri;

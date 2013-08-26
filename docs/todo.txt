@@ -1,0 +1,19 @@
+08/26/2013
+
+   spectrum list: selection color changes when check box clicked
+   move web.config settings to web.original.config or config scripts
+   always default to last search method
+   remember search form data
+   button to go back to search results
+   search list load selections from db when returning to list
+   default catalog in catalog list
+   pipeline buttons: avoid double clicks (ajax slow response)
+   use myspec folder as templates for fitting
+   matchid: use uploaded ids in object search
+   spec export format forgets column list on postback
+   keep resultsets for a week, then delete
+   display search error summary
+   search form validators
+   take id list from mydb (basically SQ integration)
+   NED
+   Simbad

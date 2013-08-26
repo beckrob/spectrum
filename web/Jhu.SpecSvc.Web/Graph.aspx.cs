@@ -55,7 +55,7 @@ namespace Jhu.SpecSvc.Web
             }
 
             //***********************
-            var spectra = Connector.FindSpectrum(idpar).ToArray();
+            var spectra = PortalConnector.FindSpectrum(idpar).ToArray();
 
             // Generating graph with the visualizer and sending to the client
             Response.Expires = -1; // TODO: check if it's necessary

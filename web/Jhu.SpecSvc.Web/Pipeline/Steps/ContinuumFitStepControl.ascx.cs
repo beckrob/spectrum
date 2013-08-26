@@ -75,7 +75,7 @@ namespace Jhu.SpecSvc.Web.Pipeline.Steps
             if (TemplateSet.Items.Count == 0)
             {
                 // Predefined template sets
-                var templates = Page.Connector.QueryTemplateSets();
+                var templates = Page.PortalConnector.QueryTemplateSets();
                 foreach (var ts in templates)
                     TemplateSet.Items.Add(new ListItem(ts.Name, "TS|" + ts.Id.ToString()));
 
@@ -105,17 +105,17 @@ namespace Jhu.SpecSvc.Web.Pipeline.Steps
             if (TemplateSet.SelectedValue.StartsWith("TS"))
             {
                 TemplateSet temp = new TemplateSet(true);
-                Page.Connector.LoadTemplateSet(temp, int.Parse(TemplateSet.SelectedValue.Substring(3)));
+                Page.PortalConnector.LoadTemplateSet(temp, int.Parse(TemplateSet.SelectedValue.Substring(3)));
 
                 // loading templates
                 IdSearchParameters idpar = new IdSearchParameters(true);
                 idpar.Collections = new string[] { "ivo://elte/templates" }; //*****
-                idpar.Ids = Page.Connector.QueryTemplates(temp.Id);
+                idpar.Ids = Page.PortalConnector.QueryTemplates(temp.Id);
                 idpar.LoadDetails = false;
                 idpar.LoadPoints = false;
                 idpar.UserGuid = Page.UserGuid;
 
-                templates.AddRange(Page.Connector.FindSpectrum(idpar));
+                templates.AddRange(Page.PortalConnector.FindSpectrum(idpar));
             }
             else if (TemplateSet.SelectedValue.StartsWith("MY"))
             {

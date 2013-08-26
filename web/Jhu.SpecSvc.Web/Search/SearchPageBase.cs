@@ -20,10 +20,10 @@ namespace Jhu.SpecSvc.Web.Search
             DeleteExistingResultset();  // TODO: what if saved as job?
 
             // Create new resultset
-            var resultsetId = ResultsetId = Connector.CreateResultset();
+            var resultsetId = ResultsetId = PortalConnector.CreateResultset();
 
-            var results = Connector.FindSpectrumDispatch(SearchParameters);
-            Connector.SaveResultsetSpectra(resultsetId, results);
+            var results = PortalConnector.FindSpectrumDispatch(SearchParameters);
+            PortalConnector.SaveResultsetSpectra(resultsetId, results);
 
             Response.Redirect(List.GetUrl());
         }
@@ -33,7 +33,7 @@ namespace Jhu.SpecSvc.Web.Search
             // if a previous resultset exists it should be deleted now
             if (ResultsetId != -1)
             {
-                Connector.DeleteResultset(ResultsetId);
+                PortalConnector.DeleteResultset(ResultsetId);
                 Session["ResultsetId"] = -1;
             }
         }

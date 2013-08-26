@@ -8,7 +8,7 @@
     <ProjectGuid>{7B1172A6-8121-472D-9212-9AB0C549B0A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jhu.SpecSvc.IO</RootNamespace>
+    <RootNamespace>Jhu.SpecSvc</RootNamespace>
     <AssemblyName>Jhu.SpecSvc.IO</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\AppSettings.cs" />
     <Compile Include="IO\Basis.cs" />
     <Compile Include="IO\BinaryConverters\FormatException.cs" />
     <Compile Include="IO\Collection.cs">

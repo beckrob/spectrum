@@ -160,16 +160,17 @@ namespace Jhu.SpecSvc.Web.Pipeline
             }
         }
 
+       
+
         protected void ResetWorkflow_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
             //Pipeline.Steps.Clear();
         }
 
-        protected void SaveWorkflow_Click(object sender, EventArgs e)
+        protected void SavePipeline_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //Response.Redirect("workflow_form_save.aspx");   // *** TODO
+            Response.Redirect(Jhu.SpecSvc.Web.Pipeline.SavePipeline.GetUrl());
         }
 
         protected void LoadWorkflow_Click(object sender, EventArgs e)
@@ -178,10 +179,9 @@ namespace Jhu.SpecSvc.Web.Pipeline
             //Response.Redirect("workflow_form_manage.aspx"); // *** TODO
         }
 
-        protected void ManageWorkflows_Click(object sender, EventArgs e)
+        protected void ManagePipelines_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //Response.Redirect("workflow_form_manage.aspx"); // *** TODO
+            Response.Redirect(List.GetUrl());
         }
     }
 }

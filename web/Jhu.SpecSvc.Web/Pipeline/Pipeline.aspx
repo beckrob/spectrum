@@ -14,8 +14,8 @@
             </jgwc:ToolbarElement>
             <jgwc:ToolbarButton runat="server" ID="ResetPipeline" Text="reset pipeline" />
             <jgwc:ToolbarButton runat="server" ID="LoadPipeline" Text="load pipeline" />
-            <jgwc:ToolbarButton runat="server" ID="SavePipeline" Text="save pipeline" />
-            <jgwc:ToolbarButton runat="server" ID="ManagePipelines" Text="manage pipelines" />
+            <jgwc:ToolbarButton runat="server" ID="SavePipeline" Text="save pipeline" OnClick="SavePipeline_Click" />
+            <jgwc:ToolbarButton runat="server" ID="ManagePipelines" Text="manage pipelines" OnClick="ManagePipelines_Click" />
             <jgwc:ToolbarElement runat="server">
             </jgwc:ToolbarElement>
         </jgwc:Toolbar>

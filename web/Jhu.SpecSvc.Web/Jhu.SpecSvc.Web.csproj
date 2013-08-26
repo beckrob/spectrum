@@ -214,6 +214,13 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pipeline\IPipelineStepControl.cs" />
+    <Compile Include="Pipeline\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pipeline\Pipeline.aspx.cs">
       <DependentUpon>Pipeline.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -223,6 +230,13 @@
     </Compile>
     <Compile Include="Pipeline\PipelineStepControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\SavePipeline.aspx.cs">
+      <DependentUpon>SavePipeline.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pipeline\SavePipeline.aspx.designer.cs">
+      <DependentUpon>SavePipeline.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pipeline\Steps\CompositeStepControl.ascx.cs">
       <DependentUpon>CompositeStepControl.ascx</DependentUpon>
@@ -451,6 +465,10 @@
       <Project>{59BFB28B-3F97-4714-B8D7-A1B40F668831}</Project>
       <Name>Jhu.Graywulf.Registry</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\graywulf\dll\Jhu.Graywulf.RemoteService\Jhu.Graywulf.RemoteService.csproj">
+      <Project>{5460DB30-CFD9-4EDB-A1E8-161A7CC505C5}</Project>
+      <Name>Jhu.Graywulf.RemoteService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\graywulf\dll\Jhu.Graywulf.Web\Jhu.Graywulf.Web.csproj">
       <Project>{E9D182CF-746E-4E40-B01C-74A32FB70749}</Project>
       <Name>Jhu.Graywulf.Web</Name>
@@ -503,7 +521,9 @@
     <Content Include="Pipeline\Formats\SpectrumXmlFormatControl.ascx" />
     <Content Include="Pipeline\Formats\TabularFileLineEnding.ascx" />
     <Content Include="Pipeline\Formats\TabularFileType.ascx" />
+    <Content Include="Pipeline\List.aspx" />
     <Content Include="Pipeline\Pipeline.aspx" />
+    <Content Include="Pipeline\SavePipeline.aspx" />
     <Content Include="Pipeline\Steps\CompositeStepControl.ascx" />
     <Content Include="Pipeline\Steps\ContinuumFitStepControl.ascx" />
     <Content Include="Pipeline\Steps\ConvolutionStepControl.ascx" />

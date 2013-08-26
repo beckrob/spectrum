@@ -4,17 +4,22 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using Jhu.Graywulf.Tasks;
 using Jhu.SpecSvc.SpectrumLib;
 using Jhu.SpecSvc.IO;
 
 namespace Jhu.SpecSvc.Pipeline
 {
-    public class SpectrumPipeline
+    public class SpectrumPipeline : ICancelableTask
     {
         private HashSet<ProgressChangedEventHandler> progressChangedEventHandlers;
 
         private PortalConnector connector;
 
+        private int id;
+        private string name;
         private List<PipelineStep> steps;
         private OutputTarget target;
 
@@ -24,7 +29,8 @@ namespace Jhu.SpecSvc.Pipeline
         private Dictionary<PipelineStep, double> stepProgress;
         private double lastProgress;
         private double progress;
-        private bool initialized;
+        private bool isInitialized;
+        private bool isCanceled;
 
         public event ProgressChangedEventHandler ProgressChanged
         {
@@ -32,10 +38,28 @@ namespace Jhu.SpecSvc.Pipeline
             remove { progressChangedEventHandlers.Remove(value); }
         }
 
+        [IgnoreDataMember]
+        [XmlIgnore]
         public PortalConnector Connector
         {
             get { return connector; }
             set { connector = value; }
+        }
+
+        [IgnoreDataMember]
+        [XmlIgnore]
+        public int ID
+        {
+            get { return id; }
+            internal set { id = value; }
+        }
+
+        [IgnoreDataMember]
+        [XmlIgnore]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
         }
 
         public List<PipelineStep> Steps
@@ -49,6 +73,8 @@ namespace Jhu.SpecSvc.Pipeline
             set { target = value; }
         }
 
+        [IgnoreDataMember]
+        [XmlIgnore]
         public int Count
         {
             get { return count; }
@@ -59,6 +85,13 @@ namespace Jhu.SpecSvc.Pipeline
         {
             get { return skipExceptions; }
             set { skipExceptions = value; }
+        }
+
+        [IgnoreDataMember]
+        [XmlIgnore]
+        public bool IsCanceled
+        {
+            get { return isCanceled; }
         }
 
         public SpectrumPipeline()
@@ -78,12 +111,15 @@ namespace Jhu.SpecSvc.Pipeline
 
             this.connector = null;
 
+            this.id = 0;
+            this.name = "new pipeline";
             this.steps = new List<PipelineStep>();
             this.target = null;
 
             this.count = 0;
             this.skipExceptions = true;
-            this.initialized = false;
+            this.isInitialized = false;
+            this.isCanceled = false;
         }
 
         /// <summary>
@@ -122,7 +158,7 @@ namespace Jhu.SpecSvc.Pipeline
                 target.InitializeTarget();
             }
 
-            initialized = true;
+            isInitialized = true;
         }
 
         public void DeinitializePipeline()
@@ -143,6 +179,11 @@ namespace Jhu.SpecSvc.Pipeline
         {
             foreach (var s in Execute(spectra))
             {
+                // TODO: this might not work correctly, test!
+                if (isCanceled)
+                {
+                    break;
+                }
             }
         }
 
@@ -153,12 +194,12 @@ namespace Jhu.SpecSvc.Pipeline
         /// <returns></returns>
         public IEnumerable<Spectrum> Execute(IEnumerable<Spectrum> spectra)
         {
-            if (!initialized)
+            if (!isInitialized)
             {
                 throw new InvalidOperationException("Pipeline must be initialized first.");
             }
 
-            initialized = false;
+            isInitialized = false;
 
             // TODO: add graywulf cancellation logic
 
@@ -242,6 +283,16 @@ namespace Jhu.SpecSvc.Pipeline
                     eh(this, a);
                 }
             }
+        }
+
+        public void Cancel()
+        {
+            if (isCanceled)
+            {
+                throw new InvalidOperationException();
+            }
+
+            isCanceled = true;
         }
     }
 }
