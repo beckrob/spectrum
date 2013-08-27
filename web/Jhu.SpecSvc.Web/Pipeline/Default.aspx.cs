@@ -16,7 +16,12 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                PipelineMode.Items[2].Enabled = Request.IsAuthenticated;    // load
+            }
 
+            PipelineTemplatesDiv.Visible = PipelineMode.SelectedValue == "template";
         }
 
         protected void Button_Command(object serder, CommandEventArgs args)
@@ -41,38 +46,45 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         private void InitializePipeline()
         {
-            switch (Template.SelectedValue)
+            switch (PipelineMode.SelectedValue)
             {
-                case "fit":
-                    InitializeFit();
+                case "session":
+                    // do nothing
                     break;
-                case "lick":
-                    InitializeLick();
+                case "load":
+                    LoadPipeline();
                     break;
-                case "pca":
-                    InitializePca();
+                case "template":
+                    switch (PipelineTemplates.SelectedValue)
+                    {
+                        case "fit":
+                            InitializeFit();
+                            break;
+                        case "lick":
+                            InitializeLick();
+                            break;
+                        case "pca":
+                            InitializePca();
+                            break;
+                        case "composite":
+                            InitializeComposite();
+                            break;
+                        case "magnitudes":
+                            InitializeMagnitudes();
+                            break;
+                        case "color":
+                            InitializeColor();
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
                     break;
-                case "composite":
-                    InitializeComposite();
-                    break;
-                case "magnitudes":
-                    InitializeMagnitudes();
-                    break;
-                case "color":
-                    InitializeColor();
-                    break;
-                case "plot":
-                    InitializePlot();
-                    break;
-                case "myspectra":
-                    InitializeMySpectra();
-                    break;
-                case "download":
-                    InitializeDownload();
-                    break;
-                default:
-                    throw new NotImplementedException();
             }
+        }
+
+        private void LoadPipeline()
+        {
+            Response.Redirect(Jhu.SpecSvc.Web.Pipeline.PipelineList.GetUrl(PipelineList.RequestMethod.Load));
         }
 
         private void InitializeFit()
@@ -96,18 +108,6 @@ namespace Jhu.SpecSvc.Web.Pipeline
         }
 
         private void InitializeColor()
-        {
-        }
-
-        private void InitializePlot()
-        {
-        }
-
-        private void InitializeMySpectra()
-        {
-        }
-
-        private void InitializeDownload()
         {
         }
     }

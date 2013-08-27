@@ -61,6 +61,13 @@
     <Compile Include="App_Masters\Spectrum.Master.designer.cs">
       <DependentUpon>Spectrum.Master</DependentUpon>
     </Compile>
+    <Compile Include="Collections\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Collections\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\CollectionList.ascx.cs">
       <DependentUpon>CollectionList.ascx</DependentUpon>
@@ -501,6 +508,7 @@
   <ItemGroup>
     <Content Include="App_Themes\Basic\Basic.skin" />
     <Content Include="App_Themes\Basic\Css\spectrum.css" />
+    <Content Include="Collections\Default.aspx" />
     <Content Include="Controls\CollectionList.ascx" />
     <Content Include="Controls\Footer.ascx" />
     <Content Include="Controls\Menu.ascx" />
@@ -594,7 +602,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Collections\" />
     <Folder Include="Jobs\" />
     <Folder Include="MySpectrum\" />
     <Folder Include="Programming\" />

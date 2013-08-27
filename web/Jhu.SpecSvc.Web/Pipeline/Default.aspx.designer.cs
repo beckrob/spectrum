@@ -13,12 +13,30 @@ namespace Jhu.SpecSvc.Web.Pipeline {
     public partial class Default {
         
         /// <summary>
-        /// Template control.
+        /// PipelineMode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList Template;
+        protected global::System.Web.UI.WebControls.RadioButtonList PipelineMode;
+        
+        /// <summary>
+        /// PipelineTemplatesDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PipelineTemplatesDiv;
+        
+        /// <summary>
+        /// PipelineTemplates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList PipelineTemplates;
     }
 }
