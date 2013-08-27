@@ -1,17 +1,3 @@
-#region Written by László Dobos (dobos@complex.elte.hu)
-/*
- * 
- * VoService.Spectrum.IO classes are designed for persisting
- * astonomical spectra in different storage systems
- * 
- * See bottom of file for revision history
- * 
- * Current revision:
- *   ID:          $Id: Collection.cs,v 1.2 2008/01/10 22:04:00 dobos Exp $
- *   Revision:    $Revision: 1.2 $
- *   Date:        $Date: 2008/01/10 22:04:00 $
- */
-#endregion
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -26,17 +12,18 @@ namespace Jhu.SpecSvc.IO
     public class Collection
     {
         private string id;					// datasetId
-        private Guid userGuid;			// remote WS userGuid
-        private CollectionTypes type;
+        private Guid userGuid;			    // remote WS userGuid
+        private CollectionType type;
         private int loadDefaults;
         private string name;				// display name
-        private string description;		// long description
+        private string description;		    // long description
         private string location;			// long description
         private string connectionString;	// SQL or WS address
         private string graphUrl;			// url points to the graph generator page
         private int @public;				// public user coll
+        private CollectionStatus status;
 
-        private List<SearchMethods> searchMethods;
+        private List<SearchMethod> searchMethods;
 
         [XmlElement]
         public string Id
@@ -53,7 +40,7 @@ namespace Jhu.SpecSvc.IO
         }
 
         [XmlIgnore]
-        public CollectionTypes Type
+        public CollectionType Type
         {
             get { return this.type; }
             set { this.type = value; }
@@ -109,7 +96,13 @@ namespace Jhu.SpecSvc.IO
         }
 
         [XmlIgnore]
-        public List<SearchMethods> SearchMethods
+        public CollectionStatus Status
+        {
+            get { return status; }
+        }
+
+        [XmlIgnore]
+        public List<SearchMethod> SearchMethods
         {
             get { return searchMethods; }
             set { searchMethods = value; }
@@ -130,7 +123,7 @@ namespace Jhu.SpecSvc.IO
         {
             this.id = string.Empty;
             this.userGuid = Guid.Empty;
-            this.type = CollectionTypes.Sql;
+            this.type = CollectionType.Sql;
             this.loadDefaults = 0;
             this.name = string.Empty;
             this.description = string.Empty;
@@ -138,7 +131,8 @@ namespace Jhu.SpecSvc.IO
             this.connectionString = string.Empty;
             this.graphUrl = string.Empty;
             this.@public = 0;
-            this.searchMethods = new List<SearchMethods>();
+            this.searchMethods = new List<SearchMethod>();
+            this.status = CollectionStatus.Unknown;
         }
 
         private void CopyMembers(Collection old)
@@ -153,29 +147,31 @@ namespace Jhu.SpecSvc.IO
             this.connectionString = old.connectionString;
             this.graphUrl = old.graphUrl;
             this.@public = old.@public;
+            this.status = old.status;
 
-            this.searchMethods = new List<SearchMethods>(old.searchMethods);
+            this.searchMethods = new List<SearchMethod>(old.searchMethods);
         }
 
 
-        public bool CheckStatus()
+        public void TestStatus()
         {
             switch (type)
             {
-                case CollectionTypes.Sql:
+                case CollectionType.Sql:
                     try
                     {
                         SqlConnection cn = new SqlConnection();
                         cn.ConnectionString = ConnectionString;
                         cn.Open();
                         cn.Close();
-                        return true;
+                        status = CollectionStatus.Ok;
                     }
                     catch (System.Exception)
                     {
-                        return false;
+                        status = CollectionStatus.Error;
                     }
-                case CollectionTypes.WebService:
+                    break;
+                case CollectionType.WebService:
                     /*try
                     {
                         VoServices.SpecSvc.Lib.Remote.search app = new VoServices.SpecSvc.Lib.Remote.search();
@@ -188,45 +184,29 @@ namespace Jhu.SpecSvc.IO
                         return false;
                     }*/
                     //****
-                    return false;
+                    throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
             }
-
-            return false;
         }
 
         public ConnectorBase GetConnector()
         {
             switch (Type)
             {
-                //case CollectionTypes.LegacySql:
-                //return new SqlConnector(this);
-                case CollectionTypes.Sql:
+                case CollectionType.Sql:
                     return new SqlConnector(this);
-                case CollectionTypes.WebService:
+                case CollectionType.WebService:
                     return new WsConnector(this);
-                case CollectionTypes.Ssa:
+                case CollectionType.Ssa:
                     return new SsaConnector(this);
+                case CollectionType.Ssap:
                     break;
-                case CollectionTypes.Ssap:
-                    break;
+                default:
+                    throw new NotImplementedException();
             }
 
             return null;
         }
-
     }
-
 }
-#region Revision History
-/* Revision History
-
-        $Log: Collection.cs,v $
-        Revision 1.2  2008/01/10 22:04:00  dobos
-        Multiple search method editing support
-
-        Revision 1.1  2008/01/08 22:00:48  dobos
-        Initial checkin
-
-
-*/
-#endregion

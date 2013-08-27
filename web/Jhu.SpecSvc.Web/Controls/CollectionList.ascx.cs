@@ -12,9 +12,9 @@ namespace Jhu.SpecSvc.Web.Controls
     {
         protected List<Collection> collections;
 
-        public SearchMethods SearchMethod
+        public SearchMethod SearchMethod
         {
-            get { return (SearchMethods)(ViewState["SearchMethod"] ?? SearchMethods.Unknown); }
+            get { return (SearchMethod)(ViewState["SearchMethod"] ?? SearchMethod.Unknown); }
             set { ViewState["SearchMethod"] = value; }
         }
 

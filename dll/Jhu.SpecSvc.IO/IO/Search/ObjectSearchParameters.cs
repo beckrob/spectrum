@@ -50,9 +50,9 @@ namespace Jhu.SpecSvc.IO
             set { this.sr = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Object; }
+            get { return SearchMethod.Object; }
         }
 
         #endregion

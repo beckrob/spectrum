@@ -108,9 +108,9 @@ namespace Jhu.SpecSvc.IO
             set { age_lastBurst = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Model; }
+            get { return SearchMethod.Model; }
         }
 
         #region Constructors

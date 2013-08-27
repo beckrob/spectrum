@@ -113,7 +113,7 @@ namespace Jhu.SpecSvc.IO
         /// <param name="collection">Spectrum Collection (dataset)</param>
         public SqlConnector(Collection collection)
         {
-            if (collection.Type != CollectionTypes.Sql)
+            if (collection.Type != CollectionType.Sql)
                 throw new System.Exception("Not valid collection type");
 
             InitializeMembers();

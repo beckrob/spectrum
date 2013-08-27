@@ -34,9 +34,9 @@ namespace Jhu.SpecSvc.IO
             set { this.ids = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Id; }
+            get { return SearchMethod.Id; }
         }
 
         #region Constructors

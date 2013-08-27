@@ -32,7 +32,7 @@ namespace Jhu.SpecSvc.IO
 
 		public WsConnector(Collection collection)
 		{
-			if (collection.Type != CollectionTypes.WebService)
+			if (collection.Type != CollectionType.WebService)
 				throw new System.Exception("Not valid collection type");
 
             InitializeMembers();

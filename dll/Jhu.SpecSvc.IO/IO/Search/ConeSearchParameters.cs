@@ -42,9 +42,9 @@ namespace Jhu.SpecSvc.IO
             set { this.sr = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Cone; }
+            get { return SearchMethod.Cone; }
         }
 
         #endregion

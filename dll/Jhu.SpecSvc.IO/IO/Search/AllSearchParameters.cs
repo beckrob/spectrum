@@ -43,9 +43,9 @@ namespace Jhu.SpecSvc.IO
         {
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.All; }
+            get { return SearchMethod.All; }
         }
 
         public AllSearchParameters GetStandardUnits()

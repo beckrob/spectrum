@@ -29,9 +29,9 @@ namespace Jhu.SpecSvc.IO
 
         #endregion
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Similar; }
+            get { return SearchMethod.Similar; }
         }
 
         public Jhu.SpecSvc.SpectrumLib.Spectrum Spectrum

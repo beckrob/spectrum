@@ -28,7 +28,7 @@ namespace Jhu.SpecSvc.IO
         private string[] pointsMask;
         private bool loadDetails;
 
-        public virtual SearchMethods Type
+        public virtual SearchMethod Type
         {
             get
             {

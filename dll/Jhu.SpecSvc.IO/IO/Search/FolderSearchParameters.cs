@@ -30,9 +30,9 @@ namespace Jhu.SpecSvc.IO
             set { this.folderId = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Folder; }
+            get { return SearchMethod.Folder; }
         }
 
         #region Constructors

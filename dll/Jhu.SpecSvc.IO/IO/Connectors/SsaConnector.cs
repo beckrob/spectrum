@@ -32,7 +32,7 @@ namespace Jhu.SpecSvc.IO
 
         public SsaConnector(Collection collection)
         {
-            if (collection.Type != CollectionTypes.Ssa)
+            if (collection.Type != CollectionType.Ssa)
                 throw new System.Exception("Not valid collection type");
 
             this.url = collection.ConnectionString;

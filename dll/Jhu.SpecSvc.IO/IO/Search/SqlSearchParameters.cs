@@ -55,9 +55,9 @@ namespace Jhu.SpecSvc.IO
             this.query = old.query;
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Sql; }
+            get { return SearchMethod.Sql; }
         }
 
         public SqlSearchParameters GetStandardUnits()

@@ -47,9 +47,9 @@ namespace Jhu.SpecSvc.IO
             set { this.ranges = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.HtmRange; }
+            get { return SearchMethod.HtmRange; }
         }
 
         #endregion

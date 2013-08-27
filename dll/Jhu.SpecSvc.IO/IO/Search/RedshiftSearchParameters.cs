@@ -29,9 +29,9 @@ namespace Jhu.SpecSvc.IO
             set { this.redshift = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Redshift; }
+            get { return SearchMethod.Redshift; }
         }
 
         #region Constructors

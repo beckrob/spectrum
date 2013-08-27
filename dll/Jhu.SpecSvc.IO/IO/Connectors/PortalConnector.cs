@@ -476,34 +476,34 @@ namespace Jhu.SpecSvc.IO
 
                     switch (par.Type)
                     {
-                        case SearchMethods.Cone:
+                        case SearchMethod.Cone:
                             temp = conn.FindSpectrum((ConeSearchParameters)par);
                             break;
-                        case SearchMethods.Redshift:
+                        case SearchMethod.Redshift:
                             temp = conn.FindSpectrum((RedshiftSearchParameters)par);
                             break;
-                        case SearchMethods.Advanced:
+                        case SearchMethod.Advanced:
                             temp = conn.FindSpectrum((AdvancedSearchParameters)par);
                             break;
-                        case SearchMethods.Model:
+                        case SearchMethod.Model:
                             temp = conn.FindSpectrum((ModelSearchParameters)par);
                             break;
-                        case SearchMethods.Folder:
+                        case SearchMethod.Folder:
                             temp = conn.FindSpectrum((FolderSearchParameters)par);
                             break;
-                        case SearchMethods.All:
+                        case SearchMethod.All:
                             temp = conn.FindSpectrum((AllSearchParameters)par);
                             break;
-                        case SearchMethods.HtmRange:
+                        case SearchMethod.HtmRange:
                             temp = conn.FindSpectrum((HtmRangeSearchParameters)par);
                             break;
-                        case SearchMethods.Similar:
+                        case SearchMethod.Similar:
                             temp = conn.FindSpectrum((SimilarSearchParameters)par);
                             break;
-                        case SearchMethods.Sql:
+                        case SearchMethod.Sql:
                             temp = conn.FindSpectrum((SqlSearchParameters)par);
                             break;
-                        case SearchMethods.Object:
+                        case SearchMethod.Object:
                             temp = conn.FindSpectrum((ObjectSearchParameters)par);
                             break;
                         default:
@@ -984,7 +984,7 @@ namespace Jhu.SpecSvc.IO
         #endregion
         #region Collection functions
 
-        public override IEnumerable<Collection> QueryCollections(Guid userGuid, SearchMethods searchMethod)
+        public override IEnumerable<Collection> QueryCollections(Guid userGuid, SearchMethod searchMethod)
         {
             string sql = "sp_FindCollections";
 
@@ -1012,7 +1012,7 @@ namespace Jhu.SpecSvc.IO
 
             coll.Id = dr.GetString(++o);
             coll.UserGuid = dr.IsDBNull(++o) ? Guid.Empty : dr.GetGuid(o);
-            coll.Type = (CollectionTypes)dr.GetInt32(++o);
+            coll.Type = (CollectionType)dr.GetInt32(++o);
             coll.LoadDefaults = dr.GetInt32(++o);
             coll.Name = dr.GetString(++o);
             coll.Description = dr.GetString(++o);
@@ -1139,7 +1139,7 @@ namespace Jhu.SpecSvc.IO
                 {
                     while (dr.Read())
                     {
-                        collection.SearchMethods.Add((SearchMethods)dr.GetInt32(0));
+                        collection.SearchMethods.Add((SearchMethod)dr.GetInt32(0));
                     }
 
                     dr.Close();
@@ -1188,7 +1188,7 @@ WHERE UserGUID = @UserGUID";
                     cmd.Parameters.Add("@CollectionID", SqlDbType.NVarChar, 50).Value = collection.Id;
                     cmd.Parameters.Add("@SearchMethodID", SqlDbType.Int);
 
-                    foreach (SearchMethods s in collection.SearchMethods)
+                    foreach (SearchMethod s in collection.SearchMethods)
                     {
                         cmd.Parameters["@SearchMethodID"].Value = (int)s;
                         cmd.ExecuteNonQuery();

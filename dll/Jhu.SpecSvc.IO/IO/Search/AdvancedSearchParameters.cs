@@ -153,9 +153,9 @@ namespace Jhu.SpecSvc.IO
             set { this.fluxCalibration = value; }
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.Advanced; }
+            get { return SearchMethod.Advanced; }
         }
 
         #region Constructors

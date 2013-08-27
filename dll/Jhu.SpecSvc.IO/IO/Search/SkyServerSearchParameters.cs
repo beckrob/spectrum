@@ -80,9 +80,9 @@ namespace Jhu.SpecSvc.IO
             this.wsId = old.wsId;
         }
 
-        public override SearchMethods Type
+        public override SearchMethod Type
         {
-            get { return SearchMethods.SkyServer; }
+            get { return SearchMethod.SkyServer; }
         }
 
         public SkyServerSearchParameters GetStandardUnits()

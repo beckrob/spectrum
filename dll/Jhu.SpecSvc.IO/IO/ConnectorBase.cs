@@ -125,7 +125,7 @@ namespace Jhu.SpecSvc.IO
 
         //
 
-        public virtual IEnumerable<Collection> QueryCollections(Guid userGuid, SearchMethods searchMethod)
+        public virtual IEnumerable<Collection> QueryCollections(Guid userGuid, SearchMethod searchMethod)
         {
             throw new NotImplementedException();
         }

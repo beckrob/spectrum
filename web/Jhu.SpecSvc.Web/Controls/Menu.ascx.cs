@@ -8,10 +8,8 @@ namespace Jhu.SpecSvc.Web.Controls
         {
             Home.NavigateUrl = Jhu.SpecSvc.Web.Default.GetUrl();
             Search.NavigateUrl = Jhu.SpecSvc.Web.Search.Default.GetUrl();
-            /*Schema.NavigateUrl = Jhu.Graywulf.Web.UI.Schema.Default.GetUrl();
-            Query.NavigateUrl = Jhu.Graywulf.Web.UI.Query.Default.GetUrl();
-            Jobs.NavigateUrl = Jhu.Graywulf.Web.UI.Jobs.Default.GetUrl();
-            MyDB.NavigateUrl = Jhu.Graywulf.Web.UI.MyDB.Default.GetUrl();*/
+
+            Collections.NavigateUrl = Jhu.SpecSvc.Web.Collections.Default.GetUrl();
             Docs.NavigateUrl = Jhu.SpecSvc.Web.Docs.Default.GetUrl();
         }
     }
