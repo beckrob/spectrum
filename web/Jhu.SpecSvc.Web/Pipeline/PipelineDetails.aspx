@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/App_Masters/Spectrum.Master" AutoEventWireup="true"
-    CodeBehind="PipelineDetails.aspx.cs" Inherits="Jhu.SpecSvc.Web.Pipeline.SavePipeline" %>
+    CodeBehind="PipelineDetails.aspx.cs" Inherits="Jhu.SpecSvc.Web.Pipeline.PipelineDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="middle" runat="server">
     <div class="LayoutContent dock-fill dock-container dock-scroll">
-        <jgwc:Form ID="SavePipelineForm" runat="server" SkinID="SavePipeline" Text="Save pipeline">
+        <jgwc:Form ID="PipelineDetailsForm" runat="server" SkinID="PipelineDetails">
             <FormTemplate>
                 <p>
                     Enter a name for this pipeline.

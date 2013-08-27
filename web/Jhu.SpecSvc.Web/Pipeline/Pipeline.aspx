@@ -12,8 +12,8 @@
                     AutoPostBack="true">
                 </asp:DropDownList>
             </jgwc:ToolbarElement>
-            <jgwc:ToolbarButton runat="server" ID="ResetPipeline" Text="reset pipeline" />
-            <jgwc:ToolbarButton runat="server" ID="LoadPipeline" Text="load pipeline" />
+            <jgwc:ToolbarButton runat="server" ID="ResetPipeline" Text="reset pipeline" OnClick="ResetPipeline_Click" />
+            <jgwc:ToolbarButton runat="server" ID="LoadPipeline" Text="load pipeline" OnClick="LoadPipeline_Click" />
             <jgwc:ToolbarButton runat="server" ID="SavePipeline" Text="save pipeline" OnClick="SavePipeline_Click" />
             <jgwc:ToolbarButton runat="server" ID="ManagePipelines" Text="manage pipelines" OnClick="ManagePipelines_Click" />
             <jgwc:ToolbarElement runat="server">

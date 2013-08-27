@@ -10,16 +10,16 @@
 namespace Jhu.SpecSvc.Web.Pipeline {
     
     
-    public partial class SavePipeline {
+    public partial class PipelineDetails {
         
         /// <summary>
-        /// SavePipelineForm control.
+        /// PipelineDetailsForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Jhu.Graywulf.Web.Controls.Form SavePipelineForm;
+        protected global::Jhu.Graywulf.Web.Controls.Form PipelineDetailsForm;
         
         /// <summary>
         /// NameLabel control.

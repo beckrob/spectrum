@@ -8,33 +8,111 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Pipeline
 {
-    public partial class List : PageBase
+    public partial class PipelineList : PageBase
     {
-        public static string GetUrl()
+        public enum RequestMethod
         {
-            return "~/Pipeline/List.aspx";
+            Load,
+            Manage
+        }
+
+        public static string GetUrl(RequestMethod method)
+        {
+            return String.Format("~/Pipeline/PipelineList.aspx?method={0}", method);
+        }
+
+        public RequestMethod Method
+        {
+            get { return (RequestMethod)Enum.Parse(typeof(RequestMethod), Request.QueryString["method"]); }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            PipelineList.DataSource = PipelineConnector.QueryPipelines(UserGuid);
-        }
-
-        /*
-        protected void SpectrumSelected_ServerValidate(object serder, ServerValidateEventArgs args)
-        {
-            switch (SpectrumListView)
+            if (!Request.IsAuthenticated)
             {
-                case Web.SpectrumListView.List:
-                    args.IsValid = SpectrumList.SelectedDataKeys.Count > 0;
+                throw new InvalidOperationException("Operation requires user logged in.");
+            }
+
+            List.DataSource = PipelineConnector.QueryPipelines(UserGuid);
+
+            switch (Method)
+            {
+                case RequestMethod.Load:
+                    PipelineListForm.Text = "Load pipeline";
+                    Ok.Visible = true;
+                    Rename.Visible = false;
+                    Delete.Visible = false;
                     break;
-                case Web.SpectrumListView.Graph:
-                case Web.SpectrumListView.Image:
-                    args.IsValid = SpectrumCards.SelectedDataKeys.Count > 0;
+                case RequestMethod.Manage:
+                    PipelineListForm.Text = "Manage pipelines";
+                    Ok.Visible = false;
+                    Rename.Visible = true;
+                    Delete.Visible = true;
                     break;
                 default:
                     throw new NotImplementedException();
             }
-        }*/
+        }
+
+        protected void Ok_Click(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                switch (Method)
+                {
+                    case RequestMethod.Load:
+                        LoadPipeline();
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        protected void Rename_Click(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                RenamePipeline();
+            }
+        }
+
+        protected void Delete_Click(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                DeletePipeline();
+            }
+        }
+
+        protected void Cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Pipeline.GetUrl());
+        }
+
+        protected void ListSelectedValidator_ServerValidate(object sender, ServerValidateEventArgs e)
+        {
+            e.IsValid = List.SelectedDataKeys.Count == 1;
+        }
+
+        private void LoadPipeline()
+        {
+            int id = int.Parse(List.SelectedDataKeys.First());
+            Pipeline = PipelineConnector.LoadPipeline(id, UserGuid);
+
+            Response.Redirect(OriginalReferer);
+        }
+
+        private void RenamePipeline()
+        {
+            int id = int.Parse(List.SelectedDataKeys.First());
+            Response.Redirect(PipelineDetails.GetUrl(PipelineDetails.RequestMethod.Rename, id));
+        }
+
+        private void DeletePipeline()
+        {
+            int id = int.Parse(List.SelectedDataKeys.First());
+            PipelineConnector.DeletePipeline(id, UserGuid);
+        }
     }
 }

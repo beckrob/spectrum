@@ -59,7 +59,7 @@ namespace Jhu.SpecSvc.Web.Pipeline.Steps
 
             step.TemplateSet = TemplateSet.SelectedValue;
 
-            List<string> selected = new List<string>();
+            var selected = new List<string>();
             foreach (ListItem li in Templates.Items)
             {
                 if (li.Selected)

@@ -7,23 +7,56 @@ using System.Web.UI.WebControls;
 
 namespace Jhu.SpecSvc.Web.Pipeline
 {
-    public partial class SavePipeline : PageBase
+    public partial class PipelineDetails : PageBase
     {
+        public enum RequestMethod
+        {
+            Save,
+            Rename
+        }
+
         public static string GetUrl()
         {
-            return "~/Pipeline/SavePipeline.aspx";
+            return String.Format("~/Pipeline/PipelineDetails.aspx?method={0}", RequestMethod.Save);
+        }
+
+        public static string GetUrl(RequestMethod method, int id)
+        {
+            return String.Format("~/Pipeline/PipelineDetails.aspx?method={0}&id={1}", method, id);
+        }
+
+        public RequestMethod Method
+        {
+            get { return (RequestMethod)Enum.Parse(typeof(RequestMethod), Request.QueryString["method"]); }
+        }
+
+        public int PipelineId
+        {
+            get { return int.Parse(Request.QueryString["id"]); }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Pipeline == null)
+            if (!Request.IsAuthenticated)
+            {
+                throw new InvalidOperationException("Operation requires user logged in.");
+            }
+
+            if (Method == RequestMethod.Save && Pipeline == null)
             {
                 throw new InvalidOperationException("Pipeline is null.");
             }
 
-            if (!Request.IsAuthenticated)
+            switch (Method)
             {
-                throw new InvalidOperationException("Operation requires user logged in.");
+                case RequestMethod.Rename:
+                    PipelineDetailsForm.Text = "Rename pipeline";
+                    break;
+                case RequestMethod.Save:
+                    PipelineDetailsForm.Text = "Save pipeline";
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
 
             if (!IsPostBack)
@@ -34,20 +67,38 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
         protected void Ok_Click(object sender, EventArgs e)
         {
-            Validate();
-
             if (IsValid)
             {
-                Pipeline.Name = Name.Text;
-                PipelineConnector.SavePipeline(Pipeline, UserGuid);
+                switch (Method)
+                {
+                    case RequestMethod.Save:
+                        SavePipeline();
+                        break;
+                    case RequestMethod.Rename:
+                        RenamePipeline();
+                        break;
+                }
 
-                Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Pipeline.GetUrl());
+                Response.Redirect(OriginalReferer);
             }
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect(Jhu.SpecSvc.Web.Pipeline.Pipeline.GetUrl());
+            Response.Redirect(OriginalReferer);
+        }
+
+        private void SavePipeline()
+        {
+            Pipeline.Name = Name.Text;
+            PipelineConnector.SavePipeline(Pipeline, UserGuid);
+        }
+
+        private void RenamePipeline()
+        {
+            var p = PipelineConnector.LoadPipeline(PipelineId, UserGuid);
+            p.Name = Name.Text;
+            PipelineConnector.SavePipeline(p, UserGuid);
         }
     }
 }

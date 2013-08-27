@@ -162,26 +162,24 @@ namespace Jhu.SpecSvc.Web.Pipeline
 
        
 
-        protected void ResetWorkflow_Click(object sender, EventArgs e)
+        protected void ResetPipeline_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //Pipeline.Steps.Clear();
+            Pipeline = new SpectrumPipeline();
         }
 
         protected void SavePipeline_Click(object sender, EventArgs e)
         {
-            Response.Redirect(Jhu.SpecSvc.Web.Pipeline.SavePipeline.GetUrl());
+            Response.Redirect(Jhu.SpecSvc.Web.Pipeline.PipelineDetails.GetUrl());
         }
 
-        protected void LoadWorkflow_Click(object sender, EventArgs e)
+        protected void LoadPipeline_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //Response.Redirect("workflow_form_manage.aspx"); // *** TODO
+            Response.Redirect(PipelineList.GetUrl(PipelineList.RequestMethod.Load));
         }
 
         protected void ManagePipelines_Click(object sender, EventArgs e)
         {
-            Response.Redirect(List.GetUrl());
+            Response.Redirect(PipelineList.GetUrl(PipelineList.RequestMethod.Manage));
         }
     }
 }

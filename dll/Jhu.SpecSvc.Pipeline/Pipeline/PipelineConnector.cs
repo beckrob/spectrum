@@ -149,6 +149,21 @@ namespace Jhu.SpecSvc.Pipeline
             }
         }
 
+        public void DeletePipeline(int id, Guid userGuid)
+        {
+            string sql = "spDeletePipeline";
+
+            using (var cmd = new SqlCommand(sql, databaseConnection, databaseTransaction))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@UserGuid", SqlDbType.UniqueIdentifier).Value = userGuid;
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         private string SerializePipeline(SpectrumPipeline pipeline)
         {
             var xml = new StringWriter();

@@ -214,12 +214,12 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pipeline\IPipelineStepControl.cs" />
-    <Compile Include="Pipeline\List.aspx.cs">
-      <DependentUpon>List.aspx</DependentUpon>
+    <Compile Include="Pipeline\PipelineList.aspx.cs">
+      <DependentUpon>PipelineList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pipeline\List.aspx.designer.cs">
-      <DependentUpon>List.aspx</DependentUpon>
+    <Compile Include="Pipeline\PipelineList.aspx.designer.cs">
+      <DependentUpon>PipelineList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pipeline\Pipeline.aspx.cs">
       <DependentUpon>Pipeline.aspx</DependentUpon>
@@ -231,12 +231,12 @@
     <Compile Include="Pipeline\PipelineStepControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pipeline\SavePipeline.aspx.cs">
-      <DependentUpon>SavePipeline.aspx</DependentUpon>
+    <Compile Include="Pipeline\PipelineDetails.aspx.cs">
+      <DependentUpon>PipelineDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pipeline\SavePipeline.aspx.designer.cs">
-      <DependentUpon>SavePipeline.aspx</DependentUpon>
+    <Compile Include="Pipeline\PipelineDetails.aspx.designer.cs">
+      <DependentUpon>PipelineDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pipeline\Steps\CompositeStepControl.ascx.cs">
       <DependentUpon>CompositeStepControl.ascx</DependentUpon>
@@ -521,9 +521,9 @@
     <Content Include="Pipeline\Formats\SpectrumXmlFormatControl.ascx" />
     <Content Include="Pipeline\Formats\TabularFileLineEnding.ascx" />
     <Content Include="Pipeline\Formats\TabularFileType.ascx" />
-    <Content Include="Pipeline\List.aspx" />
+    <Content Include="Pipeline\PipelineList.aspx" />
     <Content Include="Pipeline\Pipeline.aspx" />
-    <Content Include="Pipeline\SavePipeline.aspx" />
+    <Content Include="Pipeline\PipelineDetails.aspx" />
     <Content Include="Pipeline\Steps\CompositeStepControl.ascx" />
     <Content Include="Pipeline\Steps\ContinuumFitStepControl.ascx" />
     <Content Include="Pipeline\Steps\ConvolutionStepControl.ascx" />
