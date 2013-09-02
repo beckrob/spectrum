@@ -52,11 +52,6 @@ namespace Jhu.SpecSvc.Web
                 {
                     portalConnector = new PortalConnector(DatabaseConnection, DatabaseTransaction);
                 }
-                else
-                {
-                    portalConnector.DatabaseConnection = DatabaseConnection;
-                    portalConnector.DatabaseTransaction = DatabaseTransaction;
-                }
 
                 return portalConnector;
             }
@@ -69,11 +64,6 @@ namespace Jhu.SpecSvc.Web
                 if (pipelineConnector == null)
                 {
                     pipelineConnector = new PipelineConnector(DatabaseConnection, DatabaseTransaction);
-                }
-                else
-                {
-                    pipelineConnector.DatabaseConnection = DatabaseConnection;
-                    pipelineConnector.DatabaseTransaction = DatabaseTransaction;
                 }
 
                 return pipelineConnector;

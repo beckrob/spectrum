@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Configuration;
+
 namespace Jhu.SpecSvc.Web
 {
     public class AppSettings
@@ -34,6 +35,21 @@ namespace Jhu.SpecSvc.Web
         public static string RegionSearchUrl
         {
             get { return GetValue("RegionSearchUrl"); }
+        }
+
+        public static string WebServiceBaseUrl
+        {
+            get { return GetValue("WebServiceBaseUrl"); }
+        }
+
+        public static string SsaBaseUrl
+        {
+            get { return GetValue("SsaBaseUrl"); }
+        }
+
+        public static string DefaultMySpectrumBaseUrl
+        {
+            get { return GetValue("DefaultMySpectrumBaseUrl"); }
         }
 
         /*public static string ExportDir

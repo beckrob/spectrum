@@ -46,6 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Default", "Default", "{47D7
 		config\default\domain.config = config\default\domain.config
 		config\default\federation.config = config\default\federation.config
 		config\default\mailSettings.config = config\default\mailSettings.config
+		config\default\mySpectrum.config = config\default\mySpectrum.config
 		config\default\remoteService.config = config\default\remoteService.config
 		config\default\scheduler.config = config\default\scheduler.config
 		config\default\web.config = config\default\web.config
@@ -76,6 +77,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dev.voservices.net", "dev.v
 		config\dev.voservices.net\domain.config = config\dev.voservices.net\domain.config
 		config\dev.voservices.net\federation.config = config\dev.voservices.net\federation.config
 		config\dev.voservices.net\mailSettings.config = config\dev.voservices.net\mailSettings.config
+		config\dev.voservices.net\mySpectrum.config = config\dev.voservices.net\mySpectrum.config
 		config\dev.voservices.net\remoteService.config = config\dev.voservices.net\remoteService.config
 		config\dev.voservices.net\scheduler.config = config\dev.voservices.net\scheduler.config
 		config\dev.voservices.net\web.config = config\dev.voservices.net\web.config
@@ -102,6 +104,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Spectrum.vsmdi = Spectrum.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhu.SpecSvc.WS", "web\Jhu.SpecSvc.WS\Jhu.SpecSvc.WS.csproj", "{BF2C186D-DDCF-49AF-A209-462F1DC7034C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhu.SpecSvc.MySpectrum", "web\Jhu.SpecSvc.MySpectrum\Jhu.SpecSvc.MySpectrum.csproj", "{BFF977A2-0AF2-4D8F-B6A6-BFDAF051D592}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhu.SpecSvc.Ssa", "web\Jhu.SpecSvc.Ssa\Jhu.SpecSvc.Ssa.csproj", "{656596D2-223E-4BBD-8785-FAC67C4E6B75}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -181,6 +189,18 @@ Global
 		{4FD2E775-A686-47BC-B9B7-955D5A8FC05F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FD2E775-A686-47BC-B9B7-955D5A8FC05F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FD2E775-A686-47BC-B9B7-955D5A8FC05F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF2C186D-DDCF-49AF-A209-462F1DC7034C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF2C186D-DDCF-49AF-A209-462F1DC7034C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF2C186D-DDCF-49AF-A209-462F1DC7034C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF2C186D-DDCF-49AF-A209-462F1DC7034C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFF977A2-0AF2-4D8F-B6A6-BFDAF051D592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFF977A2-0AF2-4D8F-B6A6-BFDAF051D592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFF977A2-0AF2-4D8F-B6A6-BFDAF051D592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFF977A2-0AF2-4D8F-B6A6-BFDAF051D592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656596D2-223E-4BBD-8785-FAC67C4E6B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656596D2-223E-4BBD-8785-FAC67C4E6B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656596D2-223E-4BBD-8785-FAC67C4E6B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656596D2-223E-4BBD-8785-FAC67C4E6B75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,6 +218,9 @@ Global
 		{E3921383-6F2B-44B9-999C-B5E980A10F0D} = {6C5CFB56-018D-4697-B497-4E0F7A9D5E5C}
 		{B2D49152-49CB-41EC-AB63-8C0A88A3D5A1} = {6C5CFB56-018D-4697-B497-4E0F7A9D5E5C}
 		{1E99239B-8E6B-4758-9B1A-17B3D3282164} = {16083B0C-34C6-4315-B406-B092FC31D962}
+		{BF2C186D-DDCF-49AF-A209-462F1DC7034C} = {16083B0C-34C6-4315-B406-B092FC31D962}
+		{BFF977A2-0AF2-4D8F-B6A6-BFDAF051D592} = {16083B0C-34C6-4315-B406-B092FC31D962}
+		{656596D2-223E-4BBD-8785-FAC67C4E6B75} = {16083B0C-34C6-4315-B406-B092FC31D962}
 		{ADDC5F4C-55B9-4392-8F60-52BCCF88ADEC} = {8A222BEA-3A4A-49E5-80A0-618C162BDB85}
 		{BBFB9E02-070E-463D-AAFE-3319A24F7EBF} = {8A222BEA-3A4A-49E5-80A0-618C162BDB85}
 		{E9D182CF-746E-4E40-B01C-74A32FB70749} = {ADDC5F4C-55B9-4392-8F60-52BCCF88ADEC}

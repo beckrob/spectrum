@@ -61,6 +61,13 @@
     <Compile Include="App_Masters\Spectrum.Master.designer.cs">
       <DependentUpon>Spectrum.Master</DependentUpon>
     </Compile>
+    <Compile Include="Collections\CollectionDetails.aspx.cs">
+      <DependentUpon>CollectionDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Collections\CollectionDetails.aspx.designer.cs">
+      <DependentUpon>CollectionDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Collections\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -350,6 +357,13 @@
     <Compile Include="Pipeline\Target.aspx.designer.cs">
       <DependentUpon>Target.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Programming\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Programming\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Cone.aspx.cs">
       <DependentUpon>Cone.aspx</DependentUpon>
@@ -508,6 +522,7 @@
   <ItemGroup>
     <Content Include="App_Themes\Basic\Basic.skin" />
     <Content Include="App_Themes\Basic\Css\spectrum.css" />
+    <Content Include="Collections\CollectionDetails.aspx" />
     <Content Include="Collections\Default.aspx" />
     <Content Include="Controls\CollectionList.ascx" />
     <Content Include="Controls\Footer.ascx" />
@@ -547,6 +562,7 @@
     <Content Include="Pipeline\Steps\RedshiftStepControl.ascx" />
     <Content Include="Pipeline\Steps\WavelengthConversionStepControl.ascx" />
     <Content Include="Pipeline\Target.aspx" />
+    <Content Include="Programming\Default.aspx" />
     <Content Include="Search\Cone.aspx" />
     <Content Include="Search\Advanced.aspx" />
     <Content Include="Search\All.aspx" />
@@ -604,7 +620,6 @@
   <ItemGroup>
     <Folder Include="Jobs\" />
     <Folder Include="MySpectrum\" />
-    <Folder Include="Programming\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docs\Docs.master" />

@@ -10,6 +10,7 @@ namespace Jhu.SpecSvc.Web.Controls
             Search.NavigateUrl = Jhu.SpecSvc.Web.Search.Default.GetUrl();
 
             Collections.NavigateUrl = Jhu.SpecSvc.Web.Collections.Default.GetUrl();
+            Programming.NavigateUrl = Jhu.SpecSvc.Web.Programming.Default.GetUrl();
             Docs.NavigateUrl = Jhu.SpecSvc.Web.Docs.Default.GetUrl();
         }
     }

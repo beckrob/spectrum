@@ -19,6 +19,7 @@ namespace Jhu.SpecSvc.IO
 
         private SqlConnection databaseConnection;
         private SqlTransaction databaseTransaction;
+        private bool isConnectionOwned;
 
         #endregion
         #region Properties
@@ -26,13 +27,13 @@ namespace Jhu.SpecSvc.IO
         public SqlConnection DatabaseConnection
         {
             get { return this.databaseConnection; }
-            set { this.databaseConnection = value; }
+            //set { this.databaseConnection = value; }
         }
 
         public SqlTransaction DatabaseTransaction
         {
             get { return this.databaseTransaction; }
-            set { this.databaseTransaction = value; }
+            //set { this.databaseTransaction = value; }
         }
 
         #endregion
@@ -47,16 +48,59 @@ namespace Jhu.SpecSvc.IO
         {
             this.databaseConnection = cn;
             this.databaseTransaction = tn;
+            this.isConnectionOwned = false;
         }
 
         private void InitializeMembers()
         {
             this.databaseConnection = null;
             this.databaseTransaction = null;
+            this.isConnectionOwned = false;
         }
 
         public override void Dispose()
         {
+            Close();
+        }
+
+        #endregion
+        #region Open and close
+
+        public void Open()
+        {
+            if (databaseConnection != null || databaseTransaction != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            databaseConnection = new SqlConnection(AppSettings.PortalConnectionString);
+            databaseConnection.Open();
+
+            databaseTransaction = databaseConnection.BeginTransaction(IsolationLevel.ReadUncommitted);
+
+            isConnectionOwned = true;
+        }
+
+        public void Close()
+        {
+            if (isConnectionOwned)
+            {
+                if (databaseTransaction != null)
+                {
+                    databaseTransaction.Commit();
+                    databaseTransaction.Dispose();
+                    databaseTransaction = null;
+                }
+
+                if (databaseConnection != null && databaseConnection.State != ConnectionState.Closed)
+                {
+                    databaseConnection.Close();
+                    databaseConnection.Dispose();
+                    databaseConnection = null;
+                }
+
+                isConnectionOwned = false;
+            }
         }
 
         #endregion

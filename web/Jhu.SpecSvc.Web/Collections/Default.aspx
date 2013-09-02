@@ -21,11 +21,13 @@
                     </tr>
                     <tr>
                         <td class="FormList">
-                            <jgwc:MultiSelectGridView runat="server" ID="List" DataKeyNames="ID" AutoGenerateColumns="false">
+                            <jgwc:MultiSelectGridView runat="server" ID="List" DataKeyNames="ID" AutoGenerateColumns="false"
+                            OnRowCreated="List_RowCreated">
                                 <Columns>
                                     <jgwc:SelectionField />
                                     <asp:BoundField DataField="Name" HeaderText="Collection name" />
                                     <asp:BoundField DataField="Type" HeaderText="Type" />
+                                    <asp:BoundField DataField="Public" HeaderText="Public" />
                                     <asp:BoundField DataField="Status" HeaderText="Status" />
                                 </Columns>
                             </jgwc:MultiSelectGridView>
@@ -39,11 +41,14 @@
                         Display="Dynamic" Text="No collection selected" />
                 </p>
                 <p class="FormButtons">
-                    <asp:Button runat="server" ID="Create" Text="Create" OnClick="Create_Click" />
-                    <asp:Button runat="server" ID="Modify" Text="Modify" OnClick="Modify_Click" />
-                    <asp:Button runat="server" ID="Delete" Text="Delete" OnClick="Delete_Click" />
-                    |
-                    <asp:Button runat="server" ID="Test" Text="Test availability" OnClick="Test_Click" CausesValidation="false" />
+                    <span runat="server" ID="EditButtons">
+                        <asp:Button runat="server" ID="Create" Text="Create" CssClass="FormButton" OnClick="Create_Click" />
+                        <asp:Button runat="server" ID="Modify" Text="Modify" CssClass="FormButton" OnClick="Modify_Click" />
+                        <asp:Button runat="server" ID="Delete" Text="Delete" CssClass="FormButton" OnClick="Delete_Click" />
+                        |
+                    </span>
+                    <asp:Button runat="server" ID="Test" Text="Test availability" CssClass="FormButton"
+                        OnClick="Test_Click" CausesValidation="false" />
                 </p>
             </ButtonsTemplate>
         </jgwc:Form>

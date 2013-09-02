@@ -96,5 +96,11 @@
       <merge file="activities.config" />
       <merge file="web.config" />
     </project>
+    <project name="Jhu.SpecSvc.Ssa" path="..\Spectrum\Web\Jhu.SpecSvc.Ssa" type="web">
+      <merge file="connectionStrings.config" />
+    </project>
+    <project name="Jhu.SpecSvc.MySpectrum" path="..\Spectrum\Web\Jhu.SpecSvc.MySpectrum" type="web">
+      <merge file="mySpectrum.config" />
+    </project>
   </projects>
 </config>

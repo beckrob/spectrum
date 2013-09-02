@@ -49,6 +49,15 @@ namespace Jhu.SpecSvc.Web.Collections {
         protected global::System.Web.UI.WebControls.CustomValidator ListSelectedValidator;
         
         /// <summary>
+        /// EditButtons control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EditButtons;
+        
+        /// <summary>
         /// Create control.
         /// </summary>
         /// <remarks>

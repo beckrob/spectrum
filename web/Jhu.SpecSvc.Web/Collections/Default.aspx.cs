@@ -33,14 +33,29 @@ namespace Jhu.SpecSvc.Web.Collections
         {
             collections = PortalConnector.QueryCollections(UserGuid, IO.SearchMethod.Unknown).ToArray();
             List.DataSource = collections;
+
+            EditButtons.Visible = Request.IsAuthenticated;
+        }
+
+        protected void List_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            var coll = (Collection)e.Row.DataItem;
+
+            if (coll != null)
+            {
+                var cb = (CheckBox)e.Row.FindControl(Jhu.Graywulf.Web.Controls.SelectionField.DefaultSelectionCheckBoxID);
+                cb.Visible = Request.IsAuthenticated && coll.UserGuid == UserGuid;
+            }
         }
 
         protected void Create_Click(object sender, EventArgs e)
         {
+            Response.Redirect(CollectionDetails.GetUrl());
         }
 
         protected void Modify_Click(object sender, EventArgs e)
         {
+            Response.Redirect(CollectionDetails.GetUrl(CollectionDetails.RequestMethod.Modify, List.SelectedDataKeys.First()));
         }
 
         protected void Delete_Click(object sender, EventArgs e)

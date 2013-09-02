@@ -34,25 +34,31 @@ namespace Jhu.SpecSvc.IO
         private string connectionString;
         private string publisherId;
 
-        private bool internalCn;
-        private bool internalTn;
-        private DbConnection cn;
-        private DbTransaction tn;
+        private DbConnection databaseConnection;
+        private DbTransaction databaseTransaction;
+        private bool isConnectionOwned;
+        private bool isTransactionOwned;
 
         #endregion
         #region Properties
+
+        public string ConnectionString
+        {
+            get { return connectionString; }
+            set { connectionString = value; }
+        }
 
         /// <summary>
         /// Gets or sets the database connection context object
         /// </summary>
         public DbConnection DatabaseConnection
         {
-            get { return this.cn; }
+            get { return this.databaseConnection; }
             set
             {
                 Close();
-                this.cn = value;
-                this.internalCn = false;
+                this.databaseConnection = value;
+                this.isConnectionOwned = false;
             }
         }
 
@@ -61,12 +67,12 @@ namespace Jhu.SpecSvc.IO
         /// </summary>
         public DbTransaction DatabaseTransaction
         {
-            get { return this.tn; }
+            get { return this.databaseTransaction; }
             set
             {
                 Close();
-                this.tn = value;
-                this.internalTn = false;
+                this.databaseTransaction = value;
+                this.isTransactionOwned = false;
             }
         }
 
@@ -100,10 +106,10 @@ namespace Jhu.SpecSvc.IO
         {
             InitializeMembers();
 
-            this.cn = cn;
-            this.tn = tn;
-            if (cn != null) internalCn = false;
-            if (tn != null) internalTn = false;
+            this.databaseConnection = cn;
+            this.databaseTransaction = tn;
+            if (cn != null) isConnectionOwned = false;
+            if (tn != null) isTransactionOwned = false;
         }
 
         /// <summary>
@@ -133,8 +139,8 @@ namespace Jhu.SpecSvc.IO
             this.collectionId = string.Empty;
             this.publisherId = string.Empty;
 
-            this.cn = null;
-            this.tn = null;
+            this.databaseConnection = null;
+            this.databaseTransaction = null;
         }
 
         public override void Dispose()
@@ -148,47 +154,47 @@ namespace Jhu.SpecSvc.IO
         {
             if (connectionString.ToLower().Contains("data source"))
             {
-                this.cn = new System.Data.SqlClient.SqlConnection(connectionString);
+                this.databaseConnection = new System.Data.SqlClient.SqlConnection(connectionString);
             }
             else if (connectionString.ToLower().Contains("server"))
             {
-                this.cn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+                this.databaseConnection = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             }
             else
             {
                 throw new IOException("Server type cannot be inferred from connection string.");
             }
 
-            this.cn.Open();
-            this.internalCn = true;
+            this.databaseConnection.Open();
+            this.isConnectionOwned = true;
 
-            this.tn = this.cn.BeginTransaction();
-            this.internalTn = true;
+            this.databaseTransaction = this.databaseConnection.BeginTransaction();
+            this.isTransactionOwned = true;
         }
 
         public void Close()
         {
-            if (internalTn && tn != null)
+            if (isTransactionOwned && databaseTransaction != null)
             {
                 try
                 {
-                    tn.Commit();    // Might be commited already
+                    databaseTransaction.Commit();    // Might be commited already
                 }
                 finally
                 {
-                    tn.Dispose();
+                    databaseTransaction.Dispose();
                 }
             }
 
-            if (internalCn && cn != null)
+            if (isConnectionOwned && databaseConnection != null)
             {
                 try
                 {
-                    cn.Close();
+                    databaseConnection.Close();
                 }
                 finally
                 {
-                    cn.Dispose();
+                    databaseConnection.Dispose();
                 }
             }
         }
@@ -599,7 +605,7 @@ WHERE (UserGUID = @UserGUID OR [Public] > 0) AND ID > 0";
             par = par.GetStandardUnits();
 
             string tablesample = "";
-            if (cn.GetType() == typeof(System.Data.SqlClient.SqlConnection) && par.SampleFraction != 1.0f)
+            if (databaseConnection.GetType() == typeof(System.Data.SqlClient.SqlConnection) && par.SampleFraction != 1.0f)
             {
                 tablesample = "TABLESAMPLE (" + (par.SampleFraction * 100).ToString() + " PERCENT)";
             }
@@ -1355,29 +1361,29 @@ WHERE SpectrumID = @ID";
 
         private DbCommand CreateStoredProcCommand(string sql)
         {
-            DbCommand cmd = cn.CreateCommand();
+            DbCommand cmd = databaseConnection.CreateCommand();
             cmd.CommandText = sql;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Transaction = tn;
+            cmd.Transaction = databaseTransaction;
 
             return cmd;
         }
 
         private DbCommand CreateTextCommand(string sql)
         {
-            DbCommand cmd = cn.CreateCommand();
+            DbCommand cmd = databaseConnection.CreateCommand();
 
-            if (cn.GetType() == typeof(System.Data.SqlClient.SqlConnection))
+            if (databaseConnection.GetType() == typeof(System.Data.SqlClient.SqlConnection))
             {
                 cmd.CommandText = sql;
             }
-            else if (cn.GetType() == typeof(MySql.Data.MySqlClient.MySqlConnection))
+            else if (databaseConnection.GetType() == typeof(MySql.Data.MySqlClient.MySqlConnection))
             {
                 cmd.CommandText = sql.Replace('[', '`').Replace(']', '`').Replace('@', '?');
             }
 
             cmd.CommandType = CommandType.Text;
-            cmd.Transaction = tn;
+            cmd.Transaction = databaseTransaction;
 
             return cmd;
         }
@@ -1387,11 +1393,11 @@ WHERE SpectrumID = @ID";
             DbParameter par = cmd.CreateParameter();
             par.DbType = type;
 
-            if (cn.GetType() == typeof(System.Data.SqlClient.SqlConnection))
+            if (databaseConnection.GetType() == typeof(System.Data.SqlClient.SqlConnection))
             {
                 par.ParameterName = name;
             }
-            else if (cn.GetType() == typeof(MySql.Data.MySqlClient.MySqlConnection))
+            else if (databaseConnection.GetType() == typeof(MySql.Data.MySqlClient.MySqlConnection))
             {
                 if (cmd.CommandType == CommandType.StoredProcedure)
                     par.ParameterName = name.Replace('@', '_');

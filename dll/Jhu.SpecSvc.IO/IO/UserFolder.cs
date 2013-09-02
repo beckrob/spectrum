@@ -1,17 +1,3 @@
-#region Written by László Dobos (dobos@complex.elte.hu)
-/*
- * 
- * VoService.Spectrum.IO classes are designed for persisting
- * astonomical spectra in different storage systems
- * 
- * See bottom of file for revision history
- * 
- * Current revision:
- *   ID:          $Id: UserFolder.cs,v 1.1 2008/01/08 22:00:51 dobos Exp $
- *   Revision:    $Revision: 1.1 $
- *   Date:        $Date: 2008/01/08 22:00:51 $
- */
-#endregion
 using System;
 using System.Xml.Serialization;
 using System.Data;
@@ -93,13 +79,3 @@ namespace Jhu.SpecSvc.IO
         }
 	}
 }
-#region Revision History
-/* Revision History
-
-        $Log: UserFolder.cs,v $
-        Revision 1.1  2008/01/08 22:00:51  dobos
-        Initial checkin
-
-
-*/
-#endregion

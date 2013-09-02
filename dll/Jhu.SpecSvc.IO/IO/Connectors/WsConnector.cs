@@ -22,8 +22,8 @@ namespace Jhu.SpecSvc.IO
 {
     public class WsConnector : ConnectorBase
     {
-        private Remote.search search;
-        private Remote.admin admin;
+        private Remote.Search search;
+        private Remote.Admin admin;
 
         public WsConnector()
         {
@@ -67,8 +67,8 @@ namespace Jhu.SpecSvc.IO
 
         private void InitializeMembers()
         {
-            search = new Remote.search();
-            admin = new Remote.admin();
+            search = new Remote.Search();
+            admin = new Remote.Admin();
         }
 
         public override Spectrum GetSpectrum(Guid userGuid, string spectrumId, bool loadPoints, string[] pointsMask, bool loadDetails)
@@ -78,7 +78,7 @@ namespace Jhu.SpecSvc.IO
 
         public override IEnumerable<Spectrum> FindSpectrum(IdSearchParameters par)
         {
-            return search.GetSpectrum_Id(par);
+            return search.FindSpectrum_Id(par);
         }
 
         public override IEnumerable<Spectrum> FindSpectrum(RedshiftSearchParameters par)
