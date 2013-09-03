@@ -70,6 +70,24 @@ namespace Jhu.SpecSvc.Web
             }
         }
 
+        public WsConnector MySpectrumConnector
+        {
+            get
+            {
+                var cn = new WsConnector();
+                cn.Url = MySpectrumSearchUrl;
+                cn.AdminUrl = MySpectrumAdminUrl;
+
+                return cn;
+            }
+        }
+
+        public SearchParametersBase SearchParameters
+        {
+            get { return (SearchParametersBase)Session[Constants.SessionSearchParameters]; }
+            set { Session[Constants.SessionSearchParameters] = value; }
+        }
+
         public int ResultsetId
         {
             get { return (int)(Session[Constants.SessionResultsetId] ?? -1); }
@@ -86,6 +104,24 @@ namespace Jhu.SpecSvc.Web
         {
             get { return (SpectrumPipeline)Session[Constants.SessionPipeline]; }
             set { Session[Constants.SessionPipeline] = value; }
+        }
+
+        public string MySpectrumSearchUrl
+        {
+            get { return (string)Session[Constants.SessionMySpectrumSearchUrl]; }
+            set { Session[Constants.SessionMySpectrumSearchUrl] = value; }
+        }
+
+        public string MySpectrumAdminUrl
+        {
+            get { return (string)Session[Constants.SessionMySpectrumAdminUrl]; }
+            set { Session[Constants.SessionMySpectrumAdminUrl] = value; }
+        }
+
+        public string MySpectrumGraphUrl
+        {
+            get { return (string)Session[Constants.SessionMySpectrumGraphUrl]; }
+            set { Session[Constants.SessionMySpectrumGraphUrl] = value; }
         }
 
         override protected void OnUnload(EventArgs e)
@@ -125,6 +161,29 @@ namespace Jhu.SpecSvc.Web
             Page.DataBind();
 
             base.OnPreRender(e);
+        }
+
+        protected void ExecuteSearch()
+        {
+            DeleteExistingResultset();  // TODO: what if saved as job?
+
+            // Create new resultset
+            var resultsetId = ResultsetId = PortalConnector.CreateResultset();
+
+            var results = PortalConnector.FindSpectrumDispatch(SearchParameters);
+            PortalConnector.SaveResultsetSpectra(resultsetId, results);
+
+            Response.Redirect(Jhu.SpecSvc.Web.Search.List.GetUrl());
+        }
+
+        private void DeleteExistingResultset()
+        {
+            // if a previous resultset exists it should be deleted now
+            if (ResultsetId != -1)
+            {
+                PortalConnector.DeleteResultset(ResultsetId);
+                Session["ResultsetId"] = -1;
+            }
         }
     }
 }

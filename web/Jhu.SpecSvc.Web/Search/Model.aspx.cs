@@ -9,7 +9,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Search
 {
-    public partial class Model : SearchPageBase
+    public partial class Model : PageBase
     {
         public static string GetUrl()
         {
@@ -115,10 +115,10 @@ namespace Jhu.SpecSvc.Web.Search
                 else
                     par.Age_lastBurst.Max = null;
 
-                par.Collections = Collections.SelectedKeys;
+                par.Collections = PortalConnector.LoadCollections(Collections.SelectedKeys, UserGuid);
 
                 SearchParameters = par;
-                Execute();
+                ExecuteSearch();
             }
         }
     }

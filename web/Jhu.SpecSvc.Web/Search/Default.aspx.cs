@@ -10,7 +10,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Search
 {
-    public partial class Default : SearchPageBase
+    public partial class Default : PageBase
     {
         public static string GetUrl()
         {
@@ -28,6 +28,8 @@ namespace Jhu.SpecSvc.Web.Search
                 if (!AstroUtil.TryParseRaDec(Query.Text, out ra, out dec))
                 {
                     throw new NotImplementedException("NED web service missing...");
+
+                    // *** TODO
                     var ned = new NED();
                     var obj = ned.ObjByName(Query.Text);
                     ra = obj.ra;
@@ -37,10 +39,10 @@ namespace Jhu.SpecSvc.Web.Search
                 var par = new ConeSearchParameters(true);
                 par.Pos.Value = new Jhu.SpecSvc.Schema.Position(ra, dec);
                 par.Sr.Value = double.Parse(Radius.Text);
-                par.Collections = Collections.SelectedKeys;
+                par.Collections = PortalConnector.LoadCollections(Collections.SelectedKeys, UserGuid);
 
                 SearchParameters = par;
-                Execute();
+                ExecuteSearch();
             }
         }
     }

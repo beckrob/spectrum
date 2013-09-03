@@ -9,7 +9,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Search
 {
-    public partial class SkyServer : SearchPageBase
+    public partial class SkyServer : PageBase
     {
         public static string GetUrl()
         {
@@ -28,10 +28,10 @@ namespace Jhu.SpecSvc.Web.Search
                 par.WsUrl = AppSettings.SkyServerWsUrl;
                 par.WsId = AppSettings.SkyServerWsId;
 
-                par.Collections = Collections.SelectedKeys;
+                par.Collections = PortalConnector.LoadCollections(Collections.SelectedKeys, UserGuid);
 
                 SearchParameters = par;
-                Execute();
+                ExecuteSearch();
             }
         }
     }

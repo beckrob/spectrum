@@ -9,7 +9,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Search
 {
-    public partial class Advanced : SearchPageBase
+    public partial class Advanced : PageBase
     {
         public static string GetUrl()
         {
@@ -125,11 +125,11 @@ namespace Jhu.SpecSvc.Web.Search
 
                 if (FluxCalibration.SelectedValue != "0")
                     par.FluxCalibration = new string[] { FluxCalibration.SelectedValue };
-                
-                par.Collections = Collections.SelectedKeys;
+
+                par.Collections = PortalConnector.LoadCollections(Collections.SelectedKeys, UserGuid);
 
                 SearchParameters = par;
-                Execute();
+                ExecuteSearch();
             }
         }
     }

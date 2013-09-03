@@ -31,6 +31,9 @@ namespace Jhu.SpecSvc.Web
             base.Session_Start(sender, e);
 
             Session[Constants.SessionPipeline] = new SpectrumPipeline();
+            Session[Constants.SessionMySpectrumSearchUrl] = AppSettings.DefaultMySpectrumBaseUrl.Replace("[$Hostname]", Request.Url.Host) + "/Search.asmx";
+            Session[Constants.SessionMySpectrumAdminUrl] = AppSettings.DefaultMySpectrumBaseUrl.Replace("[$Hostname]", Request.Url.Host) + "/Admin.asmx";
+            Session[Constants.SessionMySpectrumGraphUrl] = AppSettings.DefaultMySpectrumBaseUrl.Replace("[$Hostname]", Request.Url.Host) + "/Graph.asmx";
         }
     }
 }

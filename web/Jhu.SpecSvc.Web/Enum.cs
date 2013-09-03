@@ -5,6 +5,13 @@ using System.Web;
 
 namespace Jhu.SpecSvc.Web
 {
+    public enum ItemFormRequestMethod
+    {
+        Create,
+        Modify,
+        Delete
+    }
+
     public enum SpectrumListView
     {
         List,

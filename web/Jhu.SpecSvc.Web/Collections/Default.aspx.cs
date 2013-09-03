@@ -55,11 +55,12 @@ namespace Jhu.SpecSvc.Web.Collections
 
         protected void Modify_Click(object sender, EventArgs e)
         {
-            Response.Redirect(CollectionDetails.GetUrl(CollectionDetails.RequestMethod.Modify, List.SelectedDataKeys.First()));
+            Response.Redirect(CollectionDetails.GetUrl(ItemFormRequestMethod.Modify, List.SelectedDataKeys.First()));
         }
 
         protected void Delete_Click(object sender, EventArgs e)
         {
+            Response.Redirect(CollectionDetails.GetUrl(ItemFormRequestMethod.Delete, List.SelectedDataKeys.First()));
         }
 
         protected void Test_Click(object sender, EventArgs e)

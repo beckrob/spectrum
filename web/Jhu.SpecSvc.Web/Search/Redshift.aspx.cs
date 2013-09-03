@@ -9,7 +9,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Search
 {
-    public partial class Redshift : SearchPageBase
+    public partial class Redshift : PageBase
     {
         public static string GetUrl()
         {
@@ -30,10 +30,10 @@ namespace Jhu.SpecSvc.Web.Search
                 var par = new RedshiftSearchParameters(true);
                 par.Redshift.Min.Value = double.Parse(RedshiftFrom.Text);
                 par.Redshift.Max.Value = double.Parse(RedshiftTo.Text);
-                par.Collections = Collections.SelectedKeys;
+                par.Collections = PortalConnector.LoadCollections(Collections.SelectedKeys, UserGuid);
 
                 SearchParameters = par;
-                Execute();
+                ExecuteSearch();
             }
         }
     }

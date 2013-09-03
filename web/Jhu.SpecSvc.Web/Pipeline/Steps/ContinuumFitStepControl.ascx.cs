@@ -109,11 +109,13 @@ namespace Jhu.SpecSvc.Web.Pipeline.Steps
 
                 // loading templates
                 IdSearchParameters idpar = new IdSearchParameters(true);
-                idpar.Collections = new string[] { "ivo://elte/templates" }; //*****
                 idpar.Ids = Page.PortalConnector.QueryTemplates(temp.Id);
                 idpar.LoadDetails = false;
                 idpar.LoadPoints = false;
                 idpar.UserGuid = Page.UserGuid;
+
+                var coll = Page.PortalConnector.LoadCollection("ivo://elte/templates");
+                idpar.Collections = new Collection[] { coll };
 
                 templates.AddRange(Page.PortalConnector.FindSpectrum(idpar));
             }

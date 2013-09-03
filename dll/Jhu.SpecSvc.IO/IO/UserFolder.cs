@@ -48,12 +48,8 @@ namespace Jhu.SpecSvc.IO
 
         public UserFolder()
         {
+            InitializeMembers();
         }
-
-        public UserFolder(bool initialize)
-		{
-            if (initialize) InitializeMembers();
-		}
 
         public UserFolder(UserFolder old)
         {
@@ -64,8 +60,8 @@ namespace Jhu.SpecSvc.IO
         {
             this.id = 0;
             this.userGuid = Guid.Empty;
-            this.name = "";
-            this.publisherId = "";
+            this.name = String.Empty;
+            this.publisherId = String.Empty;
             this.count = 0;
         }
 

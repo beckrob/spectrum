@@ -136,6 +136,30 @@
     <Compile Include="Graph.aspx.designer.cs">
       <DependentUpon>Graph.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ItemFormBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MySpectrum\ChangeUrl.aspx.cs">
+      <DependentUpon>ChangeUrl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MySpectrum\ChangeUrl.aspx.designer.cs">
+      <DependentUpon>ChangeUrl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MySpectrum\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MySpectrum\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MySpectrum\Folder.aspx.cs">
+      <DependentUpon>Folder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MySpectrum\Folder.aspx.designer.cs">
+      <DependentUpon>Folder.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Output\Download.aspx.cs">
       <DependentUpon>Download.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -457,9 +481,6 @@
       <DependentUpon>List.aspx</DependentUpon>
     </Compile>
     <Compile Include="Search\ResultsDataSource.cs" />
-    <Compile Include="Search\SearchPageBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Search\SpectrumCard.ascx.cs">
       <DependentUpon>SpectrumCard.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -532,6 +553,9 @@
     <Content Include="Docs\Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Graph.aspx" />
+    <Content Include="MySpectrum\ChangeUrl.aspx" />
+    <Content Include="MySpectrum\Default.aspx" />
+    <Content Include="MySpectrum\Folder.aspx" />
     <Content Include="Output\Download.aspx" />
     <Content Include="Pipeline\Format.aspx" />
     <Content Include="Pipeline\Default.aspx" />
@@ -619,7 +643,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Jobs\" />
-    <Folder Include="MySpectrum\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docs\Docs.master" />
@@ -630,6 +653,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Masters\Basic.master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MySpectrum\Web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

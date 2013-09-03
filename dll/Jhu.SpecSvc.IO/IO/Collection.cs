@@ -198,10 +198,9 @@ namespace Jhu.SpecSvc.IO
                     return new SqlConnector(this);
                 case CollectionType.Ssa:
                     return new SsaConnector(this);
-                case CollectionType.Ssap:
-                    break;
                 case CollectionType.WebService:
-                //return new WsConnector(this);
+                    return new WsConnector(this);
+                case CollectionType.Ssap:
                 default:
                     throw new NotImplementedException();
             }

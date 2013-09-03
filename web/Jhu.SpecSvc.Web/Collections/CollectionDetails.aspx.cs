@@ -8,44 +8,104 @@ using Jhu.SpecSvc.IO;
 
 namespace Jhu.SpecSvc.Web.Collections
 {
-    public partial class CollectionDetails : PageBase
+    public partial class CollectionDetails : ItemFormBase<Collection>
     {
-        public enum RequestMethod
-        {
-            Create,
-            Modify
-        }
-
         public static string GetUrl()
         {
-            return String.Format("~/Collections/CollectionDetails.aspx?method={0}", RequestMethod.Create);
+            return String.Format("~/Collections/CollectionDetails.aspx?method={0}", ItemFormRequestMethod.Create);
         }
 
-        public static string GetUrl(RequestMethod method, string id)
+        public static string GetUrl(ItemFormRequestMethod method, string id)
         {
             return String.Format("~/Collections/CollectionDetails.aspx?method={0}&id={1}", method, HttpContext.Current.Server.UrlEncode(id));
         }
 
-        private Collection collection;
-
-        public RequestMethod Method
+        protected override void OnUpdateForm()
         {
-            get { return (RequestMethod)Enum.Parse(typeof(RequestMethod), Request.QueryString["method"]); }
+            RefreshSearchMethodsList();
+
+            switch (Method)
+            {
+                case ItemFormRequestMethod.Create:
+                    ColectionDetailsForm.Text = "Register new collection";
+                    break;
+                case ItemFormRequestMethod.Modify:
+                    ColectionDetailsForm.Text = "Modify collection";
+
+                    CollectionID.Text = Item.Id;
+                    Name.Text = Item.Name;
+                    Description.Text = Item.Description;
+                    CollectionType.SelectedValue = ((int)Item.Type).ToString();
+                    Location.Text = Item.Location;
+                    ConnectionString.Text = Item.ConnectionString;
+                    GraphUrl.Text = Item.GraphUrl;
+                    Public.Checked = (Item.Public > 0);
+
+                    foreach (var s in Item.SearchMethods)
+                    {
+                        SearchMethods.Items.FindByValue(((int)s).ToString()).Selected = true;
+                    }
+
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
-        public string ID
+        protected override void OnSaveForm()
         {
-            get { return Request.QueryString["id"]; }
+            Item.Id = CollectionID.Text;
+            Item.Name = Name.Text;
+            Item.Description = Description.Text;
+            Item.Type = (CollectionType)(int.Parse(CollectionType.SelectedValue));
+            Item.Location = Location.Text;
+            Item.ConnectionString = ConnectionString.Text;
+            Item.GraphUrl = GraphUrl.Text;
+            Item.Public = Public.Checked ? 1 : 0;
+
+            Item.UserGuid = UserGuid;
+
+            Item.SearchMethods.Clear();
+            foreach (ListItem li in SearchMethods.Items)
+            {
+                if (li.Selected)
+                {
+                    Item.SearchMethods.Add((SearchMethod)int.Parse(li.Value));
+                }
+            }
         }
 
-        public CollectionDetails()
+        protected override Collection OnLoadItem()
         {
-            InitializeMembers();
+            return PortalConnector.LoadCollection(Ids[0]);
         }
 
-        private void InitializeMembers()
+        protected override void OnCreateItem()
         {
-            this.collection = new Collection();
+            PortalConnector.SaveCollection(Item, "", UserGuid);
+        }
+
+        protected override void OnModifyItem()
+        {
+            PortalConnector.SaveCollection(Item, Ids[0], UserGuid);
+        }
+
+        protected override void OnDeleteItem()
+        {
+            PortalConnector.DeleteCollection(Item, UserGuid);
+        }
+
+        private void RefreshSearchMethodsList()
+        {
+            // Load search methods
+            if (!IsPostBack)
+            {
+                var sm = PortalConnector.QuerySearchMethods();
+                foreach (int key in sm.Keys)
+                {
+                    SearchMethods.Items.Add(new ListItem(sm[key], key.ToString()));
+                }
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -53,24 +113,6 @@ namespace Jhu.SpecSvc.Web.Collections
             if (!Request.IsAuthenticated)
             {
                 throw new InvalidOperationException();
-            }
-
-            if (Method == RequestMethod.Modify)
-            {
-                collection.Id = ID;
-                PortalConnector.LoadCollection(collection);
-                PortalConnector.QueryCollectionSearchMethods(collection);
-
-                if (collection.UserGuid != UserGuid)
-                {
-                    throw new InvalidOperationException();
-                }
-            }
-
-            if (!IsPostBack)
-            {
-                RefreshSearchMethodsList();
-                UpdateForm();
             }
         }
 
@@ -117,97 +159,6 @@ namespace Jhu.SpecSvc.Web.Collections
             {
                 ConnectionStringValidator.Text = "Remote service not available: " + ex.Message;
                 args.IsValid = false;
-            }
-        }
-
-        protected void Ok_Click(object sender, EventArgs e)
-        {
-            if (IsValid)
-            {
-                SaveForm();
-
-                switch (Method)
-                {
-                    case RequestMethod.Create:
-                        PortalConnector.SaveCollection(collection, "", UserGuid);
-                        break;
-                    case RequestMethod.Modify:
-                        PortalConnector.SaveCollection(collection, ID, UserGuid);
-                        break;
-                }
-
-                Response.Redirect(Default.GetUrl());
-            }
-        }
-
-        protected void Cancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(Default.GetUrl());
-        }
-
-        private void UpdateForm()
-        {
-            switch (Method)
-            {
-                case RequestMethod.Create:
-                    ColectionDetailsForm.Text = "Register new collection";
-                    break;
-                case RequestMethod.Modify:
-                    ColectionDetailsForm.Text = "Modify collection";
-
-                    CollectionID.Text = collection.Id;
-                    Name.Text = collection.Name;
-                    Description.Text = collection.Description;
-                    CollectionType.SelectedValue = ((int)collection.Type).ToString();
-                    Location.Text = collection.Location;
-                    ConnectionString.Text = collection.ConnectionString;
-                    GraphUrl.Text = collection.GraphUrl;
-                    Public.Checked = (collection.Public > 0);
-
-                    foreach (var s in collection.SearchMethods)
-                    {
-                        SearchMethods.Items.FindByValue(((int)s).ToString()).Selected = true;
-                    }
-
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        private void SaveForm()
-        {
-            collection.Id = CollectionID.Text;
-            collection.Name = Name.Text;
-            collection.Description = Description.Text;
-            collection.Type = (CollectionType)(int.Parse(CollectionType.SelectedValue));
-            collection.Location = Location.Text;
-            collection.ConnectionString = ConnectionString.Text;
-            collection.GraphUrl = GraphUrl.Text;
-            collection.Public = Public.Checked ? 1 : 0;
-
-            collection.UserGuid = UserGuid;
-
-            collection.SearchMethods.Clear();
-            foreach (ListItem li in SearchMethods.Items)
-            {
-                if (li.Selected)
-                {
-                    collection.SearchMethods.Add((SearchMethod)int.Parse(li.Value));
-                }
-            }
-        }
-
-        private void RefreshSearchMethodsList()
-        {
-            // Load search methods
-            if (!IsPostBack)
-            {
-                var sm = PortalConnector.QuerySearchMethods();
-                foreach (int key in sm.Keys)
-                {
-                    SearchMethods.Items.Add(new ListItem(sm[key], key.ToString()));
-                }
             }
         }
     }

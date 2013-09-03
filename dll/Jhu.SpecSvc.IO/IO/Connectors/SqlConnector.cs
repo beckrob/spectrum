@@ -1455,7 +1455,7 @@ WHERE SpectrumID = @ID";
                 {
                     dr.Read();
 
-                    UserFolder folder = new UserFolder(true);
+                    UserFolder folder = new UserFolder();
                     LoadUserFolderFromDataReader(folder, dr);
 
                     return folder;
@@ -1476,7 +1476,7 @@ WHERE SpectrumID = @ID";
                 {
                     while (dr.Read())
                     {
-                        UserFolder f = new UserFolder(true);
+                        UserFolder f = new UserFolder();
                         LoadUserFolderFromDataReader(f, dr);
                         folders.Add(f);
                     }
@@ -1491,7 +1491,7 @@ WHERE SpectrumID = @ID";
                 {
                     dr.Read();
 
-                    UserFolder f = new UserFolder(true);
+                    UserFolder f = new UserFolder();
                     LoadUserFolderFromDataReader(f, dr);
                     folders.Insert(0, f);
                 }

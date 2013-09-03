@@ -9,22 +9,15 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Search
 {
-    public partial class Cone : SearchPageBase
+    public partial class Cone : PageBase
     {
         public static string GetUrl()
         {
             return "~/Search/Cone.aspx";
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
         protected void Ok_Click(object sender, EventArgs e)
         {
-            this.Validate();
-
             if (IsValid)
             {
                 double ra, dec;
@@ -33,10 +26,10 @@ namespace Jhu.SpecSvc.Web.Search
                 var par = new ConeSearchParameters(true);
                 par.Pos.Value = new Jhu.SpecSvc.Schema.Position(ra, dec);
                 par.Sr.Value = double.Parse(Radius.Text);
-                par.Collections = Collections.SelectedKeys;
+                par.Collections = PortalConnector.LoadCollections(Collections.SelectedKeys, UserGuid);
 
                 SearchParameters = par;
-                Execute();
+                ExecuteSearch();
             }
         }
     }

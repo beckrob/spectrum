@@ -30,7 +30,7 @@ namespace Jhu.SpecSvc.Ssa
                     asp.UserGuid = Guid.Empty;
 
                     // Parsing collection id
-                    asp.Collections = new string[] { Request["collection"] };
+                    asp.Collections = new Collection[] { cn.LoadCollection((string)Request["collection"]) };
 
                     // Parsing position
                     if (Request["pos"] != null && Request["pos"] != string.Empty &&

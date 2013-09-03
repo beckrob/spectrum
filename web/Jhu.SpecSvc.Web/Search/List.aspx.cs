@@ -8,7 +8,7 @@ using Jhu.SpecSvc.SpectrumLib;
 
 namespace Jhu.SpecSvc.Web.Search
 {
-    public partial class List : SearchPageBase
+    public partial class List : PageBase
     {
         public static string GetUrl()
         {

@@ -1,17 +1,3 @@
-#region Written by László Dobos (dobos@complex.elte.hu)
-/*
- * 
- * VoService.Spectrum.IO classes are designed for persisting
- * astonomical spectra in different storage systems
- * 
- * See bottom of file for revision history
- * 
- * Current revision:
- *   ID:          $Id: SearchParametersBase.cs,v 1.1 2008/01/08 22:00:50 dobos Exp $
- *   Revision:    $Revision: 1.1 $
- *   Date:        $Date: 2008/01/08 22:00:50 $
- */
-#endregion
 using System;
 using System.Data;
 using System.Configuration;
@@ -23,7 +9,7 @@ namespace Jhu.SpecSvc.IO
     public abstract class SearchParametersBase
     {
         private Guid userGuid;
-        private string[] collections;
+        private Collection[] collections;
         private bool loadPoints;
         private string[] pointsMask;
         private bool loadDetails;
@@ -42,7 +28,7 @@ namespace Jhu.SpecSvc.IO
             set { this.userGuid = value; }
         }
 
-        public string[] Collections
+        public Collection[] Collections
         {
             get { return collections; }
             set { collections = value; }
@@ -92,29 +78,9 @@ namespace Jhu.SpecSvc.IO
         protected void CopyMembers(SearchParametersBase old)
         {
             this.userGuid = old.userGuid;
-
-            if (old.collections != null)
-            {
-                this.collections = new string[old.collections.Length];
-                Array.Copy(old.collections, this.collections, old.collections.Length);
-            }
-            else
-            {
-                this.collections = null;
-            }
-
+            this.collections = old.collections;
             this.loadPoints = old.loadPoints;
             this.loadDetails = old.loadDetails;
         }
     }
 }
-#region Revision History
-/* Revision History
-
-        $Log: SearchParametersBase.cs,v $
-        Revision 1.1  2008/01/08 22:00:50  dobos
-        Initial checkin
-
-
-*/
-#endregion

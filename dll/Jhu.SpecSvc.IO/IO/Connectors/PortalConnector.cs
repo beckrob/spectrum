@@ -108,9 +108,7 @@ namespace Jhu.SpecSvc.IO
 
         public override Spectrum GetSpectrum(Guid userGuid, string spectrumId, bool loadPoints, string[] pointsMask, bool loadDetails)
         {
-            var coll = new Collection();
-            coll.Id = GetCollectionId(spectrumId);
-            LoadCollection(coll);
+            var coll = LoadCollection(GetCollectionId(spectrumId));
 
             using (var conn = coll.GetConnector())
             {
@@ -122,14 +120,17 @@ namespace Jhu.SpecSvc.IO
 
         public override IEnumerable<Spectrum> FindSpectrum(IdSearchParameters par)
         {
+            var collections = new Dictionary<string, Collection>(StringComparer.InvariantCultureIgnoreCase);
             var idsbycollection = new Dictionary<string, HashSet<string>>(StringComparer.InvariantCultureIgnoreCase);
 
             for (int i = 0; i < par.Ids.Length; i++)
             {
                 var cid = GetCollectionId(par.Ids[i]);
 
-                if (!idsbycollection.ContainsKey(cid))
+                if (!collections.ContainsKey(cid))
                 {
+                    var coll = LoadCollection(cid);
+                    collections.Add(cid, coll);
                     idsbycollection.Add(cid, new HashSet<string>(StringComparer.InvariantCultureIgnoreCase));
                 }
 
@@ -148,7 +149,7 @@ namespace Jhu.SpecSvc.IO
             // Query all collections in parallel on a separate thread
             var queries = Task.Factory.StartNew(() =>
                 {
-                    FindSpectrumByIdWorker(idsbycollection, par, buffer);
+                    FindSpectrumByIdWorker(collections, idsbycollection, par, buffer);
                 });
 
             // Read from the buffer
@@ -240,13 +241,13 @@ namespace Jhu.SpecSvc.IO
 #endif
         }
 
-        private void FindSpectrumByIdWorker(Dictionary<string, HashSet<string>> idsbycollection, IdSearchParameters par, BlockingCollection<Spectrum> buffer)
+        private void FindSpectrumByIdWorker(Dictionary<string, Collection> collections, Dictionary<string, HashSet<string>> idsbycollection, IdSearchParameters par, BlockingCollection<Spectrum> buffer)
         {
             try
             {
                 Parallel.ForEach<string>(idsbycollection.Keys, cid =>
                     {
-                        FindSpectrumByIdWorker(cid, idsbycollection[cid].ToArray(), par, buffer);
+                        FindSpectrumByIdWorker(collections[cid], idsbycollection[cid].ToArray(), par, buffer);
                     });
             }
             catch (AggregateException ex)
@@ -258,16 +259,11 @@ namespace Jhu.SpecSvc.IO
             buffer.CompleteAdding();
         }
 
-        private void FindSpectrumByIdWorker(string cid, string[] ids, IdSearchParameters par, BlockingCollection<Spectrum> buffer)
+        private void FindSpectrumByIdWorker(Collection coll, string[] ids, IdSearchParameters par, BlockingCollection<Spectrum> buffer)
         {
-            // Load collection
-            var coll = new Collection();
-            coll.Id = cid;
-            LoadCollection(coll);
-
             // Make copy of original parameters, but replace collection id and id list
             var idsp = new IdSearchParameters(par);
-            idsp.Collections = new string[] { cid };
+            idsp.Collections = new Collection[] { coll };
             idsp.Ids = ids;
 
             // Get connector
@@ -381,11 +377,11 @@ namespace Jhu.SpecSvc.IO
 
             List<string> idlist = new List<string>(par.Collections.Length * ds.Tables[0].Rows.Count);
 
-            foreach (string coll in par.Collections)
+            foreach (var coll in par.Collections)
             {
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    idlist.Add(coll + "#" + dr["SpecObjID"].ToString());
+                    idlist.Add(coll.Id + "#" + dr["SpecObjID"].ToString());
                 }
             }
 
@@ -486,7 +482,11 @@ namespace Jhu.SpecSvc.IO
                 // Read from the buffer
                 while (!buffer.IsCompleted)
                 {
-                    yield return buffer.Take();
+                    Spectrum s;
+                    if (buffer.TryTake(out s, 100))
+                    {
+                        yield return s;
+                    }
                 }
 
                 queries.Wait();
@@ -495,23 +495,18 @@ namespace Jhu.SpecSvc.IO
 
         private void FindSpectrumDispatchWorker(SearchParametersBase par, BlockingCollection<Spectrum> buffer)
         {
-            Parallel.ForEach(par.Collections, cid =>
+            Parallel.ForEach(par.Collections, c =>
                 {
-                    FindSpectrumInCollectionWorker(cid, par, buffer);
+                    FindSpectrumInCollectionWorker(c, par, buffer);
                 });
 
             // All collections processed, now mark as done
             buffer.CompleteAdding();
         }
 
-        void FindSpectrumInCollectionWorker(string cid, SearchParametersBase par, BlockingCollection<Spectrum> buffer)
+        void FindSpectrumInCollectionWorker(Collection coll, SearchParametersBase par, BlockingCollection<Spectrum> buffer)
         {
             {
-                // load collection
-                var coll = new Collection();
-                coll.Id = cid;
-                LoadCollection(coll);
-
                 // Get connector
                 using (var conn = coll.GetConnector())
                 {
@@ -1066,12 +1061,14 @@ namespace Jhu.SpecSvc.IO
             coll.Public = dr.GetInt32(++o);
         }
 
-        public void LoadCollection(Collection coll)
+        public Collection LoadCollection(string id)
         {
+            var coll = new Collection();
+
             using (SqlCommand cmd = new SqlCommand("sp_GetCollection", databaseConnection, databaseTransaction))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50).Value = coll.Id;
+                cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 50).Value = id;
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -1080,6 +1077,20 @@ namespace Jhu.SpecSvc.IO
                     dr.Close();
                 }
             }
+
+            return coll;
+        }
+
+        public Collection[] LoadCollections(string[] collectionIds, Guid userGuid)
+        {
+            var colls = new Collection[collectionIds.Length];
+
+            for (int i = 0; i < collectionIds.Length; i++)
+            {
+                colls[i] = LoadCollection(collectionIds[i]);
+            }
+
+            return colls;
         }
 
         public override void SaveCollection(Collection collection, string oldId, Guid userGuid)
