@@ -33,14 +33,7 @@ namespace Jhu.SpecSvc.Util
 
                     for (int x = 0; x < y.Length; x++)
                     {
-
-                        //M[i, j] += (w * fx[i][x] * fx[j][x]);
                         mij += (ww[x] * fxi[x] * fxj[x]);
-
-                        /* Debug code, remove, because slow!
-                        if (double.IsNaN(M[i, j]))
-                            throw new Exception();
-                         * */
                     }
 
                     M[i, j] = mij;
@@ -55,13 +48,6 @@ namespace Jhu.SpecSvc.Util
                 for (int x = 0; x < y.Length; x++)
                 {
                     fi += (ww[x] * y[x] * fx[i][x]);
-
-                    /* Debug code, remove, because slow!
-                    if (double.IsNaN(f[i]))
-                    {
-                        throw new Exception();
-                    }
-                     * */
                 }
 
                 F[i] = fi;

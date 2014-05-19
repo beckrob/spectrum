@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{000FA6DE-E70B-4B63-9EB4-B3F25F937F07}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jhu.SpecSvc.CmdLine.FitGalaxy</RootNamespace>
+    <AssemblyName>Jhu.SpecSvc.CmdLine.FitGalaxy</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\..\lib\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\graywulf\dll\Jhu.Graywulf.Activities\Jhu.Graywulf.Activities.csproj">
+      <Project>{57392DA3-E280-48EE-80C8-64E09FD8AFB5}</Project>
+      <Name>Jhu.Graywulf.Activities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\graywulf\dll\Jhu.Graywulf.RemoteService\Jhu.Graywulf.RemoteService.csproj">
+      <Project>{5460DB30-CFD9-4EDB-A1E8-161A7CC505C5}</Project>
+      <Name>Jhu.Graywulf.RemoteService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.FilterLib\Jhu.SpecSvc.FilterLib.csproj">
+      <Project>{AB174205-D7D0-4BE6-AF11-D7BC619C054A}</Project>
+      <Name>Jhu.SpecSvc.FilterLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.IO\Jhu.SpecSvc.IO.csproj">
+      <Project>{7B1172A6-8121-472D-9212-9AB0C549B0A2}</Project>
+      <Name>Jhu.SpecSvc.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.Pipeline\Jhu.SpecSvc.Pipeline.csproj">
+      <Project>{E3921383-6F2B-44B9-999C-B5E980A10F0D}</Project>
+      <Name>Jhu.SpecSvc.Pipeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.Schema\Jhu.SpecSvc.Schema.csproj">
+      <Project>{4AFBD644-DD6E-4661-A488-A0975F4AC723}</Project>
+      <Name>Jhu.SpecSvc.Schema</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dll\Jhu.SpecSvc.SpectrumLib\Jhu.SpecSvc.SpectrumLib.csproj">
+      <Project>{73D0F3D5-DB1A-48EC-BFC1-85BD7C0347BB}</Project>
+      <Name>Jhu.SpecSvc.SpectrumLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

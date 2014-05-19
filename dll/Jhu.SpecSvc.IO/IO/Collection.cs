@@ -204,8 +204,6 @@ namespace Jhu.SpecSvc.IO
                 default:
                     throw new NotImplementedException();
             }
-
-            return null;
         }
     }
 }

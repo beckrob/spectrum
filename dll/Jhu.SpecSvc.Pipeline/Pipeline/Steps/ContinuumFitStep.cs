@@ -144,7 +144,7 @@ namespace Jhu.SpecSvc.Pipeline.Steps
                 for (int l = 0; l < wl.Length; l++)
                 {
                     // Use mask from spectrum
-                    bool masked = ((spmask[l] & step.mask) != 0);
+                    bool masked = spmask != null && ((spmask[l] & step.mask) != 0);
 
                     // Mask invalid values
                     masked |= double.IsNaN(spfl[l]) | double.IsInfinity(spfl[l]);
@@ -815,6 +815,11 @@ namespace Jhu.SpecSvc.Pipeline.Steps
 
             lock (spectrum)
             {
+                if (spectrum.ContinuumFits == null)
+                {
+                    spectrum.ContinuumFits = new List<ContinuumFit>();
+                }
+
                 spectrum.ContinuumFits.Add(new FitTask(this, spectrum).Execute(vDisp.Value, tau_v.Value, mu.Value));
             }
 

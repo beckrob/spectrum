@@ -1108,7 +1108,7 @@ WHERE SpectrumID = @ID";
 
         //
 
-        public void SaveSpectrumFields(Spectrum spec, Guid userGuid)
+        public override void SaveSpectrumFields(Spectrum spec, Guid userGuid)
         {
             string sql = "spSaveSpectrumFields";
 
@@ -1247,7 +1247,7 @@ WHERE SpectrumID = @ID";
             }
         }
 
-        public void SaveSpectrumData(Spectrum spec, Guid userGuid)
+        public override void SaveSpectrumData(Spectrum spec, Guid userGuid)
         {
             string sql = "spSaveSpectrumData";
 

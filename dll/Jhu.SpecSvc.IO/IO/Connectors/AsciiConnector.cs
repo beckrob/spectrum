@@ -320,7 +320,7 @@ namespace Jhu.SpecSvc.IO
                 outputStream.WriteLine("# Exported from Spectrum Service: http://voservices.net/spectrum");
         }
 
-        private void SaveSpectrumFields(Jhu.SpecSvc.SpectrumLib.Spectrum spec, Guid userGuid)
+        public override void SaveSpectrumFields(Jhu.SpecSvc.SpectrumLib.Spectrum spec, Guid userGuid)
         {
             if (format == AsciiFileType.Tabular && writeFields)
                 SaveSpectrumFields_Group(spec, "Spectrum");
@@ -517,7 +517,7 @@ namespace Jhu.SpecSvc.IO
         #endregion
         #region IDisposable Members
 
-        public void Dispose()
+        public override void Dispose()
         {
         }
 
